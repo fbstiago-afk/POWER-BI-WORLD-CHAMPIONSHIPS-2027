@@ -5,6 +5,7 @@
 - Refreshed the two analytical screenshots and added a Home screenshot from current Desktop PDF exports.
 - Added a public README and repository ignore rules for local Power BI cache and internal reference files.
 - Clarified that the 32% OTA-share baseline is 2021; the $2.05M channel-mix cost contribution covers 2023–2025.
+- Published the project source, final PBIX, original challenge dataset, documentation and three screenshots to the public GitHub repository.
 
 ## 2026-11-05 · Photographic Home and landing layout
 - Added an unmodified twilight resort photo as a PBIR registered resource and Home overlay visual, with corresponding bookmark states and an illustrative-image disclosure.

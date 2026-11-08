@@ -1,9 +1,10 @@
-# Project Status — 2026-11-08 (GitHub release preparation)
+# Project Status — 2026-11-08 (GitHub release published)
 
 ## 2026-11-08 · GitHub release preparation
 - The PBIX saved on 2026-11-08 contained a newer report layout and two additional registered landing-page images. Opened that PBIX in Power BI Desktop and saved it over the existing `The Investment Challenge.pbip`, keeping the same project entry point and folders. The PBIX remains the final binary deliverable.
 - Exported the current report twice from Desktop: once with Brand Overview active and once with the Home overlay active. Replaced the two analytical screenshots in `submission/` and added `Screenshot_Home.jpg`. Reviewed all three rendered images.
 - Added a public-facing README and narrowed `.gitignore` to keep Power BI local cache and internal reference material out of the GitHub package.
+- Published the project to `fbstiago-afk/POWER-BI-WORLD-CHAMPIONSHIPS-2027` on branch `main`. The challenge entry itself was not submitted.
 
 ### Tests actually executed (2026-11-08)
 | Test | Result |
@@ -13,6 +14,8 @@
 | PDF export with Brand Overview active contained 2 pages; both analytical screenshots rendered and were visually reviewed | Pass |
 | PDF export with Home active produced a Home screenshot; it was visually reviewed | Pass |
 | `.pbip` entry point and `.Report` / `.SemanticModel` files received 2026-11-08 save timestamps; only one `.pbip` exists in the project folder | Pass (structural check) |
+| GitHub API returned a public `main` branch with 193 files, including the PBIX, PBIP, dataset and all three report screenshots | Pass |
+| Local Git working tree clean after push; remote HEAD matched the local commit | Pass |
 
 ## 2026-11-05 hero card alignment
 - Moved the existing contextual text beside the large value in all six cards shown in the Brand Overview and The Decision screenshots: three in `UX Hero Review` and three in `UX Hero Decision`. Retained all existing wording, values, formulas and colors. `UX Operational Impact` is the separate table on The Decision page and was not changed.
