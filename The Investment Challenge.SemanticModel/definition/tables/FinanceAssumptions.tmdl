@@ -1,0 +1,50 @@
+/// One row per year (2026-2032) and region: market demand growth, ADR inflation and cost inflation.
+table FinanceAssumptions
+	lineageTag: 79dacf9a-df72-44ca-863e-4a3e594c6c25
+
+	/// Projection year.
+	column Year
+		dataType: int64
+		lineageTag: d9a0b24c-2e45-44cb-90b9-6dbdb94b34c6
+		summarizeBy: none
+		sourceColumn: Year
+
+	/// Region.
+	column Region
+		dataType: string
+		lineageTag: e8060976-fc76-461e-a21c-4a5c45417d37
+		summarizeBy: none
+		sourceColumn: Region
+
+	/// Expected growth in market demand.
+	column MarketDemandGrowthPct
+		dataType: double
+		lineageTag: 95fa4d8b-5476-476c-bff0-ad048b0f12ea
+		summarizeBy: sum
+		sourceColumn: MarketDemandGrowthPct
+
+	/// Expected annual change in room rates.
+	column ADRInflationPct
+		dataType: double
+		lineageTag: 756c9f77-85d0-4e6c-b269-fcbfd4aa4172
+		summarizeBy: sum
+		sourceColumn: ADRInflationPct
+
+	/// Expected annual change in operating costs.
+	column CostInflationPct
+		dataType: double
+		lineageTag: a768e1ed-4f68-4fe0-91f3-c5d884f7013a
+		summarizeBy: sum
+		sourceColumn: CostInflationPct
+
+	partition FinanceAssumptions = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="FinanceAssumptions",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"Year", Int64.Type}, {"Region", type text}, {"MarketDemandGrowthPct", type number}, {"ADRInflationPct", type number}, {"CostInflationPct", type number}})
+				in
+				    Typed
+

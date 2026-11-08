@@ -1,0 +1,64 @@
+/// Standalone value of each project per scenario: NPV at 2026 (dataset discount rate, annual cash flows 2027-2032, no terminal value), net cash to 2032 and 2032 profit uplift. Portfolio values are additive because projects do not share cash flows (interaction GI-01 x GI-10 < $15k/yr).
+table 'Project Value'
+	isHidden
+	lineageTag: 25cc6af8-398b-4321-af27-d2ac70bebffe
+
+	column ProjectID
+		lineageTag: 21084408-85be-4412-b6eb-bbad2dcd992a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ProjectID]
+
+	column Scenario
+		lineageTag: 810e392f-9859-4ae0-b6b9-1903641b3f26
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Scenario]
+
+	column NPV2026
+		formatString: \$#,0
+		lineageTag: 0092d0d2-6994-4ac6-ad07-c621fef9dc97
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [NPV2026]
+
+	column NetCash2032
+		formatString: \$#,0
+		lineageTag: 133eb860-ec16-4556-bf66-5cd7d49df715
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [NetCash2032]
+
+	column RunRate2032
+		formatString: \$#,0
+		lineageTag: bac61ca2-3051-4c6c-a518-ea087b87113a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [RunRate2032]
+
+	partition 'Project Value' = calculated
+		mode: import
+		source =
+				VAR _r = LOOKUPVALUE( FinanceParameters[Value], FinanceParameters[Parameter], "Discount rate" )
+				VAR _T =
+				    SELECTCOLUMNS(
+				        'Project Timeline',
+				        "PID", 'Project Timeline'[ProjectID],
+				        "Sc", 'Project Timeline'[Scenario],
+				        "Y", 'Project Timeline'[Year],
+				        "Net", 'Project Timeline'[ProfitImpactUSD] - 'Project Timeline'[DisruptionProfitUSD] - 'Project Timeline'[CapexUSD],
+				        "Ben", 'Project Timeline'[ProfitImpactUSD]
+				    )
+				VAR _T2 = ADDCOLUMNS( _T, "PV", [Net] / POWER( 1 + _r, [Y] - 2026 ), "Ben32", IF( [Y] = 2032, [Ben], 0 ) )
+				VAR _G =
+				    GROUPBY(
+				        _T2, [PID], [Sc],
+				        "NPV", SUMX( CURRENTGROUP(), [PV] ),
+				        "Cash", SUMX( CURRENTGROUP(), [Net] ),
+				        "Run", SUMX( CURRENTGROUP(), [Ben32] )
+				    )
+				RETURN
+				    SELECTCOLUMNS( _G, "ProjectID", [PID], "Scenario", [Sc], "NPV2026", [NPV], "NetCash2032", [Cash], "RunRate2032", [Run] )
+
+	annotation PBI_Id = 56b6c703983d4442b171e56982c4d059
+

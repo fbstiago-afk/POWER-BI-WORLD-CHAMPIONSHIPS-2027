@@ -1,0 +1,54 @@
+/// Candidate Goodnight Inn portfolios compared on the Investment Strategy page. Disconnected selector table. ProjectsKey links each option to the Portfolio Universe.
+table 'Portfolio Option'
+	lineageTag: b6c0ac45-02f8-432f-bc43-b317c9be8f5c
+
+	column Portfolio
+		lineageTag: 3e30bb37-3cf7-4667-8db7-ffc86192a4c5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Portfolio]
+		sortByColumn: PortfolioOrder
+
+	column PortfolioOrder
+		isHidden
+		lineageTag: dacde36c-190b-480b-922c-393e2788f962
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [PortfolioOrder]
+
+	column Thesis
+		lineageTag: 4f13d961-5336-4d3b-bd10-8ce711f238e3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Thesis]
+
+	column ProjectsKey
+		isHidden
+		lineageTag: ca3623d5-5d9f-4dfb-99da-b5a28db7574c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ProjectsKey]
+
+	partition 'Portfolio Option' = calculated
+		mode: import
+		source =
+				VAR _Map = DATATABLE( "Portfolio", STRING, "ProjectID", STRING, { {"Recommended", "GI-01"}, {"Recommended", "GI-10"}, {"Recommended", "GI-02"}, {"Digital + F&B", "GI-01"}, {"Digital + F&B", "GI-10"}, {"Digital + F&B", "GI-02"}, {"Digital + F&B", "GI-09"}, {"Growth mix", "GI-01"}, {"Growth mix", "GI-10"}, {"Growth mix", "GI-02"}, {"Growth mix", "GI-09"}, {"Growth mix", "GI-05"}, {"Growth mix", "GI-04"}, {"Yield list", "GI-01"}, {"Yield list", "GI-10"}, {"Yield list", "GI-02"}, {"Yield list", "GI-09"}, {"Yield list", "GI-05"}, {"Yield list", "GI-04"}, {"Yield list", "GI-03"}, {"Big bets", "GI-01"}, {"Big bets", "GI-07"}, {"Big bets", "GI-08"} } )
+				RETURN
+				ADDCOLUMNS(
+					DATATABLE(
+					"Portfolio", STRING,
+					"PortfolioOrder", INTEGER,
+					"Thesis", STRING,
+					{
+					{"Recommended", 1, "Digital commission recovery: direct booking app, revenue management, self check-in. Highest NPV of all 456 rule-compliant portfolios, in both Expected and Low cases."},
+					{"Digital + F&B", 2, "Recommended plus the breakfast upgrade: more profit per year by 2032, lower NPV."},
+					{"Growth mix", 3, "Adds the two airport extensions and breakfast: capital recovered by 2032 but NPV negative."},
+					{"Yield list", 4, "Every project with run-rate yield above 8% (the earlier proposal): highest run-rate, deeply negative NPV."},
+					{"Big bets", 5, "Direct booking app plus the room refresh and the Boston Logan new build: uses the budget, destroys the most value."}
+					}
+					),
+					"ProjectsKey", VAR _p = [Portfolio] RETURN CONCATENATEX( FILTER( _Map, [Portfolio] = _p ), [ProjectID], "+", [ProjectID], ASC )
+				)
+
+	annotation PBI_Id = 082ef3761e8a45d085c2b301609e29f0
+

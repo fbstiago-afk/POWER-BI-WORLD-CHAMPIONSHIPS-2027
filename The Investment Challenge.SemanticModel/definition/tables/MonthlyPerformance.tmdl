@@ -1,0 +1,146 @@
+/// One row per hotel per month: rooms, revenue and operating expenses. Operating expenses exclude distribution costs (see BookingChannels).
+table MonthlyPerformance
+	lineageTag: 2ccbf25b-6a9a-4b2d-8e44-d6a59f7faaff
+
+	/// Hotel.
+	column HotelID
+		dataType: string
+		lineageTag: f881b4bb-aade-4d96-828a-fc72e3f772a4
+		summarizeBy: none
+		sourceColumn: HotelID
+
+	/// First day of the month.
+	column Month
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: a39faa3d-5be6-47cf-92ce-5e35625dccb0
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Room nights available (rooms x days, less rooms out of service).
+	column RoomsAvailable
+		dataType: int64
+		lineageTag: 7463c4b1-0000-4b2c-9747-9fc9ef0f5b78
+		summarizeBy: sum
+		sourceColumn: RoomsAvailable
+
+	/// Room nights sold.
+	column RoomsSold
+		dataType: int64
+		lineageTag: 8a46f3c3-21c4-462c-81a3-9ccd175235ea
+		summarizeBy: sum
+		sourceColumn: RoomsSold
+
+	/// Room revenue, in USD.
+	column RoomRevenue
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 345fb359-ef3c-4b2e-a0a2-0b12bbf0a2f0
+		summarizeBy: sum
+		sourceColumn: RoomRevenue
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Restaurant, bar and catering revenue, in USD.
+	column FoodBeverageRevenue
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 874f2e0b-8971-4959-8fce-908b409cd4b9
+		summarizeBy: sum
+		sourceColumn: FoodBeverageRevenue
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Other revenue (spa, activities, meeting rooms, parking...), in USD.
+	column OtherRevenue
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: cd72e289-00b2-42ff-af63-373456ad62a6
+		summarizeBy: sum
+		sourceColumn: OtherRevenue
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// RoomRevenue + FoodBeverageRevenue + OtherRevenue, in USD.
+	column TotalRevenue
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: af47bb4d-35f9-4d5a-a077-1957b05015b8
+		summarizeBy: sum
+		sourceColumn: TotalRevenue
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Staff costs, in USD.
+	column StaffCost
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 956785aa-b39e-4722-b160-9282b92a86b9
+		summarizeBy: sum
+		sourceColumn: StaffCost
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Energy costs, in USD.
+	column EnergyCost
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 0837ee94-1c17-42e1-8a92-b830d45699c6
+		summarizeBy: sum
+		sourceColumn: EnergyCost
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Maintenance costs, in USD.
+	column MaintenanceCost
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 458ce7e3-8ab4-4c58-9348-3e18cefdfd92
+		summarizeBy: sum
+		sourceColumn: MaintenanceCost
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Cost of food and beverage sold, in USD.
+	column FoodBeverageCost
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 3df61966-32d2-431b-8e82-39c53e1bbf17
+		summarizeBy: sum
+		sourceColumn: FoodBeverageCost
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Other operating costs (administration, marketing...), in USD.
+	column OtherOperatingCost
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: e15ddb23-488b-4c79-8e6f-a76e069d2e67
+		summarizeBy: sum
+		sourceColumn: OtherOperatingCost
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Sum of the five expense categories, in USD. Excludes distribution costs.
+	column TotalOperatingExpenses
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 407fe0d6-478e-438a-a6e6-1ccef6d926db
+		summarizeBy: sum
+		sourceColumn: TotalOperatingExpenses
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition MonthlyPerformance = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="MonthlyPerformance",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"RoomsAvailable", Int64.Type}, {"RoomsSold", Int64.Type}, {"RoomRevenue", Int64.Type}, {"FoodBeverageRevenue", Int64.Type}, {"OtherRevenue", Int64.Type}, {"TotalRevenue", Int64.Type}, {"StaffCost", Int64.Type}, {"EnergyCost", Int64.Type}, {"MaintenanceCost", Int64.Type}, {"FoodBeverageCost", Int64.Type}, {"OtherOperatingCost", Int64.Type}, {"TotalOperatingExpenses", Int64.Type}})
+				in
+				    Typed
+

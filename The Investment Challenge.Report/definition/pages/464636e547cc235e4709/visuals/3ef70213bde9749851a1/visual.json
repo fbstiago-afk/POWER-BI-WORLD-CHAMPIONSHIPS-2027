@@ -1,0 +1,30 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "3ef70213bde9749851a1",
+  "position": {
+    "x": 23.333333333333336,
+    "y": 116.66666666666667,
+    "z": 1000,
+    "height": 943.33333333333348,
+    "width": 1871.6666666666665
+  },
+  "visualGroup": {
+    "displayName": "State · The Decision",
+    "groupMode": "ScaleMode",
+    "objects": {
+      "background": [
+        {
+          "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "49D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

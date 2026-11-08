@@ -1,0 +1,74 @@
+/// Daily calendar from 2021 to 2032. Related to the Month column of each monthly table.
+table Date
+	lineageTag: 2609a9d7-b398-4f3f-8c2b-5ea8c72c9490
+	dataCategory: Time
+
+	/// Calendar date (key).
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: yyyy-mm-dd
+		lineageTag: 9b917674-58c1-45c7-bf5d-84ce9a5d6910
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Calendar year.
+	column Year
+		dataType: int64
+		lineageTag: 036a5447-3e1e-4545-8ac6-6c951e136c94
+		summarizeBy: none
+		sourceColumn: Year
+
+	/// Calendar quarter (Q1 to Q4).
+	column Quarter
+		dataType: string
+		lineageTag: f56f7f63-65b7-4c0a-9277-19cde8039fa7
+		summarizeBy: none
+		sourceColumn: Quarter
+
+	/// Month number (1 to 12), used to sort Month.
+	column MonthNumber
+		dataType: int64
+		lineageTag: 2dea4616-008b-4277-a194-62c0d8a2c5ab
+		summarizeBy: none
+		sourceColumn: MonthNumber
+
+	/// Month abbreviation, sorted by MonthNumber.
+	column Month
+		dataType: string
+		lineageTag: b0126743-bb5d-41f2-ac50-63ea9b626d38
+		summarizeBy: none
+		sourceColumn: Month
+		sortByColumn: MonthNumber
+
+	/// Year and month (yyyy-mm).
+	column YearMonth
+		dataType: string
+		lineageTag: 9cf15a2c-4f73-4a6a-b19b-c5a51385fae8
+		summarizeBy: none
+		sourceColumn: YearMonth
+
+	/// Historical (2021-2025), Planning year (2026) or Investment horizon (2027-2032).
+	column Period
+		dataType: string
+		lineageTag: 7923775a-f9d7-4a0b-a757-15694008f1db
+		summarizeBy: none
+		sourceColumn: Period
+
+	partition Date = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="Date",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"Date", type date}, {"Year", Int64.Type}, {"Quarter", type text}, {"MonthNumber", Int64.Type}, {"Month", type text}, {"YearMonth", type text}, {"Period", type text}})
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

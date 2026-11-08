@@ -1,0 +1,94 @@
+/// Lost room revenue and lost operating profit per project and calendar month while rooms are out of service (FinanceParameters: Disruption during works). Uses each linked hotel's base-year (2025) room revenue for that month, net of the hotel's own 2025 distribution-cost rate.
+table 'Project Disruption Base'
+	isHidden
+	lineageTag: 5922025d-b86c-4b6a-8505-51f9b4051382
+
+	column ProjectID
+		lineageTag: ae99f7b4-73b6-449b-86ec-8c05d2fdf38d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ProjectID]
+
+	column MonthNo
+		lineageTag: e35f13cf-182d-4c87-852a-5c4beea77c9d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MonthNo]
+
+	column LostRoomRevenueUSD
+		formatString: \$#,0
+		lineageTag: 13413a25-c34d-4c61-9a9e-4fdc0f14e2c3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [LostRoomRevenueUSD]
+
+	column LostProfitUSD
+		formatString: \$#,0
+		lineageTag: 5096e796-b6a2-4b6b-a269-24ed45981927
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [LostProfitUSD]
+
+	column LostRoomNights
+		formatString: #,0
+		lineageTag: aa713caa-2f99-4e86-a5dc-81c9abe30d4b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [LostRoomNights]
+
+	partition 'Project Disruption Base' = calculated
+		mode: import
+		source =
+				VAR _BaseYear = INT( LOOKUPVALUE( FinanceParameters[Value], FinanceParameters[Parameter], "Base year" ) )
+				VAR _Links =
+				    SELECTCOLUMNS(
+				        FILTER( InvestmentProjectProperties, RELATED( InvestmentProjects[RoomsOutOfServicePct] ) > 0 ),
+				        "PID", InvestmentProjectProperties[ProjectID],
+				        "HID", InvestmentProjectProperties[HotelID],
+				        "OOS", RELATED( InvestmentProjects[RoomsOutOfServicePct] )
+				    )
+				VAR _HotelMonth =
+				    SELECTCOLUMNS(
+				        FILTER( MonthlyPerformance, YEAR( MonthlyPerformance[Month] ) = _BaseYear ),
+				        "HID2", MonthlyPerformance[HotelID],
+				        "MonthNo", MONTH( MonthlyPerformance[Month] ),
+				        "RoomRev", MonthlyPerformance[RoomRevenue],
+				        "RoomsAvail", MonthlyPerformance[RoomsAvailable]
+				    )
+				VAR _BC =
+				    SELECTCOLUMNS(
+				        FILTER( BookingChannels, YEAR( BookingChannels[Month] ) = _BaseYear ),
+				        "HID3", BookingChannels[HotelID],
+				        "D", BookingChannels[DistributionCost],
+				        "R", BookingChannels[RoomRevenue]
+				    )
+				VAR _HotelDist0 = GROUPBY( _BC, [HID3], "SD", SUMX( CURRENTGROUP(), [D] ), "SR", SUMX( CURRENTGROUP(), [R] ) )
+				VAR _HotelDist = SELECTCOLUMNS( _HotelDist0, "HID3", [HID3], "DistPct", DIVIDE( [SD], [SR] ) )
+				VAR _J1 = FILTER( CROSSJOIN( _Links, _HotelMonth ), [HID] = [HID2] )
+				VAR _J2 = FILTER( CROSSJOIN( _J1, _HotelDist ), [HID] = [HID3] )
+				VAR _R =
+				    ADDCOLUMNS(
+				        _J2,
+				        "LostRev", [RoomRev] * [OOS],
+				        "LostPro", [RoomRev] * [OOS] * ( 1 - [DistPct] ),
+				        "LostRN", [RoomsAvail] * [OOS]
+				    )
+				VAR _G =
+				    GROUPBY(
+				        _R, [PID], [MonthNo],
+				        "SumRev", SUMX( CURRENTGROUP(), [LostRev] ),
+				        "SumPro", SUMX( CURRENTGROUP(), [LostPro] ),
+				        "SumRN", SUMX( CURRENTGROUP(), [LostRN] )
+				    )
+				RETURN
+				    SELECTCOLUMNS(
+				        _G,
+				        "ProjectID", [PID],
+				        "MonthNo", [MonthNo],
+				        "LostRoomRevenueUSD", [SumRev],
+				        "LostProfitUSD", [SumPro],
+				        "LostRoomNights", [SumRN]
+				    )
+
+	annotation PBI_Id = 4011cac3486c488eb006787e42f75b52
+

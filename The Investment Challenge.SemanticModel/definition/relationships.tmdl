@@ -1,0 +1,76 @@
+relationship Hotels-Brand-Brands
+	fromColumn: Hotels.Brand
+	toColumn: Brands.Brand
+
+relationship Hotels-Region-Region
+	fromColumn: Hotels.Region
+	toColumn: Region.Region
+
+relationship FinanceAssumptions-Region-Region
+	fromColumn: FinanceAssumptions.Region
+	toColumn: Region.Region
+
+relationship InvestmentProjects-Brand-Brands
+	fromColumn: InvestmentProjects.Brand
+	toColumn: Brands.Brand
+
+relationship InvestmentScenarios-ProjectID-InvestmentProjects
+	fromColumn: InvestmentScenarios.ProjectID
+	toColumn: InvestmentProjects.ProjectID
+
+relationship InvestmentProjectProperties-ProjectID-InvestmentProjects
+	fromColumn: InvestmentProjectProperties.ProjectID
+	toColumn: InvestmentProjects.ProjectID
+
+relationship Renovations-HotelID-Hotels
+	fromColumn: Renovations.HotelID
+	toColumn: Hotels.HotelID
+
+relationship MonthlyPerformance-HotelID-Hotels
+	fromColumn: MonthlyPerformance.HotelID
+	toColumn: Hotels.HotelID
+
+relationship MonthlyPerformance-Month-Date
+	fromColumn: MonthlyPerformance.Month
+	toColumn: Date.Date
+
+relationship GuestSegments-HotelID-Hotels
+	fromColumn: GuestSegments.HotelID
+	toColumn: Hotels.HotelID
+
+relationship GuestSegments-Month-Date
+	fromColumn: GuestSegments.Month
+	toColumn: Date.Date
+
+relationship BookingChannels-HotelID-Hotels
+	fromColumn: BookingChannels.HotelID
+	toColumn: Hotels.HotelID
+
+relationship BookingChannels-Month-Date
+	fromColumn: BookingChannels.Month
+	toColumn: Date.Date
+
+relationship GuestExperience-HotelID-Hotels
+	fromColumn: GuestExperience.HotelID
+	toColumn: Hotels.HotelID
+
+relationship GuestExperience-Month-Date
+	fromColumn: GuestExperience.Month
+	toColumn: Date.Date
+
+relationship GuestComplaints-HotelID-Hotels
+	fromColumn: GuestComplaints.HotelID
+	toColumn: Hotels.HotelID
+
+relationship GuestComplaints-Month-Date
+	fromColumn: GuestComplaints.Month
+	toColumn: Date.Date
+
+relationship f39b8afc-b555-4842-8a7f-05f7133c18df
+	fromColumn: 'Project Timeline'.ProjectID
+	toColumn: InvestmentProjects.ProjectID
+
+relationship e5bd7bfe-f330-49f0-b153-60f36325cd92
+	fromColumn: 'Project Timeline'.Month
+	toColumn: Date.Date
+

@@ -1,0 +1,98 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Panel closed · NPV",
+  "name": "6bb9fa330214a0b2a153",
+  "options": {
+    "targetVisualNames": [
+      "1902c14e7440c03c04b8",
+      "42e0c87ebef5ebcf2293",
+      "ab3749b75fb53d41239f",
+      "fd93cc93e79058dfb279",
+      "9231636764ef1aef6917",
+      "2d29ca0e2a2211df0a73",
+      "0db2dd944f9ee9a131f4",
+      "e4e97e9cc382fd3518f6"
+    ],
+    "applyOnlyToTargetVisuals": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "464636e547cc235e4709",
+    "sections": {
+      "464636e547cc235e4709": {
+        "visualContainers": {
+          "42e0c87ebef5ebcf2293": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ab3749b75fb53d41239f": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "fd93cc93e79058dfb279": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "9231636764ef1aef6917": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "2d29ca0e2a2211df0a73": {
+            "singleVisual": {
+              "visualType": "htmlContent443BE3AD55E043BF878BED274D3A6865",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "0db2dd944f9ee9a131f4": {
+            "singleVisual": {
+              "visualType": "tableEx",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "e4e97e9cc382fd3518f6": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        },
+        "visualContainerGroups": {
+          "1902c14e7440c03c04b8": {
+            "isHidden": true
+          }
+        }
+      }
+    },
+    "objects": {}
+  }
+}

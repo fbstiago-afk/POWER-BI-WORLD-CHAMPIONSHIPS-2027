@@ -1,0 +1,43 @@
+/// Group-level projection rules: discount rate, ramp-up, capex phasing, disruption, investment window and horizon.
+table FinanceParameters
+	lineageTag: f8124196-a0ae-4f3e-973c-e585794092a3
+
+	/// Name of the rule.
+	column Parameter
+		dataType: string
+		lineageTag: 4e4a3f28-c136-41c4-8d25-bd03efe52554
+		summarizeBy: none
+		sourceColumn: Parameter
+
+	/// Value of the rule.
+	column Value
+		dataType: double
+		lineageTag: 635e2e29-33f6-403a-9a9a-794415992e01
+		summarizeBy: sum
+		sourceColumn: Value
+
+	/// Unit of the value.
+	column Unit
+		dataType: string
+		lineageTag: 93e58f0d-9e2f-48b4-878f-6a2714b5316e
+		summarizeBy: none
+		sourceColumn: Unit
+
+	/// How to apply the rule.
+	column Notes
+		dataType: string
+		lineageTag: a7514c38-64cb-4486-bfc1-f99c42b1b8ab
+		summarizeBy: none
+		sourceColumn: Notes
+
+	partition FinanceParameters = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="FinanceParameters",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"Parameter", type text}, {"Value", type number}, {"Unit", type text}, {"Notes", type text}})
+				in
+				    Typed
+

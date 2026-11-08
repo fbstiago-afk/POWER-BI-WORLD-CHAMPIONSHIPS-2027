@@ -1,0 +1,29 @@
+/// Hotels affected by each project. New properties have no rows. Not related to Hotels: use TREATAS to link them.
+table InvestmentProjectProperties
+	lineageTag: b5a248a0-5219-4558-91a2-b989a5584c0a
+
+	/// Project.
+	column ProjectID
+		dataType: string
+		lineageTag: 8325df18-244a-4723-a350-de0fd5b4c167
+		summarizeBy: none
+		sourceColumn: ProjectID
+
+	/// Hotel affected by the project.
+	column HotelID
+		dataType: string
+		lineageTag: cef0575a-02c9-4396-85d3-a99425ace048
+		summarizeBy: none
+		sourceColumn: HotelID
+
+	partition InvestmentProjectProperties = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="InvestmentProjectProperties",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"ProjectID", type text}, {"HotelID", type text}})
+				in
+				    Typed
+

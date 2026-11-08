@@ -1,0 +1,17 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "57db3154526e7daad4ef",
+  "position": {
+    "x": 40,
+    "y": 116,
+    "z": 1100,
+    "height": 934,
+    "width": 1840,
+    "tabOrder": 2000
+  },
+  "visualGroup": {
+    "displayName": "State · Hotel Explorer",
+    "groupMode": "ScaleMode"
+  },
+  "isHidden": true
+}

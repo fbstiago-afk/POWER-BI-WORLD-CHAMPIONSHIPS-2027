@@ -1,0 +1,63 @@
+/// One row per hotel, month and guest segment. Room nights and room revenue add up to the totals in MonthlyPerformance.
+table GuestSegments
+	lineageTag: 3259a19f-c367-45b8-93a6-cd8cb4f2ae02
+
+	/// Hotel.
+	column HotelID
+		dataType: string
+		lineageTag: 378937e7-0f90-4f7a-8433-c159c83b54df
+		summarizeBy: none
+		sourceColumn: HotelID
+
+	/// First day of the month.
+	column Month
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 7f268ae3-c73f-4269-9d27-3477a41e42bf
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Leisure, Family, Business Travel, Groups & Events or Long Stay.
+	column Segment
+		dataType: string
+		lineageTag: 1fa29977-95d8-4c8f-aae9-f9f52df59653
+		summarizeBy: none
+		sourceColumn: Segment
+
+	/// Number of reservations.
+	column Bookings
+		dataType: int64
+		lineageTag: 893ec136-a8a4-4420-95e2-66a2bd8d7a43
+		summarizeBy: sum
+		sourceColumn: Bookings
+
+	/// Room nights sold.
+	column RoomNights
+		dataType: int64
+		lineageTag: 064f8ab8-fe41-4b94-9d1c-dab1082d1ec2
+		summarizeBy: sum
+		sourceColumn: RoomNights
+
+	/// Room revenue, in USD.
+	column RoomRevenue
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 504946c3-4b69-4241-9e34-7187b066a8e7
+		summarizeBy: sum
+		sourceColumn: RoomRevenue
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition GuestSegments = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="GuestSegments",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"Segment", type text}, {"Bookings", Int64.Type}, {"RoomNights", Int64.Type}, {"RoomRevenue", Int64.Type}})
+				in
+				    Typed
+

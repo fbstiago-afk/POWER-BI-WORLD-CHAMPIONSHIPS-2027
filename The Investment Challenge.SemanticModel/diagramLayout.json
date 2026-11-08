@@ -1,0 +1,230 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 226.87058633173697
+          },
+          "nodeIndex": "BookingChannels",
+          "nodeLineageTag": "21981d53-7ff4-45d6-9802-515116b9de3d",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 2008.9268599328925,
+            "y": 217.5970012963042
+          },
+          "nodeIndex": "Brands",
+          "nodeLineageTag": "d86e4067-7be4-4366-a360-2be92c8ed697",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 16
+        },
+        {
+          "location": {
+            "x": 562.67423423262915,
+            "y": 0
+          },
+          "nodeIndex": "Date",
+          "nodeLineageTag": "2609a9d7-b398-4f3f-8c2b-5ea8c72c9490",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 2357.1149689650028,
+            "y": 0
+          },
+          "nodeIndex": "FinanceAssumptions",
+          "nodeLineageTag": "79dacf9a-df72-44ca-863e-4a3e594c6c25",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 2704.6123876234606,
+            "y": 0
+          },
+          "nodeIndex": "FinanceParameters",
+          "nodeLineageTag": "f8124196-a0ae-4f3e-973c-e585794092a3",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 497.28621878239824
+          },
+          "nodeIndex": "GuestComplaints",
+          "nodeLineageTag": "03618df3-72fd-447c-a71a-5253a1fa3942",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 683.54426145107686
+          },
+          "nodeIndex": "GuestExperience",
+          "nodeLineageTag": "d6885dd4-4a1a-4895-b484-9109a67a1cfc",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 1026.490201767348
+          },
+          "nodeIndex": "GuestSegments",
+          "nodeLineageTag": "3259a19f-c367-45b8-93a6-cd8cb4f2ae02",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 1510.8444036166991,
+            "y": 0
+          },
+          "nodeIndex": "Hotels",
+          "nodeLineageTag": "43965b2f-8e60-4e41-b7f4-795d0f047cb8",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 844.578591904427,
+            "y": 0
+          },
+          "nodeIndex": "InvestmentProjectProperties",
+          "nodeLineageTag": "b5a248a0-5219-4558-91a2-b989a5584c0a",
+          "size": {
+            "height": 145,
+            "width": 257.65184796698964
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 1278.5970571589692
+          },
+          "nodeIndex": "InvestmentProjects",
+          "nodeLineageTag": "81a23888-f5d2-4aca-9ad0-a342bc1117d2",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 1180.0684443372163,
+            "y": 0
+          },
+          "nodeIndex": "InvestmentScenarios",
+          "nodeLineageTag": "c716f900-5b4e-48f8-a2d2-186947472f9b",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 1608.4719574149185
+          },
+          "nodeIndex": "MonthlyPerformance",
+          "nodeLineageTag": "2ccbf25b-6a9a-4b2d-8e44-d6a59f7faaff",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 2014.0282310506923,
+            "y": 0
+          },
+          "nodeIndex": "Region",
+          "nodeLineageTag": "14487a8d-c45c-4193-a935-dca2532129a5",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 1928.0906075314847
+          },
+          "nodeIndex": "Renovations",
+          "nodeLineageTag": "969675ae-c6d6-4215-b3d4-e445f33106e3",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 14
+        },
+        {
+          "location": {
+            "x": 2704.5802123863486,
+            "y": 193.12751213409871
+          },
+          "nodeIndex": "Scenario",
+          "nodeLineageTag": "6db08896-29ef-4e06-a956-5b84346690c3",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 15
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 42.2799944171669,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

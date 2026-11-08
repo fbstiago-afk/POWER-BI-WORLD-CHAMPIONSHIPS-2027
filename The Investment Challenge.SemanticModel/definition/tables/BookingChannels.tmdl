@@ -1,0 +1,81 @@
+/// One row per hotel, month and booking channel, including distribution costs. Totals match MonthlyPerformance.
+table BookingChannels
+	lineageTag: 21981d53-7ff4-45d6-9802-515116b9de3d
+
+	/// Hotel.
+	column HotelID
+		dataType: string
+		lineageTag: e7196dc1-542c-465b-b7c4-69d4cee6ee3b
+		summarizeBy: none
+		sourceColumn: HotelID
+
+	/// First day of the month.
+	column Month
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 6e25765e-30ea-46dd-8dcd-62bef07b2e6d
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Direct Website & App, Direct Phone & Walk-in, Online Travel Agencies, Corporate Contracts, or Travel Agents & Tour Operators.
+	column Channel
+		dataType: string
+		lineageTag: b2092f0f-9e5f-4a6b-892d-736f87fcba88
+		summarizeBy: none
+		sourceColumn: Channel
+
+	/// Number of reservations.
+	column Bookings
+		dataType: int64
+		lineageTag: bf7f83fd-dd60-4b7e-be53-f56fe6c2cbb6
+		summarizeBy: sum
+		sourceColumn: Bookings
+
+	/// Room nights sold.
+	column RoomNights
+		dataType: int64
+		lineageTag: e45b8ff0-050c-4097-b192-1f03e487169f
+		summarizeBy: sum
+		sourceColumn: RoomNights
+
+	/// Room revenue, in USD.
+	column RoomRevenue
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: d9371d48-eed4-4d8d-8142-7e7ee32d46f0
+		summarizeBy: sum
+		sourceColumn: RoomRevenue
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Commissions, fees and marketing costs attributable to the channel, in USD.
+	column DistributionCost
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 94418019-d680-458e-bd2b-076263a3bc44
+		summarizeBy: sum
+		sourceColumn: DistributionCost
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Short channel label for chart legends.
+	column 'Channel Short' = SWITCH( BookingChannels[Channel], "Online Travel Agencies", "OTA", "Direct Website & App", "Direct web/app", "Direct Phone & Walk-in", "Direct phone", "Corporate Contracts", "Corporate", "Travel Agents & Tour Operators", "Travel agents", BookingChannels[Channel] )
+		dataType: string
+		lineageTag: baa19da0-2035-4669-aa0b-ceb0eb4b967a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition BookingChannels = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="BookingChannels",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"Channel", type text}, {"Bookings", Int64.Type}, {"RoomNights", Int64.Type}, {"RoomRevenue", Int64.Type}, {"DistributionCost", Int64.Type}})
+				in
+				    Typed
+

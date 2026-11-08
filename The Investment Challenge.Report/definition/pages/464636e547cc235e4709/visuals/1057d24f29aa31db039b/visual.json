@@ -1,0 +1,17 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "1057d24f29aa31db039b",
+  "position": {
+    "x": 40,
+    "y": 116,
+    "z": 1100,
+    "height": 160,
+    "width": 1840,
+    "tabOrder": 5000
+  },
+  "visualGroup": {
+    "displayName": "State · Explore chrome",
+    "groupMode": "ScaleMode"
+  },
+  "isHidden": true
+}

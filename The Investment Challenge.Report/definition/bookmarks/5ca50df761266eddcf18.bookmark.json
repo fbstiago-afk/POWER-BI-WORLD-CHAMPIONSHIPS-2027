@@ -1,0 +1,308 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Home (welcome)",
+  "name": "5ca50df761266eddcf18",
+  "options": {
+    "targetVisualNames": [
+      "d2e0a4c7b2f18cd9e772",
+      "1493d1ba2b74684e69fa",
+      "a4bb4be438ed3fccad7d",
+      "d54a33377e1e0c7b9196",
+      "8d8bc672944871d10f90",
+      "2d2b08ed55ed173fae61",
+      "9e359087d2a7aaa049e9",
+      "678698d30d1b7025f0ad",
+      "6b435f46f1e16c91bc1a",
+      "369855b52f7e72add50d",
+      "0ae180876220dfbf8fe0",
+      "5f6006d7411dc89a1b46",
+      "8905a6c2bbe0ba637149",
+      "103a52f244b93f31aabb",
+      "6783c6ceff3ca108bd3a",
+      "6d6dfe91223c9bc90261",
+      "feff58a1e0b4c27bfa56",
+      "3ac26743b94101d399ff",
+      "e068addbf1a9457840c6",
+      "c72696ccfd54814aa431",
+      "c69c522d7937f66ff7be",
+      "8353e21f0a0287e6eaf6",
+      "7b4b5018038c33a752cc",
+      "911b1ca4b34d45a115af",
+      "c485d2ed5cc4ce64fccc",
+      "bcb1d4ca49afed6f236a",
+      "8525c2b2caf184c5e343",
+      "72fc6967d13563c58c66",
+      "57db3154526e7daad4ef",
+      "5edd37f4deaaaf378c18",
+      "0ae82159f646b64e72aa",
+      "50894a237d9bcde0a187",
+      "819afab4221593c5d810",
+      "960db2ed82202a9706b9",
+      "e06862c31ebdf7aeaeb9"
+    ],
+    "applyOnlyToTargetVisuals": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "047e036301c06b91de48",
+    "sections": {
+      "047e036301c06b91de48": {
+        "visualContainers": {
+          "1493d1ba2b74684e69fa": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "d54a33377e1e0c7b9196": {
+            "singleVisual": {
+              "visualType": "image",
+              "objects": {}
+            }
+          },
+          "8d8bc672944871d10f90": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "2d2b08ed55ed173fae61": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "9e359087d2a7aaa049e9": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "6b435f46f1e16c91bc1a": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "369855b52f7e72add50d": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "0ae180876220dfbf8fe0": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "5f6006d7411dc89a1b46": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "8905a6c2bbe0ba637149": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "103a52f244b93f31aabb": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "6d6dfe91223c9bc90261": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "feff58a1e0b4c27bfa56": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "3ac26743b94101d399ff": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "e068addbf1a9457840c6": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c72696ccfd54814aa431": {
+            "singleVisual": {
+              "visualType": "htmlContent443BE3AD55E043BF878BED274D3A6865",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c69c522d7937f66ff7be": {
+            "singleVisual": {
+              "visualType": "lineClusteredColumnComboChart",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "7b4b5018038c33a752cc": {
+            "singleVisual": {
+              "visualType": "htmlContent443BE3AD55E043BF878BED274D3A6865",
+              "objects": {}
+            }
+          },
+          "911b1ca4b34d45a115af": {
+            "singleVisual": {
+              "visualType": "waterfallChart",
+              "objects": {}
+            }
+          },
+          "c485d2ed5cc4ce64fccc": {
+            "singleVisual": {
+              "visualType": "columnChart",
+              "objects": {}
+            }
+          },
+          "bcb1d4ca49afed6f236a": {
+            "singleVisual": {
+              "visualType": "htmlContent443BE3AD55E043BF878BED274D3A6865",
+              "objects": {}
+            }
+          },
+          "8525c2b2caf184c5e343": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "72fc6967d13563c58c66": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "5edd37f4deaaaf378c18": {
+            "singleVisual": {
+              "visualType": "htmlContent443BE3AD55E043BF878BED274D3A6865",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "0ae82159f646b64e72aa": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "50894a237d9bcde0a187": {
+            "singleVisual": {
+              "visualType": "scatterChart",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "819afab4221593c5d810": {
+            "singleVisual": {
+              "visualType": "tableEx",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "960db2ed82202a9706b9": {
+            "singleVisual": {
+              "visualType": "clusteredBarChart",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "e06862c31ebdf7aeaeb9": {
+            "singleVisual": {
+              "visualType": "htmlContent443BE3AD55E043BF878BED274D3A6865",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "a4bb4be438ed3fccad7d": {
+            "singleVisual": {
+              "visualType": "image",
+              "objects": {}
+            }
+          }
+        },
+        "visualContainerGroups": {
+          "d2e0a4c7b2f18cd9e772": {
+            "isHidden": false
+          },
+          "678698d30d1b7025f0ad": {
+            "isHidden": true
+          },
+          "6783c6ceff3ca108bd3a": {
+            "isHidden": true
+          },
+          "8353e21f0a0287e6eaf6": {
+            "isHidden": false
+          },
+          "57db3154526e7daad4ef": {
+            "isHidden": true
+          }
+        }
+      }
+    },
+    "objects": {}
+  }
+}

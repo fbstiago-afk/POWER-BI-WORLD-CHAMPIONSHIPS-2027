@@ -1,0 +1,194 @@
+{
+  "name": "Pillow & Key Board Dark",
+  "dataColors": [
+    "#70A9E9",
+    "#D7AB62",
+    "#4DD1BD",
+    "#FF8F82",
+    "#BCA0ED",
+    "#F6B26B",
+    "#CBD4E2",
+    "#8EA6C7"
+  ],
+  "background": "#0B1733",
+  "foreground": "#F8F1E6",
+  "tableAccent": "#D7AB62",
+  "good": "#4DD1BD",
+  "neutral": "#F6B26B",
+  "bad": "#FF8F82",
+  "maximum": "#D7AB62",
+  "center": "#CBD4E2",
+  "minimum": "#182A4A",
+  "foregroundNeutralSecondary": "#CBD4E2",
+  "foregroundNeutralTertiary": "#9FB0C8",
+  "backgroundLight": "#101F3C",
+  "backgroundNeutral": "#182A4A",
+  "hyperlink": "#EFD3A0",
+  "visitedHyperlink": "#EFD3A0",
+  "textClasses": {
+    "label": {
+      "fontFace": "Segoe UI",
+      "color": "#CBD4E2",
+      "fontSize": 11
+    },
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "color": "#F8F1E6",
+      "fontSize": 28
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "color": "#F8F1E6",
+      "fontSize": 14
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "color": "#F8F1E6",
+      "fontSize": 13
+    },
+    "largeTitle": {
+      "fontFace": "Segoe UI Semibold",
+      "color": "#F8F1E6",
+      "fontSize": 20
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#0B1733"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": false
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ],
+        "title": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#F8F1E6"
+              }
+            },
+            "fontFamily": "Segoe UI Semibold",
+            "fontSize": 14
+          }
+        ],
+        "subTitle": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#9FB0C8"
+              }
+            },
+            "fontSize": 11
+          }
+        ],
+        "visualTooltip": [
+          {
+            "background": {
+              "solid": {
+                "color": "#101F3C"
+              }
+            },
+            "titleFontColor": {
+              "solid": {
+                "color": "#9FB0C8"
+              }
+            },
+            "valueFontColor": {
+              "solid": {
+                "color": "#F8F1E6"
+              }
+            },
+            "fontSize": 11
+          }
+        ],
+        "outspacePane": [
+          {
+            "backgroundColor": {
+              "solid": {
+                "color": "#0B1733"
+              }
+            },
+            "foregroundColor": {
+              "solid": {
+                "color": "#F8F1E6"
+              }
+            },
+            "borderColor": {
+              "solid": {
+                "color": "#334462"
+              }
+            }
+          }
+        ],
+        "filterCard": [
+          {
+            "$id": "Applied",
+            "backgroundColor": {
+              "solid": {
+                "color": "#182A4A"
+              }
+            },
+            "foregroundColor": {
+              "solid": {
+                "color": "#F8F1E6"
+              }
+            }
+          },
+          {
+            "$id": "Available",
+            "backgroundColor": {
+              "solid": {
+                "color": "#0B1733"
+              }
+            },
+            "foregroundColor": {
+              "solid": {
+                "color": "#F8F1E6"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#040F2B"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#040F2B"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    }
+  }
+}

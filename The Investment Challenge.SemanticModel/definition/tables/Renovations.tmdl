@@ -1,0 +1,73 @@
+/// One row per past renovation, with works period, rooms out of service and cost.
+table Renovations
+	lineageTag: 969675ae-c6d6-4215-b3d4-e445f33106e3
+
+	/// Unique renovation identifier.
+	column RenovationID
+		dataType: string
+		lineageTag: 78208d84-052a-4148-9196-c415adf33e91
+		summarizeBy: none
+		sourceColumn: RenovationID
+
+	/// Hotel renovated.
+	column HotelID
+		dataType: string
+		lineageTag: 972e2d1f-35c6-4178-9a92-38cf00d33145
+		summarizeBy: none
+		sourceColumn: HotelID
+
+	/// Start of works.
+	column StartDate
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 3ca59dec-b385-42c9-8115-6c83e0a0eeda
+		summarizeBy: none
+		sourceColumn: StartDate
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// End of works.
+	column EndDate
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: cf54ec45-d2e9-4f19-8556-30120a2f191a
+		summarizeBy: none
+		sourceColumn: EndDate
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Full renovation or Rooms refresh.
+	column RenovationType
+		dataType: string
+		lineageTag: 3338b936-ec1f-47a1-b857-7b985f32145e
+		summarizeBy: none
+		sourceColumn: RenovationType
+
+	/// Average share of rooms out of service during works.
+	column RoomsOutOfServicePct
+		dataType: double
+		lineageTag: c0f5f4ff-f743-4552-96b2-b35abb45c040
+		summarizeBy: sum
+		sourceColumn: RoomsOutOfServicePct
+
+	/// Renovation cost, in USD of the year of the works.
+	column CostUSD
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 6babb1ca-736d-43d6-8674-71b8dd45d608
+		summarizeBy: sum
+		sourceColumn: CostUSD
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition Renovations = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="Renovations",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"RenovationID", type text}, {"HotelID", type text}, {"StartDate", type date}, {"EndDate", type date}, {"RenovationType", type text}, {"RoomsOutOfServicePct", type number}, {"CostUSD", Int64.Type}})
+				in
+				    Typed
+

@@ -1,0 +1,88 @@
+/// One row per hotel per month: survey responses and average satisfaction scores (0-10) and NPS.
+table GuestExperience
+	lineageTag: d6885dd4-4a1a-4895-b484-9109a67a1cfc
+
+	/// Hotel.
+	column HotelID
+		dataType: string
+		lineageTag: 1faea05e-c8f6-44c9-86dc-b22af2fbe5f9
+		summarizeBy: none
+		sourceColumn: HotelID
+
+	/// First day of the month.
+	column Month
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: b20116bf-290a-48cc-b987-0f630ced2753
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Number of completed guest surveys. Use it to weight average scores.
+	column SurveyResponses
+		dataType: int64
+		lineageTag: 0ea5a6fd-ef5c-4cb6-85ef-4ce3e3f10e38
+		summarizeBy: sum
+		sourceColumn: SurveyResponses
+
+	/// Average overall satisfaction (0-10).
+	column OverallScore
+		dataType: double
+		lineageTag: eab38ae0-a6f5-47d1-9ef2-313039b8b4e9
+		summarizeBy: sum
+		sourceColumn: OverallScore
+
+	/// Average cleanliness score (0-10).
+	column CleanlinessScore
+		dataType: double
+		lineageTag: 8c62d977-196a-4003-88ab-8c55f2f532d9
+		summarizeBy: sum
+		sourceColumn: CleanlinessScore
+
+	/// Average service score (0-10).
+	column ServiceScore
+		dataType: double
+		lineageTag: dd85338a-6a62-4869-a09f-9fce623ec05a
+		summarizeBy: sum
+		sourceColumn: ServiceScore
+
+	/// Average room comfort score (0-10).
+	column RoomComfortScore
+		dataType: double
+		lineageTag: fdfb71c0-7af3-42af-b575-475bb0f64d47
+		summarizeBy: sum
+		sourceColumn: RoomComfortScore
+
+	/// Average amenities score (0-10).
+	column AmenitiesScore
+		dataType: double
+		lineageTag: b2e31d78-a854-4b6a-8acc-2ac866b946d2
+		summarizeBy: sum
+		sourceColumn: AmenitiesScore
+
+	/// Average value for money score (0-10).
+	column ValueForMoneyScore
+		dataType: double
+		lineageTag: de1071dd-49e0-404e-927c-69c60142d3fe
+		summarizeBy: sum
+		sourceColumn: ValueForMoneyScore
+
+	/// Net Promoter Score (-100 to 100).
+	column NetPromoterScore
+		dataType: double
+		lineageTag: bc1a8f0e-3600-415f-8833-1fe6498097d0
+		summarizeBy: sum
+		sourceColumn: NetPromoterScore
+
+	partition GuestExperience = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="GuestExperience",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"SurveyResponses", Int64.Type}, {"OverallScore", type number}, {"CleanlinessScore", type number}, {"ServiceScore", type number}, {"RoomComfortScore", type number}, {"AmenitiesScore", type number}, {"ValueForMoneyScore", type number}, {"NetPromoterScore", type number}})
+				in
+				    Typed
+

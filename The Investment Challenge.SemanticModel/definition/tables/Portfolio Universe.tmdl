@@ -1,0 +1,160 @@
+/// Every one of the 1,024 combinations of the ten Goodnight Inn proposals, with the challenge rules applied (budget, >= 3 projects, >= 1 growth initiative, DependsOn, ExclusiveWith) and additive value from Project Value.
+table 'Portfolio Universe'
+	lineageTag: 15e6dca9-af13-48a3-aa53-a8a0f3c7947f
+
+	column Mask
+		isHidden
+		lineageTag: ba57d246-600a-42db-ad42-dec3df70e11d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Mask]
+
+	column Projects
+		lineageTag: 0c3669de-db46-4767-b209-ee4fcc80048e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Projects]
+
+	column ProjectCount
+		lineageTag: a0bdc461-6e37-44b8-b339-c37b06a53b39
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ProjectCount]
+
+	column CapexUSD
+		formatString: \$#,0
+		lineageTag: b8675eb6-02f3-41c4-86df-62576b4db297
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [CapexUSD]
+
+	column GrowthCount
+		lineageTag: c0c86249-53e1-4c0e-8b49-5e7d252f02e0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [GrowthCount]
+
+	column MissingDependencies
+		lineageTag: 1a791eae-b9fe-4c17-8bbf-8353d039cc9d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MissingDependencies]
+
+	column Conflicts
+		lineageTag: 10129ad9-7487-4ee8-8535-e50f05c11a3d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Conflicts]
+
+	column IsValid
+		lineageTag: f6e6cb4f-4c46-4419-8d49-7ae7c1194621
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [IsValid]
+
+	column NPVLow
+		formatString: \$#,0
+		lineageTag: 70ac4ae9-a2a4-4613-a835-82a0f020b792
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [NPVLow]
+
+	column NPVExpected
+		formatString: \$#,0
+		lineageTag: b71d2c05-f5b2-4f4a-b910-dc99bb918184
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [NPVExpected]
+
+	column NPVHigh
+		formatString: \$#,0
+		lineageTag: 4346a9bf-bfee-4caa-ba1b-6f7a69f49660
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [NPVHigh]
+
+	column NetCashExpected
+		formatString: \$#,0
+		lineageTag: 9c8088f5-ca00-49ff-88d1-dfd47a62d96c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [NetCashExpected]
+
+	column RunRate2032Expected
+		formatString: \$#,0
+		lineageTag: 28be2d9d-06dd-45ee-833e-940e54371b8e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [RunRate2032Expected]
+
+	column Option
+		lineageTag: b7f2826e-4d16-4ec7-a7ec-93e32804fd1a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Option]
+
+	partition 'Portfolio Universe' = calculated
+		mode: import
+		source =
+				VAR _Brand = "Goodnight Inn"
+				VAR _Budget = LOOKUPVALUE( Brands[InvestmentBudgetUSD], Brands[Brand], _Brand )
+				VAR _Ids = SELECTCOLUMNS( FILTER( InvestmentProjects, InvestmentProjects[Brand] = _Brand ), "I", InvestmentProjects[ProjectID] )
+				VAR _P =
+				    ADDCOLUMNS(
+				        SELECTCOLUMNS(
+				            FILTER( InvestmentProjects, InvestmentProjects[Brand] = _Brand ),
+				            "PID", InvestmentProjects[ProjectID],
+				            "Capex", InvestmentProjects[CapexUSD],
+				            "Growth", IF( InvestmentProjects[GrowthInitiative] = "Yes", 1, 0 ),
+				            "Dep", InvestmentProjects[DependsOn],
+				            "Exc", InvestmentProjects[ExclusiveWith]
+				        ),
+				        "Bit", VAR _me = [PID] RETURN COUNTROWS( FILTER( _Ids, [I] < _me ) ) + 0,
+				        "NL", VAR _me = [PID] RETURN LOOKUPVALUE( 'Project Value'[NPV2026], 'Project Value'[ProjectID], _me, 'Project Value'[Scenario], "Low" ),
+				        "NE", VAR _me = [PID] RETURN LOOKUPVALUE( 'Project Value'[NPV2026], 'Project Value'[ProjectID], _me, 'Project Value'[Scenario], "Expected" ),
+				        "NH", VAR _me = [PID] RETURN LOOKUPVALUE( 'Project Value'[NPV2026], 'Project Value'[ProjectID], _me, 'Project Value'[Scenario], "High" ),
+				        "CE", VAR _me = [PID] RETURN LOOKUPVALUE( 'Project Value'[NetCash2032], 'Project Value'[ProjectID], _me, 'Project Value'[Scenario], "Expected" ),
+				        "RE", VAR _me = [PID] RETURN LOOKUPVALUE( 'Project Value'[RunRate2032], 'Project Value'[ProjectID], _me, 'Project Value'[Scenario], "Expected" )
+				    )
+				VAR _U =
+				    GENERATE(
+				        GENERATESERIES( 0, 1023, 1 ),
+				        VAR _m = [Value]
+				        VAR _inc = FILTER( _P, MOD( INT( _m / POWER( 2, [Bit] ) ), 2 ) = 1 )
+				        VAR _incIds = SELECTCOLUMNS( _inc, "X", [PID] )
+				        RETURN
+				            ROW(
+				                "Projects", CONCATENATEX( _inc, [PID], "+", [PID], ASC ),
+				                "ProjectCount", COUNTROWS( _inc ) + 0,
+				                "CapexUSD", SUMX( _inc, [Capex] ) + 0,
+				                "GrowthCount", SUMX( _inc, [Growth] ) + 0,
+				                "MissingDependencies", COUNTROWS( FILTER( _inc, [Dep] <> "" && NOT ( [Dep] IN _incIds ) ) ) + 0,
+				                "Conflicts", COUNTROWS( FILTER( _inc, [Exc] <> "" && [Exc] IN _incIds ) ) + 0,
+				                "NPVLow", SUMX( _inc, [NL] ) + 0,
+				                "NPVExpected", SUMX( _inc, [NE] ) + 0,
+				                "NPVHigh", SUMX( _inc, [NH] ) + 0,
+				                "NetCashExpected", SUMX( _inc, [CE] ) + 0,
+				                "RunRate2032Expected", SUMX( _inc, [RE] ) + 0
+				            )
+				    )
+				RETURN
+				    SELECTCOLUMNS(
+				        _U,
+				        "Mask", [Value],
+				        "Projects", [Projects],
+				        "ProjectCount", [ProjectCount],
+				        "CapexUSD", [CapexUSD],
+				        "GrowthCount", [GrowthCount],
+				        "MissingDependencies", [MissingDependencies],
+				        "Conflicts", [Conflicts],
+				        "IsValid", IF( [CapexUSD] <= _Budget && [ProjectCount] >= 3 && [GrowthCount] >= 1 && [MissingDependencies] = 0 && [Conflicts] = 0, 1, 0 ),
+				        "NPVLow", [NPVLow],
+				        "NPVExpected", [NPVExpected],
+				        "NPVHigh", [NPVHigh],
+				        "NetCashExpected", [NetCashExpected],
+				        "RunRate2032Expected", [RunRate2032Expected],
+				        "Option", VAR _k = [Projects] RETURN LOOKUPVALUE( 'Portfolio Option'[Portfolio], 'Portfolio Option'[ProjectsKey], _k )
+				    )
+
+	annotation PBI_Id = 7c0c046c5be244d28cc6fc6eb1d8dc16
+

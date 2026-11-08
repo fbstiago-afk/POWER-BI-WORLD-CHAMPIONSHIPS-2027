@@ -1,0 +1,137 @@
+/// One row per proposed investment project: cost, timing, scope, dependencies and exclusions.
+table InvestmentProjects
+	lineageTag: 81a23888-f5d2-4aca-9ad0-a342bc1117d2
+
+	/// Unique project identifier (key).
+	column ProjectID
+		dataType: string
+		lineageTag: a4f261c0-24d4-47d8-ad4b-915a0fc6e21f
+		summarizeBy: none
+		sourceColumn: ProjectID
+
+	/// Brand of the project.
+	column Brand
+		dataType: string
+		lineageTag: 090110a0-a6dd-41f7-b022-db30b2539090
+		summarizeBy: none
+		sourceColumn: Brand
+
+	/// Project name.
+	column ProjectName
+		dataType: string
+		lineageTag: ce824b76-573a-4c89-b6bb-c4a34267dc4f
+		summarizeBy: none
+		sourceColumn: ProjectName
+
+	/// Renovation, Expansion, New property, New services, Digital, Efficiency or Commercial.
+	column Category
+		dataType: string
+		lineageTag: 7aa8309d-a70d-4fce-ba65-4506ec151dde
+		summarizeBy: none
+		sourceColumn: Category
+
+	/// Single property, Multiple properties, Brand-wide or New property.
+	column Scope
+		dataType: string
+		lineageTag: 0794373b-3bed-49f0-84e2-0637707b3360
+		summarizeBy: none
+		sourceColumn: Scope
+
+	/// Yes if the project counts as a future growth initiative.
+	column GrowthInitiative
+		dataType: string
+		lineageTag: 2d317e36-8c6f-4d37-96ed-33490412bb87
+		summarizeBy: none
+		sourceColumn: GrowthInitiative
+
+	/// Total investment cost, in USD.
+	column CapexUSD
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: b2386d84-78ef-4355-bea9-68dad06ee1b2
+		summarizeBy: sum
+		sourceColumn: CapexUSD
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Earliest possible start date.
+	column EarliestStart
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 23b384b4-91b1-4955-8d98-f0b08402105f
+		summarizeBy: none
+		sourceColumn: EarliestStart
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Duration of works or implementation, in months.
+	column DurationMonths
+		dataType: int64
+		lineageTag: 5e517779-b72e-4637-8fab-f7e497d838f5
+		summarizeBy: sum
+		sourceColumn: DurationMonths
+
+	/// Share of the affected properties' rooms out of service during works.
+	column RoomsOutOfServicePct
+		dataType: double
+		lineageTag: 14d8bc5a-492e-4c2e-8d8e-f6f2fd25cd2b
+		summarizeBy: sum
+		sourceColumn: RoomsOutOfServicePct
+
+	/// Rooms added by the project.
+	column AddedRooms
+		dataType: int64
+		lineageTag: 0b5047d1-0d5a-4b16-a855-042fff7e2754
+		summarizeBy: sum
+		sourceColumn: AddedRooms
+
+	/// Recurring annual cost once live, in USD. Already deducted from the profit impact.
+	column AnnualRunningCostUSD
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 63b4e82d-5acf-47d8-9be2-b9684d4e6626
+		summarizeBy: sum
+		sourceColumn: AnnualRunningCostUSD
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Project that must also be funded and completed first.
+	column DependsOn
+		dataType: string
+		lineageTag: 85bd0b6b-bf82-478a-b0c3-c22c263d941c
+		summarizeBy: none
+		sourceColumn: DependsOn
+
+	/// Project that cannot be funded together with this one.
+	column ExclusiveWith
+		dataType: string
+		lineageTag: 221dcdde-466a-4892-a15c-27c64696a184
+		summarizeBy: none
+		sourceColumn: ExclusiveWith
+
+	/// Short description of the project.
+	column Description
+		dataType: string
+		lineageTag: 4f559615-af7a-414e-b047-b54ff70e9ab8
+		summarizeBy: none
+		sourceColumn: Description
+
+	/// Compact project label for charts: removes the brand name from ProjectName.
+	column 'Short Name' = SUBSTITUTE( SUBSTITUTE( InvestmentProjects[ProjectName], " - Goodnight Inn ", " · " ), " - ", " · " )
+		dataType: string
+		lineageTag: bf7c5963-549c-4cad-91e6-51697f02da3a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition InvestmentProjects = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="InvestmentProjects",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"ProjectID", type text}, {"Brand", type text}, {"ProjectName", type text}, {"Category", type text}, {"Scope", type text}, {"GrowthInitiative", type text}, {"CapexUSD", Int64.Type}, {"EarliestStart", type date}, {"DurationMonths", Int64.Type}, {"RoomsOutOfServicePct", type number}, {"AddedRooms", Int64.Type}, {"AnnualRunningCostUSD", Int64.Type}, {"DependsOn", type text}, {"ExclusiveWith", type text}, {"Description", type text}})
+				in
+				    Typed
+

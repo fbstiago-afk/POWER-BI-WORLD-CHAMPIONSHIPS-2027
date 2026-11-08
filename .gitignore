@@ -1,0 +1,24 @@
+**/.pbi/
+**/TMDLScripts/
+Thumbs.db
+.DS_Store
+*.tmp
+*.lock
+
+# Internal working notes and duplicate reference assets
+CODEX_HANDOFF.md
+PROMPT_CLAUDE_OPUS_5_5_WORLD_CHAMPS_2027_ROUND_1.md
+CATALOGO_80_VISUAIS_POWER_BI.md
+SKILL_*.md
+PillowKey_Starter.pbix
+*Official Rules*.pdf
+Pillow_Key_*.pdf
+Pillow_Key_World_Champs_2027_DOCUMENTACAO*.zip
+Pillow_Key_Guia_de_Aplicacao_do_Logo_v1.md
+Pillow_Key_Paleta_de_Cores_v1.md
+Pillow_Key_Theme_Dark.json
+land page.png
+logo.png
+Logotipo P&K de Hotelaria Luxuosa.png
+Resort de Luxo ao Entardecer home.png
+The Investment Challenge.pdf

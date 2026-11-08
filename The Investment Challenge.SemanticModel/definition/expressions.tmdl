@@ -1,0 +1,6 @@
+/// URL of PillowKey_Dataset.xlsx in Azure Blob Storage (public, anonymous). Change it in Transform data > Edit parameters, then refresh.
+expression DataFile = "https://datavizcontests.blob.core.windows.net/worldchamps-atl27/PillowKey_Dataset.xlsx" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: f62ac0d4-ffb1-4435-be01-6bba6186330b
+
+	annotation PBI_ResultType = Text
+

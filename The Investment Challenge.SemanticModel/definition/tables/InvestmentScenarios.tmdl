@@ -1,0 +1,122 @@
+/// Three rows per project (Low, Expected, High). Impacts are annual, at full run-rate, versus 2025 actuals, in 2025 USD, before ramp-up, inflation and disruption.
+table InvestmentScenarios
+	lineageTag: c716f900-5b4e-48f8-a2d2-186947472f9b
+
+	/// Project.
+	column ProjectID
+		dataType: string
+		lineageTag: 08de8f03-e559-4d71-b2a0-e9dcd1b860d5
+		summarizeBy: none
+		sourceColumn: ProjectID
+
+	/// Low, Expected or High.
+	column Scenario
+		dataType: string
+		lineageTag: e26414a3-b788-4c05-a967-6909cc2b071d
+		summarizeBy: none
+		sourceColumn: Scenario
+
+	/// Change in occupancy, in percentage points (0.02 = +2 pts).
+	column OccupancyChangePts
+		dataType: double
+		lineageTag: 8a1837b8-95e8-4728-b2dd-4ee2b53e58fc
+		summarizeBy: sum
+		sourceColumn: OccupancyChangePts
+
+	/// Change in average daily rate (0.05 = +5%).
+	column ADRChangePct
+		dataType: double
+		lineageTag: a7a43948-61b8-4405-b3e8-7ac8d03c4602
+		summarizeBy: sum
+		sourceColumn: ADRChangePct
+
+	/// Occupancy achieved by added rooms.
+	column AddedRoomsOccupancy
+		dataType: double
+		lineageTag: 2ee4b967-219e-4303-8618-1a9444e23251
+		summarizeBy: sum
+		sourceColumn: AddedRoomsOccupancy
+
+	/// Change in food and beverage revenue.
+	column FoodBeverageRevenueChangePct
+		dataType: double
+		lineageTag: beffdc63-ee9c-4dba-a8db-c336805e14e7
+		summarizeBy: sum
+		sourceColumn: FoodBeverageRevenueChangePct
+
+	/// Change in other revenue.
+	column OtherRevenueChangePct
+		dataType: double
+		lineageTag: f15c086f-93f6-44e2-aa74-f98a743d92d8
+		summarizeBy: sum
+		sourceColumn: OtherRevenueChangePct
+
+	/// Change in operating expenses (negative = savings).
+	column OperatingExpenseChangePct
+		dataType: double
+		lineageTag: 59b008a5-e7a8-4ecd-a2e0-a0f9a3f0a934
+		summarizeBy: sum
+		sourceColumn: OperatingExpenseChangePct
+
+	/// Change in distribution cost as a share of room revenue (negative = savings).
+	column DistributionCostChangePts
+		dataType: double
+		lineageTag: 520aeb2a-4feb-4ad3-9291-a59737f78764
+		summarizeBy: sum
+		sourceColumn: DistributionCostChangePts
+
+	/// Change in overall satisfaction score.
+	column SatisfactionChangePts
+		dataType: double
+		lineageTag: 9ad9760f-25ae-42fd-bd62-57649f973cc6
+		summarizeBy: sum
+		sourceColumn: SatisfactionChangePts
+
+	/// Expected occupancy of a new hotel.
+	column NewPropertyOccupancy
+		dataType: double
+		lineageTag: cf7fbd65-c107-4d24-95d2-5ee6cfbe987a
+		summarizeBy: sum
+		sourceColumn: NewPropertyOccupancy
+
+	/// Expected average daily rate of a new hotel, in 2025 USD.
+	column NewPropertyADR
+		dataType: double
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: fbae8d45-1409-4620-9f22-2a824cd20474
+		summarizeBy: sum
+		sourceColumn: NewPropertyADR
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Change in annual total revenue at full run-rate, in 2025 USD.
+	column AnnualRevenueImpactUSD
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 5c870a76-a014-4516-ba51-619923c05bb1
+		summarizeBy: sum
+		sourceColumn: AnnualRevenueImpactUSD
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Change in annual operating profit (after distribution and running costs) at full run-rate, in 2025 USD.
+	column AnnualOperatingProfitImpactUSD
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: efa7376f-4ff7-417c-8ddf-dda552a443f0
+		summarizeBy: sum
+		sourceColumn: AnnualOperatingProfitImpactUSD
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition InvestmentScenarios = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="InvestmentScenarios",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"ProjectID", type text}, {"Scenario", type text}, {"OccupancyChangePts", type number}, {"ADRChangePct", type number}, {"AddedRoomsOccupancy", type number}, {"FoodBeverageRevenueChangePct", type number}, {"OtherRevenueChangePct", type number}, {"OperatingExpenseChangePct", type number}, {"DistributionCostChangePts", type number}, {"SatisfactionChangePts", type number}, {"NewPropertyOccupancy", type number}, {"NewPropertyADR", type number}, {"AnnualRevenueImpactUSD", Int64.Type}, {"AnnualOperatingProfitImpactUSD", Int64.Type}})
+				in
+				    Typed
+

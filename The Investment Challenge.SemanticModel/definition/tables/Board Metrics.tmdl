@@ -1,0 +1,1702 @@
+/// Measure table. Folders: Actuals, Operating, Guest, Scenario, Investment, UX, QA.
+table 'Board Metrics'
+	lineageTag: e87f46a0-81d2-4777-a126-7bb674a71a86
+
+	/// Total revenue (rooms + F&B + other), MonthlyPerformance.
+	measure Revenue = SUM( MonthlyPerformance[TotalRevenue] )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Actuals
+		lineageTag: f561b06c-80e7-43e6-b50e-dd31cf1f2a50
+
+	measure 'Room Revenue' = SUM( MonthlyPerformance[RoomRevenue] )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Actuals
+		lineageTag: ecb4a651-dfd4-469d-8120-ec67fe23feaf
+
+	/// Excludes distribution costs (dataset note).
+	measure 'Operating Expenses' = SUM( MonthlyPerformance[TotalOperatingExpenses] )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Actuals
+		lineageTag: 10bf1935-c3a3-4d9f-ac02-33691f6e947c
+
+	/// Commissions and channel fees, BookingChannels.
+	measure 'Distribution Cost' = SUM( BookingChannels[DistributionCost] )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Actuals
+		lineageTag: e9418575-253a-4a87-8a95-ff215ac80d73
+
+	/// Operating profit after distribution = total revenue - operating expenses - distribution cost. Analytical measure, not EBITDA.
+	measure 'Operating Profit' = [Revenue] - [Operating Expenses] - [Distribution Cost]
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Actuals
+		lineageTag: 51de5c26-cb13-4183-82d8-bf306df73561
+
+	measure 'Operating Margin' = DIVIDE( [Operating Profit], [Revenue] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Actuals
+		lineageTag: 30930a9d-fa1f-4394-94c7-78e138dbe8e7
+
+	measure 'Rooms Sold' = SUM( MonthlyPerformance[RoomsSold] )
+		formatString: #,0
+		displayFolder: Actuals
+		lineageTag: 93efadf0-8703-4a1c-b48a-71a10ca4ca83
+
+	measure 'Rooms Available' = SUM( MonthlyPerformance[RoomsAvailable] )
+		formatString: #,0
+		displayFolder: Actuals
+		lineageTag: 71dc4f5a-a748-4000-abed-0c36ad63996e
+
+	measure Occupancy = DIVIDE( [Rooms Sold], [Rooms Available] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Actuals
+		lineageTag: e244cd76-5653-42ea-867f-794fa8a799dc
+
+	/// Average daily rate = room revenue / rooms sold.
+	measure ADR = DIVIDE( [Room Revenue], [Rooms Sold] )
+		formatString: \$#,0.00
+		displayFolder: Actuals
+		lineageTag: 4b6900a7-cec8-4b36-8f3b-bd2fbb963414
+
+	measure RevPAR = DIVIDE( [Room Revenue], [Rooms Available] )
+		formatString: \$#,0.00
+		displayFolder: Actuals
+		lineageTag: b5b81064-7544-4ea0-b083-b8a3b9c8e3cc
+
+	measure 'Revenue 2021' = CALCULATE( [Revenue], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2021 )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Actuals
+		lineageTag: 21cc876c-57bb-4c6c-97b6-23ba3e3d5331
+
+	measure 'Operating Profit 2021' = CALCULATE( [Operating Profit], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2021 )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Actuals
+		lineageTag: eb022e85-4c43-4412-bd57-b6c3e3139e26
+
+	measure 'Revenue 2023' = CALCULATE( [Revenue], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2023 )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Actuals
+		lineageTag: b2d99a60-5b45-4a10-909e-5e72e7798be0
+
+	measure 'Operating Profit 2023' = CALCULATE( [Operating Profit], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2023 )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Actuals
+		lineageTag: 3c73d7bb-b7d3-4057-b689-140a14a820e3
+
+	measure 'Revenue 2024' = CALCULATE( [Revenue], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2024 )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Actuals
+		lineageTag: bef9098e-1a54-4094-82db-f368d4eeb4de
+
+	measure 'Operating Profit 2024' = CALCULATE( [Operating Profit], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2024 )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Actuals
+		lineageTag: 819cbded-8f38-46f1-865e-2ce8ca265062
+
+	measure 'Revenue 2025' = CALCULATE( [Revenue], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Actuals
+		lineageTag: d8bcccb0-fb8d-45dd-acff-03715e959b22
+
+	measure 'Operating Profit 2025' = CALCULATE( [Operating Profit], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Actuals
+		lineageTag: 57d2fce8-9796-4f59-a670-981976124561
+
+	measure 'Operating Margin 2023' = CALCULATE( [Operating Margin], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2023 )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Actuals
+		lineageTag: cd828b30-0d00-4aee-b7df-d399424bc6f7
+
+	measure 'Operating Margin 2025' = CALCULATE( [Operating Margin], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Actuals
+		lineageTag: d332bda2-7348-41e5-bc21-d383a4fe841c
+
+	measure 'Revenue Change 2023-2025' = [Revenue 2025] - [Revenue 2023]
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Actuals
+		lineageTag: 814b44bb-1306-4c01-805e-450652ee7e47
+
+	measure 'Profit Change 2023-2025' = [Operating Profit 2025] - [Operating Profit 2023]
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Actuals
+		lineageTag: c18a98c8-028e-4837-bb38-4cbf87371122
+
+	measure 'Profit YoY %' =
+			VAR _y = MAX( 'Date'[Year] )
+			VAR _prev = CALCULATE( [Operating Profit], REMOVEFILTERS( 'Date' ), 'Date'[Year] = _y - 1 )
+			RETURN DIVIDE( [Operating Profit] - _prev, _prev )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Actuals
+		lineageTag: 0bfe4465-d57f-4f9e-91a6-cc4d1eaa4a72
+
+	measure 'Revenue YoY %' =
+			VAR _y = MAX( 'Date'[Year] )
+			VAR _prev = CALCULATE( [Revenue], REMOVEFILTERS( 'Date' ), 'Date'[Year] = _y - 1 )
+			RETURN DIVIDE( [Revenue] - _prev, _prev )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Actuals
+		lineageTag: 244da916-0c20-4b55-b8ba-b72dcef6397c
+
+	/// Change in operating profit 2023 -> 2025 by driver (positive adds to profit). Distribution split into volume (room revenue growth at the 2023 cost rate) and channel mix; the rate effect is zero in the dataset and folded into mix. Total = [Profit Change 2023-2025].
+	measure 'Profit Bridge Value' =
+			VAR _step = SELECTEDVALUE( 'Profit Bridge Step'[Step] )
+			VAR _rr = CALCULATE( SUM( MonthlyPerformance[RoomRevenue] ), REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025 ) - CALCULATE( SUM( MonthlyPerformance[RoomRevenue] ), REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2023 )
+			VAR _ot = CALCULATE( SUM( MonthlyPerformance[FoodBeverageRevenue] ) + SUM( MonthlyPerformance[OtherRevenue] ), REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025 ) - CALCULATE( SUM( MonthlyPerformance[FoodBeverageRevenue] ) + SUM( MonthlyPerformance[OtherRevenue] ), REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2023 )
+			VAR _st = CALCULATE( SUM( MonthlyPerformance[StaffCost] ), REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025 ) - CALCULATE( SUM( MonthlyPerformance[StaffCost] ), REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2023 )
+			VAR _ox = CALCULATE( [Operating Expenses] - SUM( MonthlyPerformance[StaffCost] ), REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025 ) - CALCULATE( [Operating Expenses] - SUM( MonthlyPerformance[StaffCost] ), REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2023 )
+			VAR _vol = [Distribution Volume Effect 2023-2025]
+			VAR _mix = [Distribution Mix Effect 2023-2025] + [Commission Rate Effect 2023-2025]
+			RETURN
+			    SWITCH(
+			        _step,
+			        "Room revenue", _rr,
+			        "F&B + other revenue", _ot,
+			        "Staff cost", -_st,
+			        "Other operating costs", -_ox,
+			        "Distribution: volume", -_vol,
+			        "Distribution: channel mix", -_mix,
+			        _rr + _ot - _st - _ox - _vol - _mix
+			    )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Actuals
+		lineageTag: 08f1f017-2a7b-46d0-bf67-7a6aa1788ee3
+
+	measure 'Channel Room Revenue' = SUM( BookingChannels[RoomRevenue] )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Operating
+		lineageTag: 5b75b57c-9f9a-4e7e-b139-872067755e1e
+
+	measure 'Channel Room Nights' = SUM( BookingChannels[RoomNights] )
+		formatString: #,0
+		displayFolder: Operating
+		lineageTag: 033c2e24-f477-4ced-b3e4-95230c15211f
+
+	/// Distribution cost as a share of room revenue.
+	measure 'Distribution Cost %' = DIVIDE( [Distribution Cost], [Channel Room Revenue] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Operating
+		lineageTag: 6107ef75-b6d7-46c7-9803-850f1985027b
+
+	measure 'Distribution Cost % 2021' = CALCULATE( [Distribution Cost %], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2021 )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Operating
+		lineageTag: 14e84206-0996-4a87-9a94-131a1c837bcc
+
+	measure 'Distribution Cost % 2025' = CALCULATE( [Distribution Cost %], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Operating
+		lineageTag: 1d47d900-958b-426e-be86-a25709c24873
+
+	/// Share of room nights sold through the channel in context.
+	measure 'Channel Share' = DIVIDE( [Channel Room Nights], CALCULATE( [Channel Room Nights], REMOVEFILTERS( BookingChannels[Channel], BookingChannels[Channel Short] ) ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Operating
+		lineageTag: 9802dd85-d74f-450b-a4ef-cdc58c6cce8c
+
+	measure 'OTA Share' = CALCULATE( [Channel Share], BookingChannels[Channel] = "Online Travel Agencies" )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Operating
+		lineageTag: 07e80790-4822-4ed6-bd4c-d7125657a90c
+
+	measure 'OTA Share 2021' = CALCULATE( [OTA Share], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2021 )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Operating
+		lineageTag: c950ffc1-5b30-408a-bff1-d873c1efe835
+
+	measure 'OTA Share 2025' = CALCULATE( [OTA Share], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Operating
+		lineageTag: 78041338-f5fb-4673-b9de-c150998f4cb2
+
+	measure 'Direct Share' = CALCULATE( [Channel Share], BookingChannels[Channel] IN { "Direct Website & App", "Direct Phone & Walk-in" } )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Operating
+		lineageTag: 42ef46b4-4f83-453e-b8e0-2ca99c6f68b7
+
+	/// Observed distribution cost per $ of room revenue for the channel in context.
+	measure 'Commission Rate' = DIVIDE( [Distribution Cost], [Channel Room Revenue] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Operating
+		lineageTag: f183c43f-7181-4c2b-b80d-fa3737fb4c06
+
+	/// Extra 2025 distribution cost caused by the channel-mix shift since 2021: 2025 actual minus 2025 room revenue re-weighted to the 2021 channel mix at 2025 channel rates.
+	measure 'Channel Mix Cost 2025' =
+			VAR _rr25 = CALCULATE( [Channel Room Revenue], REMOVEFILTERS( 'Date' ), REMOVEFILTERS( BookingChannels[Channel], BookingChannels[Channel Short] ), 'Date'[Year] = 2025 )
+			VAR _actual = CALCULATE( [Distribution Cost], REMOVEFILTERS( 'Date' ), REMOVEFILTERS( BookingChannels[Channel], BookingChannels[Channel Short] ), 'Date'[Year] = 2025 )
+			VAR _atMix2021 =
+			    SUMX(
+			        CALCULATETABLE( VALUES( BookingChannels[Channel] ), REMOVEFILTERS( BookingChannels[Channel] ) ),
+			        VAR _sh21 =
+			            DIVIDE(
+			                CALCULATE( [Channel Room Revenue], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2021 ),
+			                CALCULATE( [Channel Room Revenue], REMOVEFILTERS( 'Date' ), REMOVEFILTERS( BookingChannels[Channel], BookingChannels[Channel Short] ), 'Date'[Year] = 2021 )
+			            )
+			        VAR _rate = CALCULATE( [Commission Rate], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025 )
+			        RETURN _sh21 * _rr25 * _rate
+			    )
+			RETURN _actual - _atMix2021
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Operating
+		lineageTag: ae9e2a28-243e-4cad-ba14-693891dd422b
+
+	measure 'Staff Cost per Occupied Room' = DIVIDE( SUM( MonthlyPerformance[StaffCost] ), [Rooms Sold] )
+		formatString: \$#,0.00
+		displayFolder: Operating
+		lineageTag: 63b952eb-b65e-4907-8de3-c9731f5bd014
+
+	measure 'Revenue per Occupied Room' = DIVIDE( [Revenue], [Rooms Sold] )
+		formatString: \$#,0.00
+		displayFolder: Operating
+		lineageTag: 835c45d3-b6ab-467a-83ea-7790a7b62884
+
+	measure 'Hotel Rooms' = SUM( Hotels[Rooms] )
+		formatString: #,0
+		displayFolder: Operating
+		lineageTag: 4d9d07f8-9929-4044-8f73-5d8f0ac30fa4
+
+	measure 'Occupancy 2025' = CALCULATE( [Occupancy], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Operating
+		lineageTag: 5c92ac98-55af-4961-8345-6501102f1e64
+
+	measure 'Operating Profit per Room 2025' = DIVIDE( [Operating Profit 2025], [Hotel Rooms] )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Operating
+		lineageTag: 9b5955dd-b0ae-468f-b024-473c9eb211e5
+
+	/// Net Promoter Score weighted by survey responses.
+	measure NPS = DIVIDE( SUMX( GuestExperience, GuestExperience[NetPromoterScore] * GuestExperience[SurveyResponses] ), SUM( GuestExperience[SurveyResponses] ) )
+		formatString: 0.0;-0.0;0.0
+		displayFolder: Guest
+		lineageTag: 68cbc40d-0bca-4fe3-a330-4297f90b0357
+
+	measure 'NPS 2021' = CALCULATE( [NPS], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2021 )
+		formatString: 0.0;-0.0;0.0
+		displayFolder: Guest
+		lineageTag: 67130fe7-f9e2-4790-bc37-0047698406ae
+
+	measure 'NPS 2025' = CALCULATE( [NPS], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.0;-0.0;0.0
+		displayFolder: Guest
+		lineageTag: 8d09a13e-462e-4df0-a425-97892bdffc47
+
+	measure 'Room Comfort Score' = DIVIDE( SUMX( GuestExperience, GuestExperience[RoomComfortScore] * GuestExperience[SurveyResponses] ), SUM( GuestExperience[SurveyResponses] ) )
+		formatString: 0.00
+		displayFolder: Guest
+		lineageTag: a5ceb588-0f33-4cc5-84d6-fb35b983bfac
+
+	measure 'Room Comfort Score 2025' = CALCULATE( [Room Comfort Score], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.00
+		displayFolder: Guest
+		lineageTag: 0dd67341-906c-42a3-9573-a5dd635a9019
+
+	measure Complaints = SUM( GuestComplaints[Complaints] )
+		formatString: #,0
+		displayFolder: Guest
+		lineageTag: b92376e0-fb21-4893-8f72-4a13ef368490
+
+	measure 'Complaints per 1k Room Nights' = DIVIDE( [Complaints], [Rooms Sold] ) * 1000
+		formatString: 0.00
+		displayFolder: Guest
+		lineageTag: 1029dbf5-d5ef-4006-8e63-c099237b0ff8
+
+	measure 'Room Condition Complaints per 1k 2025' = CALCULATE( [Complaints per 1k Room Nights], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025, GuestComplaints[Category] = "Room condition" )
+		formatString: 0.00
+		displayFolder: Guest
+		lineageTag: 90927957-7cac-4759-8ab4-6ed4010e5dfc
+
+	measure 'Room Condition Complaints per 1k 2021' = CALCULATE( [Complaints per 1k Room Nights], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2021, GuestComplaints[Category] = "Room condition" )
+		formatString: 0.00
+		displayFolder: Guest
+		lineageTag: e22a9f72-5ba2-4045-a988-b2bd0391bbc4
+
+	measure 'Selected Scenario' = SELECTEDVALUE( Scenario[Scenario], "Expected" )
+		displayFolder: Scenario
+		lineageTag: fc909095-5911-4f39-97a7-85be8503f770
+
+	measure 'Selected Portfolio' = SELECTEDVALUE( 'Portfolio Option'[Portfolio], "Recommended" )
+		displayFolder: Scenario
+		lineageTag: 607d8b15-e9b8-46c4-963d-627528a8e8dd
+
+	measure 'Discount Rate' = LOOKUPVALUE( FinanceParameters[Value], FinanceParameters[Parameter], "Discount rate" )
+		formatString: 0.0%
+		displayFolder: Scenario
+		lineageTag: 38fb0f8f-90d2-45c3-b9c3-193bc157ba55
+
+	/// CAPEX cash-out of the selected portfolio in the period in context (spread evenly over works).
+	measure 'Plan CAPEX Spend' =
+			VAR _opt = [Selected Portfolio]
+			VAR _ids = SELECTCOLUMNS( FILTER( ALL( 'Portfolio Map' ), 'Portfolio Map'[Portfolio] = _opt ), "ProjectID", 'Portfolio Map'[ProjectID] )
+			VAR _sc = [Selected Scenario]
+			RETURN
+			    CALCULATE(
+			        SUM( 'Project Timeline'[CapexUSD] ),
+			        TREATAS( _ids, 'Project Timeline'[ProjectID] ),
+			        'Project Timeline'[Scenario] = _sc
+			    )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 25f8b1a2-0941-48b1-9cb7-022fea19353f
+
+	/// AnnualOperatingProfitImpactUSD (already net of running and distribution costs) x official ramp-up, from the month after completion. Selected scenario, 2025 USD.
+	measure 'Plan Profit Uplift' =
+			VAR _opt = [Selected Portfolio]
+			VAR _ids = SELECTCOLUMNS( FILTER( ALL( 'Portfolio Map' ), 'Portfolio Map'[Portfolio] = _opt ), "ProjectID", 'Portfolio Map'[ProjectID] )
+			VAR _sc = [Selected Scenario]
+			RETURN
+			    CALCULATE(
+			        SUM( 'Project Timeline'[ProfitImpactUSD] ),
+			        TREATAS( _ids, 'Project Timeline'[ProjectID] ),
+			        'Project Timeline'[Scenario] = _sc
+			    )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 2fbdec7f-7a8a-4b85-82af-2f2b53c4fe3d
+
+	measure 'Plan Revenue Uplift' =
+			VAR _opt = [Selected Portfolio]
+			VAR _ids = SELECTCOLUMNS( FILTER( ALL( 'Portfolio Map' ), 'Portfolio Map'[Portfolio] = _opt ), "ProjectID", 'Portfolio Map'[ProjectID] )
+			VAR _sc = [Selected Scenario]
+			RETURN
+			    CALCULATE(
+			        SUM( 'Project Timeline'[RevenueImpactUSD] ),
+			        TREATAS( _ids, 'Project Timeline'[ProjectID] ),
+			        'Project Timeline'[Scenario] = _sc
+			    )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 6ccd8878-4252-4802-8d32-652a0fd02dbd
+
+	/// Operating profit lost while rooms are out of service during works.
+	measure 'Plan Disruption Cost' =
+			VAR _opt = [Selected Portfolio]
+			VAR _ids = SELECTCOLUMNS( FILTER( ALL( 'Portfolio Map' ), 'Portfolio Map'[Portfolio] = _opt ), "ProjectID", 'Portfolio Map'[ProjectID] )
+			VAR _sc = [Selected Scenario]
+			RETURN
+			    CALCULATE(
+			        SUM( 'Project Timeline'[DisruptionProfitUSD] ),
+			        TREATAS( _ids, 'Project Timeline'[ProjectID] ),
+			        'Project Timeline'[Scenario] = _sc
+			    )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 6533a8e5-5ecb-4674-afed-dcbb522a10aa
+
+	measure 'Plan Disruption Revenue' =
+			VAR _opt = [Selected Portfolio]
+			VAR _ids = SELECTCOLUMNS( FILTER( ALL( 'Portfolio Map' ), 'Portfolio Map'[Portfolio] = _opt ), "ProjectID", 'Portfolio Map'[ProjectID] )
+			VAR _sc = [Selected Scenario]
+			RETURN
+			    CALCULATE(
+			        SUM( 'Project Timeline'[DisruptionRevenueUSD] ),
+			        TREATAS( _ids, 'Project Timeline'[ProjectID] ),
+			        'Project Timeline'[Scenario] = _sc
+			    )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: e3bdbb2e-9429-4a05-9ef4-9fa097af9e4a
+
+	measure 'Plan Room Nights Out of Service' =
+			VAR _opt = [Selected Portfolio]
+			VAR _ids = SELECTCOLUMNS( FILTER( ALL( 'Portfolio Map' ), 'Portfolio Map'[Portfolio] = _opt ), "ProjectID", 'Portfolio Map'[ProjectID] )
+			VAR _sc = [Selected Scenario]
+			RETURN
+			    CALCULATE(
+			        SUM( 'Project Timeline'[DisruptionRoomNights] ),
+			        TREATAS( _ids, 'Project Timeline'[ProjectID] ),
+			        'Project Timeline'[Scenario] = _sc
+			    )
+		formatString: #,0
+		displayFolder: Investment
+		lineageTag: 6b8e8b12-f18f-4cbd-8ae6-84c2c0621c3c
+
+	/// Incremental operating profit vs the 2025 baseline: benefits after ramp-up minus profit lost during works.
+	measure 'Plan Net Operating Impact' = [Plan Profit Uplift] - [Plan Disruption Cost]
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 7ebd001c-68be-4d07-8661-f94d91bf4e0b
+
+	measure 'Plan Net Cash Flow' = [Plan Net Operating Impact] - [Plan CAPEX Spend]
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 852e18ac-0f68-4014-bbac-59ee4d9d207e
+
+	measure 'Plan Cumulative Net Cash' =
+			VAR _y = MAX( 'Date'[Year] )
+			RETURN IF( _y >= 2027, CALCULATE( [Plan Net Cash Flow], REMOVEFILTERS( 'Date' ), 'Date'[Year] <= _y ) )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 7ad7000e-c453-40cd-bf96-dcdb97c0cfa0
+
+	measure 'Plan Net Cash to 2032' = CALCULATE( [Plan Net Cash Flow], REMOVEFILTERS( 'Date' ) )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 6ed88e9f-1293-4dc9-b02a-b9c9d784dfb3
+
+	measure 'Plan Profit Uplift to 2032' = CALCULATE( [Plan Profit Uplift], REMOVEFILTERS( 'Date' ) )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: d3c724cf-70e7-48b5-bf65-983167db5404
+
+	measure 'Plan Disruption Cost to 2032' = CALCULATE( [Plan Disruption Cost], REMOVEFILTERS( 'Date' ) )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: e47bcf92-3143-444d-b8bd-db7be7fd27e2
+
+	/// Net present value at 2026 of annual net cash flows 2027-2032 (no terminal value), discounted at the dataset rate.
+	measure 'Plan NPV 2026' =
+			VAR _r = [Discount Rate]
+			RETURN
+			    SUMX(
+			        GENERATESERIES( 2027, 2032, 1 ),
+			        VAR _y = [Value]
+			        RETURN CALCULATE( [Plan Net Cash Flow], REMOVEFILTERS( 'Date' ), 'Date'[Year] = _y ) / ( 1 + _r ) ^ ( _y - 2026 )
+			    )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: fd6847c4-a569-41a1-bf3d-26956c68e972
+
+	/// Annual operating profit added in 2032, when every funded project is at or near full run-rate.
+	measure 'Plan Run-Rate Uplift 2032' = CALCULATE( [Plan Profit Uplift], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2032 )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 05b9749a-dbaa-4f50-86e2-92cc018621fb
+
+	measure 'Plan Run-Rate Uplift 2032 Low' =
+			VAR _opt = [Selected Portfolio]
+			VAR _ids = SELECTCOLUMNS( FILTER( ALL( 'Portfolio Map' ), 'Portfolio Map'[Portfolio] = _opt ), "ProjectID", 'Portfolio Map'[ProjectID] )
+			RETURN
+			    CALCULATE(
+			        SUM( 'Project Timeline'[ProfitImpactUSD] ),
+			        TREATAS( _ids, 'Project Timeline'[ProjectID] ),
+			        'Project Timeline'[Scenario] = "Low",
+			        REMOVEFILTERS( 'Date' ),
+			        'Date'[Year] = 2032
+			    )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: d5e5feed-7b7e-4630-b8bb-948883d13cc1
+
+	measure 'Plan Run-Rate Uplift 2032 High' =
+			VAR _opt = [Selected Portfolio]
+			VAR _ids = SELECTCOLUMNS( FILTER( ALL( 'Portfolio Map' ), 'Portfolio Map'[Portfolio] = _opt ), "ProjectID", 'Portfolio Map'[ProjectID] )
+			RETURN
+			    CALCULATE(
+			        SUM( 'Project Timeline'[ProfitImpactUSD] ),
+			        TREATAS( _ids, 'Project Timeline'[ProjectID] ),
+			        'Project Timeline'[Scenario] = "High",
+			        REMOVEFILTERS( 'Date' ),
+			        'Date'[Year] = 2032
+			    )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 1167e2d6-0862-4033-a919-ca6e61ab4803
+
+	measure 'Brand Budget' = MAX( Brands[InvestmentBudgetUSD] )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 0799a627-12a6-4750-a582-d75469cb8c37
+
+	/// Total CAPEX of the selected portfolio (all projects, whole duration).
+	measure 'Portfolio CAPEX' =
+			VAR _opt = [Selected Portfolio]
+			VAR _ids = SELECTCOLUMNS( FILTER( ALL( 'Portfolio Map' ), 'Portfolio Map'[Portfolio] = _opt ), "ProjectID", 'Portfolio Map'[ProjectID] )
+			RETURN CALCULATE( SUM( InvestmentProjects[CapexUSD] ), TREATAS( _ids, InvestmentProjects[ProjectID] ) )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: b51a55be-9fc3-4e89-89a4-33c49ad2282d
+
+	measure 'Budget Remaining' = [Brand Budget] - CALCULATE( [Portfolio CAPEX], REMOVEFILTERS( InvestmentProjects ) )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 19505fe0-b0fa-49c1-83db-2989a2c03627
+
+	measure 'Budget Used %' = DIVIDE( CALCULATE( [Portfolio CAPEX], REMOVEFILTERS( InvestmentProjects ) ), [Brand Budget] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Investment
+		lineageTag: 7c0f7425-d75a-4e63-9199-7e1eef682067
+
+	measure 'Projects Funded' =
+			VAR _opt = [Selected Portfolio]
+			RETURN COUNTROWS( FILTER( ALL( 'Portfolio Map' ), 'Portfolio Map'[Portfolio] = _opt ) ) + 0
+		formatString: 0
+		displayFolder: Investment
+		lineageTag: b23f726a-8da4-4040-8e33-1c7c5976fd8f
+
+	measure 'Growth Projects Funded' =
+			VAR _opt = [Selected Portfolio]
+			VAR _ids = SELECTCOLUMNS( FILTER( ALL( 'Portfolio Map' ), 'Portfolio Map'[Portfolio] = _opt ), "ProjectID", 'Portfolio Map'[ProjectID] )
+			RETURN CALCULATE( COUNTROWS( InvestmentProjects ), REMOVEFILTERS( InvestmentProjects ), TREATAS( _ids, InvestmentProjects[ProjectID] ), InvestmentProjects[GrowthInitiative] = "Yes" ) + 0
+		formatString: 0
+		displayFolder: Investment
+		lineageTag: 39a827bb-37c1-42b5-9c20-56c8ef760058
+
+	measure 'Missing Dependencies' =
+			VAR _opt = [Selected Portfolio]
+			VAR _ids = SELECTCOLUMNS( FILTER( ALL( 'Portfolio Map' ), 'Portfolio Map'[Portfolio] = _opt ), "ProjectID", 'Portfolio Map'[ProjectID] )
+			VAR _funded = CALCULATETABLE( InvestmentProjects, REMOVEFILTERS( InvestmentProjects ), TREATAS( _ids, InvestmentProjects[ProjectID] ) )
+			RETURN COUNTROWS( FILTER( _funded, InvestmentProjects[DependsOn] <> "" && NOT ( InvestmentProjects[DependsOn] IN _ids ) ) ) + 0
+		formatString: 0
+		displayFolder: Investment
+		lineageTag: 23deea73-1384-431c-ba26-a9598b82e1ec
+
+	measure 'Exclusivity Conflicts' =
+			VAR _opt = [Selected Portfolio]
+			VAR _ids = SELECTCOLUMNS( FILTER( ALL( 'Portfolio Map' ), 'Portfolio Map'[Portfolio] = _opt ), "ProjectID", 'Portfolio Map'[ProjectID] )
+			VAR _funded = CALCULATETABLE( InvestmentProjects, REMOVEFILTERS( InvestmentProjects ), TREATAS( _ids, InvestmentProjects[ProjectID] ) )
+			RETURN COUNTROWS( FILTER( _funded, InvestmentProjects[ExclusiveWith] <> "" && InvestmentProjects[ExclusiveWith] IN _ids ) ) + 0
+		formatString: 0
+		displayFolder: Investment
+		lineageTag: cfefa67b-51a3-4248-8cb6-59fbeb1aa669
+
+	/// Validation against the challenge rules and the dataset's DependsOn / ExclusiveWith constraints.
+	measure 'Portfolio Status' =
+			SWITCH(
+			    TRUE(),
+			    [Budget Remaining] < 0, "Over budget",
+			    [Missing Dependencies] > 0, "Missing dependency",
+			    [Exclusivity Conflicts] > 0, "Mutually exclusive",
+			    [Projects Funded] < 3, "Fewer than 3 projects",
+			    [Growth Projects Funded] < 1, "No growth initiative",
+			    "Portfolio valid"
+			)
+		displayFolder: Investment
+		lineageTag: 8e625150-98c3-4c3d-a9b4-7f14d35fed18
+
+	measure 'Project Is Funded' =
+			VAR _opt = [Selected Portfolio]
+			VAR _ids = SELECTCOLUMNS( FILTER( ALL( 'Portfolio Map' ), 'Portfolio Map'[Portfolio] = _opt ), "ProjectID", 'Portfolio Map'[ProjectID] )
+			RETURN IF( HASONEVALUE( InvestmentProjects[ProjectID] ), IF( SELECTEDVALUE( InvestmentProjects[ProjectID] ) IN _ids, 1, 0 ) )
+		formatString: 0
+		displayFolder: Investment
+		lineageTag: 091f9d6b-2d14-426c-9994-03e019c7b3eb
+
+	measure 'Project Decision' = IF( HASONEVALUE( InvestmentProjects[ProjectID] ), IF( [Project Is Funded] = 1, "● Funded", "○ Not funded" ) )
+		displayFolder: Investment
+		lineageTag: 29ff50d8-b14d-4a74-b271-be716ecc2598
+
+	/// Full run-rate annual operating profit impact for the selected scenario (dataset value, vs 2025, 2025 USD).
+	measure 'Project Annual Profit Impact' =
+			VAR _sc = [Selected Scenario]
+			RETURN
+			CALCULATE( SUM( InvestmentScenarios[AnnualOperatingProfitImpactUSD] ), InvestmentScenarios[Scenario] = _sc )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: b8a10b3a-9104-46df-81b9-271acd534e71
+
+	measure 'Project Annual Profit Low' = CALCULATE( SUM( InvestmentScenarios[AnnualOperatingProfitImpactUSD] ), InvestmentScenarios[Scenario] = "Low" )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 27389db1-4021-4aa4-9b5d-5932a3a1cfdc
+
+	measure 'Project Annual Profit High' = CALCULATE( SUM( InvestmentScenarios[AnnualOperatingProfitImpactUSD] ), InvestmentScenarios[Scenario] = "High" )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 3dcdba13-de45-480f-b2bc-f37de0876206
+
+	measure 'Project Annual Profit Expected' = CALCULATE( SUM( InvestmentScenarios[AnnualOperatingProfitImpactUSD] ), InvestmentScenarios[Scenario] = "Expected" )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: b978debd-8360-426e-9f02-40c6688b5496
+
+	measure 'Project CAPEX' = SUM( InvestmentProjects[CapexUSD] )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 7c633309-c763-4fcd-89a9-96d923a46187
+
+	/// Annual operating profit at full run-rate / CAPEX. Compared with the dataset discount rate (8%) as the hurdle.
+	measure 'Project Yield' = DIVIDE( [Project Annual Profit Impact], [Project CAPEX] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Investment
+		lineageTag: 50ea45ad-8ced-4478-bc0b-9fb82a984a51
+
+	/// Simple payback at full run-rate, years (excludes ramp-up and disruption).
+	measure 'Project Payback Years' = DIVIDE( [Project CAPEX], [Project Annual Profit Impact] )
+		formatString: 0.0
+		displayFolder: Investment
+		lineageTag: f7bc438b-a375-4374-bca5-b6512af4d1f1
+
+	measure 'Project Disruption Cost' =
+			VAR _sc = [Selected Scenario]
+			RETURN
+			CALCULATE( SUM( 'Project Timeline'[DisruptionProfitUSD] ), 'Project Timeline'[Scenario] = _sc )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 212424b4-9d9d-4ef4-8886-d27a45f02155
+
+	measure 'Project Net Cash to 2032' =
+			VAR _sc = [Selected Scenario]
+			RETURN
+			CALCULATE( SUM( 'Project Timeline'[ProfitImpactUSD] ) - SUM( 'Project Timeline'[DisruptionProfitUSD] ) - SUM( 'Project Timeline'[CapexUSD] ), 'Project Timeline'[Scenario] = _sc )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 47022aea-355b-4bd6-a248-3cd9ac91e8e6
+
+	measure 'Project First Benefit' =
+			VAR _sc = [Selected Scenario]
+			RETURN
+			CALCULATE( MIN( 'Project Timeline'[FirstBenefitMonth] ), 'Project Timeline'[Scenario] = _sc )
+		formatString: mmm yyyy
+		displayFolder: Investment
+		lineageTag: 27fc2128-0bbc-4425-8e54-6a7a82b3a00f
+
+	measure 'Project Start' =
+			VAR _sc = [Selected Scenario]
+			RETURN
+			CALCULATE( MIN( 'Project Timeline'[StartMonth] ), 'Project Timeline'[Scenario] = _sc )
+		formatString: mmm yyyy
+		displayFolder: Investment
+		lineageTag: 6a956818-a6e4-4149-87d5-c7e8c9aba5d5
+
+	/// Funding rule: Expected-case yield >= dataset discount rate (8%) AND the Low case is still profitable.
+	measure 'Project Clears Hurdle' = IF( HASONEVALUE( InvestmentProjects[ProjectID] ), IF( [Project Yield Expected] >= [Discount Rate] && [Project Annual Profit Low] > 0, 1, 0 ) )
+		formatString: 0
+		displayFolder: Investment
+		lineageTag: e551624f-a293-46d2-8e3e-a7b129a7c6a8
+
+	measure 'Project Hurdle Label' = IF( HASONEVALUE( InvestmentProjects[ProjectID] ), IF( [Project Clears Hurdle] = 1, "✓ Clears", "✕ Fails" ) )
+		displayFolder: Investment
+		lineageTag: 58f11fb9-200a-4b08-9935-551613253d2e
+
+	measure 'Project Hurdle Reason' =
+			IF(
+			    HASONEVALUE( InvestmentProjects[ProjectID] ),
+			    SWITCH(
+			        TRUE(),
+			        [Project Yield Expected] < [Discount Rate] && [Project Annual Profit Low] <= 0, "✕ Yield < 8% · Low-case loss",
+			        [Project Yield Expected] < [Discount Rate], "✕ Yield below 8%",
+			        [Project Annual Profit Low] <= 0, "✕ Low-case loss",
+			        [Project Is Funded] = 0, "✓ Clears · not in this plan",
+			        "✓ Clears the bar"
+			    )
+			)
+		displayFolder: Investment
+		lineageTag: d2a3d039-2c45-44be-8b83-85e9a606a19f
+
+	measure 'Project Phase Value' =
+			VAR _sc = [Selected Scenario]
+			RETURN
+			CALCULATE( MAX( 'Project Timeline'[PhaseOrder] ), 'Project Timeline'[Scenario] = _sc )
+		formatString: 0
+		displayFolder: Investment
+		lineageTag: ff3c749f-d7d1-4677-8057-586ffba58313
+
+	/// Historical operating profit after distribution, 2021-2025.
+	measure 'Profit Actual' = IF( MAX( 'Date'[Year] ) <= 2025, [Operating Profit] )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 8444b18c-c89d-4a0d-b053-f106d68a4a20
+
+	/// Do-nothing reference: 2025 actual operating profit held constant, in 2025 USD (the base the dataset uses for investment impacts).
+	measure 'Profit Baseline' = IF( MAX( 'Date'[Year] ) >= 2025, [Operating Profit 2025] )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: d39224c4-6861-4a6a-b2b1-b1d8baa429c4
+
+	/// Baseline + incremental operating impact of the selected portfolio and scenario (projected, 2025 USD).
+	measure 'Profit With Plan' =
+			VAR _y = MAX( 'Date'[Year] )
+			RETURN IF( _y >= 2025, [Operating Profit 2025] + IF( _y >= 2027, [Plan Net Operating Impact], 0 ) )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 357db735-1cfd-4df0-9320-4851579c5904
+
+	measure 'Profit With Plan 2032' = CALCULATE( [Profit With Plan], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2032 )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 36bb3a02-e903-4c8a-9ae6-4665a828c839
+
+	measure 'Plan Uplift vs 2025 %' = DIVIDE( [Plan Run-Rate Uplift 2032], [Operating Profit 2025] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Investment
+		lineageTag: 050014cc-ffab-4b89-93ca-f6fba41c36e7
+
+	measure 'Rooms Added' =
+			VAR _opt = [Selected Portfolio]
+			VAR _ids = SELECTCOLUMNS( FILTER( ALL( 'Portfolio Map' ), 'Portfolio Map'[Portfolio] = _opt ), "ProjectID", 'Portfolio Map'[ProjectID] )
+			RETURN CALCULATE( SUM( InvestmentProjects[AddedRooms] ), REMOVEFILTERS( InvestmentProjects ), TREATAS( _ids, InvestmentProjects[ProjectID] ) ) + 0
+		formatString: #,0
+		displayFolder: Investment
+		lineageTag: be6e3bcb-799e-450e-bb7c-c83ff30b6975
+
+	measure 'Room Capacity 2032' = [Brand Rooms] + [Rooms Added]
+		formatString: #,0
+		displayFolder: Investment
+		lineageTag: 910b1ec1-2e5b-4063-9a8d-b0cbf3117667
+
+	/// 2025 distribution-cost rate plus the brand-wide DistributionCostChangePts of funded projects (full run-rate).
+	measure 'Distribution Cost % at Run-Rate' =
+			VAR _opt = [Selected Portfolio]
+			VAR _ids = SELECTCOLUMNS( FILTER( ALL( 'Portfolio Map' ), 'Portfolio Map'[Portfolio] = _opt ), "ProjectID", 'Portfolio Map'[ProjectID] )
+			VAR _sc = [Selected Scenario]
+			VAR _chg = CALCULATE( SUM( InvestmentScenarios[DistributionCostChangePts] ), TREATAS( _ids, InvestmentScenarios[ProjectID] ), InvestmentScenarios[Scenario] = _sc )
+			RETURN CALCULATE( [Distribution Cost % 2025], REMOVEFILTERS( Region[Region] ), REMOVEFILTERS( Hotels[Region], Hotels[Country], Hotels[City], Hotels[LocationType], Hotels[HotelID], Hotels[HotelName], Hotels[Hotel Role] ) ) + _chg
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Investment
+		lineageTag: 2732959f-db28-473a-a4ea-1342a8499cc2
+
+	/// First year in which cumulative net cash (operating impact - disruption - CAPEX) turns positive.
+	measure 'Plan Payback Year' =
+			VAR _t =
+			    ADDCOLUMNS( GENERATESERIES( 2027, 2032, 1 ), "Cum", VAR _v = [Value] RETURN CALCULATE( [Plan Net Cash Flow], REMOVEFILTERS( 'Date' ), 'Date'[Year] <= _v ) )
+			VAR _first = MINX( FILTER( _t, [Cum] >= 0 ), [Value] )
+			RETURN IF( ISBLANK( _first ), "Not within 2032", FORMAT( _first, "0" ) )
+		displayFolder: Investment
+		lineageTag: 288fce21-40d2-44ea-88a1-eed56cca2500
+
+	/// Should be 0: MonthlyPerformance and BookingChannels room revenue reconcile.
+	measure 'QA Room Revenue Reconciliation' = SUM( MonthlyPerformance[RoomRevenue] ) - SUM( BookingChannels[RoomRevenue] )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: QA
+		lineageTag: 9bebdb1c-2f18-4231-b04b-b692731afeed
+
+	/// Should be 0 when every project finishes by Dec 2032: timeline CAPEX equals total CAPEX.
+	measure 'QA Timeline CAPEX Check' =
+			VAR _sc = "Expected"
+			RETURN CALCULATE( SUM( 'Project Timeline'[CapexUSD] ), 'Project Timeline'[Scenario] = _sc ) - SUM( InvestmentProjects[CapexUSD] )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: QA
+		lineageTag: 4cbd90d5-eba8-495b-8984-85e1578222ac
+
+	/// Brand room count regardless of page filters.
+	measure 'Brand Rooms' = CALCULATE( SUM( Hotels[Rooms] ), REMOVEFILTERS( Region[Region] ), REMOVEFILTERS( Hotels[Region], Hotels[Country], Hotels[City], Hotels[LocationType], Hotels[HotelID], Hotels[HotelName], Hotels[Hotel Role] ) )
+		formatString: #,0
+		displayFolder: Operating
+		lineageTag: 70af741c-a4ef-44d1-a390-cda997208a45
+
+	measure 'Brand Hotels' = CALCULATE( COUNTROWS( Hotels ), REMOVEFILTERS( Region[Region] ), REMOVEFILTERS( Hotels[Region], Hotels[Country], Hotels[City], Hotels[LocationType], Hotels[HotelID], Hotels[HotelName], Hotels[Hotel Role] ) )
+		formatString: 0
+		displayFolder: Operating
+		lineageTag: 6aec2342-997e-4dfd-8341-e67fca4372f1
+
+	measure 'Hotels in View' = COUNTROWS( Hotels )
+		formatString: 0
+		displayFolder: Operating
+		lineageTag: 457942d7-ee8c-4e82-b235-919fde927596
+
+	/// Per-project yearly net cash (benefit - disruption - CAPEX), independent of the portfolio selection.
+	measure 'Project Net Cash Flow' =
+			VAR _sc = [Selected Scenario]
+			RETURN
+			CALCULATE( SUM( 'Project Timeline'[ProfitImpactUSD] ) - SUM( 'Project Timeline'[DisruptionProfitUSD] ) - SUM( 'Project Timeline'[CapexUSD] ), 'Project Timeline'[Scenario] = _sc )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 3a7f53f4-64f4-4a19-9c67-5c13461cab75
+
+	/// Compact status rail: lists only the filters actually applied (gold), or ALL HOTELS when none. Distinguishes slicer filters from selections made in a visual.
+	measure 'UX Rail Review' =
+			VAR _RegActive = ISFILTERED( Region[Region] )
+			VAR _RegN = COUNTROWS( VALUES( Region[Region] ) )
+			VAR _RegRaw = IF( NOT _RegActive, "All", IF( _RegN = 1, SELECTEDVALUE( Region[Region] ), "Multi-select (" & _RegN & ")" ) )
+			VAR _Reg = IF( LEN( _RegRaw ) > 26, LEFT( _RegRaw, 24 ) & "…", _RegRaw )
+			VAR _TypActive = ISFILTERED( Hotels[LocationType] )
+			VAR _TypN = COUNTROWS( VALUES( Hotels[LocationType] ) )
+			VAR _TypRaw = IF( NOT _TypActive, "All", IF( _TypN = 1, SELECTEDVALUE( Hotels[LocationType] ), "Multi-select (" & _TypN & ")" ) )
+			VAR _Typ = IF( LEN( _TypRaw ) > 26, LEFT( _TypRaw, 24 ) & "…", _TypRaw )
+			VAR _CtyActive = ISFILTERED( Hotels[Country] )
+			VAR _CtyN = COUNTROWS( VALUES( Hotels[Country] ) )
+			VAR _CtyRaw = IF( NOT _CtyActive, "All", IF( _CtyN = 1, SELECTEDVALUE( Hotels[Country] ), "Multi-select (" & _CtyN & ")" ) )
+			VAR _Cty = IF( LEN( _CtyRaw ) > 26, LEFT( _CtyRaw, 24 ) & "…", _CtyRaw )
+			VAR _inView = [Hotels in View]
+			VAR _total = [Brand Hotels]
+			VAR _cross = _inView <> _total && NOT ( _RegActive || _TypActive || _CtyActive )
+			VAR _any = _RegActive || _TypActive || _CtyActive || _cross
+			VAR _sep = "<span style='color:#334462;margin:0 12px'>|</span>"
+			VAR _lab = ( 0 )
+			RETURN
+			    "<div style='font-family:Segoe UI,Aptos,sans-serif;display:flex;align-items:center;height:100%;white-space:nowrap;overflow:hidden;font-size:14px;color:#CBD4E2;letter-spacing:0.6px'>"
+			        & "<span style='color:#D7AB62;font-weight:700;letter-spacing:1.8px'>" & UPPER( SELECTEDVALUE( Brands[Brand] ) ) & "</span>" & _sep
+			        & "<span>2021–2025 ACTUALS</span>" & _sep
+			        & IF( NOT _any, "<span>ALL HOTELS · " & _total & "</span>",
+			            IF( _RegActive, "<span>REGION: <b style='color:#EFD3A0'>" & UPPER( _Reg ) & "</b></span>" & _sep, "" )
+			            & IF( _CtyActive, "<span>COUNTRY: <b style='color:#EFD3A0'>" & UPPER( _Cty ) & "</b></span>" & _sep, "" )
+			            & IF( _TypActive, "<span>LOCATION: <b style='color:#EFD3A0'>" & UPPER( _Typ ) & "</b></span>" & _sep, "" )
+			            & IF( _cross, "<span style='color:#F6B26B'>SELECTED IN A VISUAL</span>" & _sep, "" )
+			            & "<span>HOTELS: <b style='color:#EFD3A0'>" & _inView & "/" & _total & "</b></span>"
+			            & "<span style='margin-left:14px;color:#9FB0C8;font-size:12px'>(Reset clears filters)</span>" )
+			        & "</div>"
+		displayFolder: UX
+		lineageTag: 236171f0-2b05-4c8a-ae1b-9f8e5659037e
+
+	/// Status rail for the investment page: makes explicit that projections are brand-wide.
+	measure 'UX Rail Strategy' =
+			VAR _sc = [Selected Scenario]
+			VAR _pf = [Selected Portfolio]
+			VAR _st = [Portfolio Status]
+			VAR _ok = _st = "Portfolio valid"
+			VAR _sep = "<span style='color:#334462;margin:0 12px'>|</span>"
+			RETURN
+			    "<div style='font-family:Segoe UI,Aptos,sans-serif;display:flex;align-items:center;height:100%;white-space:nowrap;overflow:hidden;font-size:14px;color:#CBD4E2;letter-spacing:0.6px'>"
+			        & "<span style='color:#D7AB62;font-weight:700;letter-spacing:1.8px'>" & UPPER( SELECTEDVALUE( Brands[Brand] ) ) & "</span>" & _sep
+			        & "<span>SCOPE: <b style='color:#F8F1E6'>BRAND-WIDE</b> <span style='color:#9FB0C8'>(hotel and region filters do not apply)</span></span>" & _sep
+			        & "<span>PLAN 2026 · INVEST 2027–31 · VALUE TO 2032</span>" & _sep
+			        & "<span>PORTFOLIO: <b style='color:" & IF( _pf = "Recommended", "#F8F1E6", "#EFD3A0" ) & "'>" & UPPER( _pf ) & "</b></span>" & _sep
+			        & "<span>SCENARIO: <b style='color:" & IF( _sc = "Expected", "#F8F1E6", "#EFD3A0" ) & "'>" & UPPER( _sc ) & "</b></span>" & _sep
+			        & "<span style='color:" & IF( _ok, "#4DD1BD", "#FF8F82" ) & ";font-weight:700'>" & IF( _ok, "✓ ", "⚠ " ) & UPPER( _st ) & "</span>"
+			        & "</div>"
+		displayFolder: UX
+		lineageTag: a97f4aef-bd04-4ad2-b0eb-ce7748e32a4a
+
+	/// Page 1 executive hero: headline, one-sentence explanation, three KPIs. All values react to filters.
+	measure 'UX Hero Review' =
+			VAR _dR = [Revenue Change 2023-2025]
+			VAR _dP = [Profit Change 2023-2025]
+			VAR _p25 = [Operating Profit 2025]
+			VAR _p24 = [Operating Profit 2024]
+			VAR _yoy = DIVIDE( _p25 - _p24, _p24 )
+			VAR _m25 = [Operating Margin 2025]
+			VAR _m23 = [Operating Margin 2023]
+			VAR _ota25 = [OTA Share 2025]
+			VAR _ota21 = [OTA Share 2021]
+			VAR _mix = [Distribution Mix Effect 2023-2025]
+			VAR _head = IF( _dR > 0 && _dP < 0, "Revenue grew " & FORMAT( _dR / 1e6, "$#,0.0;-$#,0.0" ) & "M" & ". Profit fell " & FORMAT( ABS( _dP ) / 1e6, "$#,0.0;-$#,0.0" ) & "M" & ".", "Since 2023: revenue " & IF( _dR >= 0, "+", "−" ) & FORMAT( ABS( _dR ) / 1e6, "$#,0.0" ) & "M" & ", profit " & IF( _dP >= 0, "+", "−" ) & FORMAT( ABS( _dP ) / 1e6, "$#,0.0" ) & "M" & "." )
+			VAR _dek = "Commission rates never changed — the channel mix did. That shift alone cost <b style='color:#EFD3A0'>" & FORMAT( _mix / 1e6, "$#,0.0;-$#,0.0" ) & "M" & "</b>" & IF( _dP < 0, ", " & FORMAT( DIVIDE( _mix, ABS( _dP ) ), "0%" ) & " of the decline.", "." )
+			RETURN
+			    "<div style='font-family:Segoe UI,Aptos,sans-serif;color:#F8F1E6;padding:4px 8px 0 4px'>"
+			        & "<div style='color:#D7AB62;font-size:14px;letter-spacing:2.4px;font-weight:700'>01 · BRAND OVERVIEW · " & UPPER( SELECTEDVALUE( Brands[Brand] ) ) & " · 2021–2025 ACTUALS</div>"
+			        & "<div style='font-family:Segoe UI Semibold,Segoe UI,sans-serif;font-size:46px;line-height:1.05;margin:8px 0 6px 0;letter-spacing:-0.6px'>" & _head & "</div>"
+			        & "<div style='color:#CBD4E2;font-size:20px;line-height:1.35;margin-bottom:12px'>" & _dek & "</div>"
+			        & "<div style='display:flex;margin-top:56px'>"
+			        & "<div style='flex:1;min-width:0;padding:13px 18px 11px 20px;background:#102747;border-left:4px solid #D7AB62;border-radius:8px;margin-right:18px'><div style='color:#9FB0C8;font-size:13px;letter-spacing:1.6px;font-weight:600;text-transform:uppercase'>Operating profit 2025</div><div style='display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:4px'><div style='color:#F8F1E6;font-size:36px;font-weight:600;line-height:1.1;margin-top:0;white-space:nowrap;font-family:Segoe UI Semibold,Segoe UI,sans-serif'>" & FORMAT( _p25 / 1e6, "$#,0.0;-$#,0.0" ) & "M" & "</div><div style='color:" & IF( _yoy < 0, "#FF8F82", "#4DD1BD" ) & ";font-size:15px;line-height:1.25;text-align:right;flex:0 1 55%;min-width:0'>" & IF( _yoy < 0, "▼ ", "▲ " ) & FORMAT( ABS( _yoy ), "0.0%" ) & " vs 2024" & "</div></div></div>"
+			        & "<div style='flex:1;min-width:0;padding:13px 18px 11px 20px;background:#102747;border-left:4px solid #D7AB62;border-radius:8px;margin-right:18px'><div style='color:#9FB0C8;font-size:13px;letter-spacing:1.6px;font-weight:600;text-transform:uppercase'>Operating margin 2025</div><div style='display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:4px'><div style='color:#F8F1E6;font-size:36px;font-weight:600;line-height:1.1;margin-top:0;white-space:nowrap;font-family:Segoe UI Semibold,Segoe UI,sans-serif'>" & FORMAT( _m25, "0.0%" ) & "</div><div style='color:" & IF( _m25 < _m23, "#FF8F82", "#4DD1BD" ) & ";font-size:15px;line-height:1.25;text-align:right;flex:0 1 55%;min-width:0'>" & IF( _m25 < _m23, "▼ ", "▲ " ) & FORMAT( ABS( _m25 - _m23 ) * 100, "0.0" ) & " pp vs 2023" & "</div></div></div>"
+			        & "<div style='flex:1;min-width:0;padding:13px 18px 11px 20px;background:#102747;border-left:4px solid #D7AB62;border-radius:8px;margin-right:18px'><div style='color:#9FB0C8;font-size:13px;letter-spacing:1.6px;font-weight:600;text-transform:uppercase'>OTA share of room nights</div><div style='display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:4px'><div style='color:#F8F1E6;font-size:36px;font-weight:600;line-height:1.1;margin-top:0;white-space:nowrap;font-family:Segoe UI Semibold,Segoe UI,sans-serif'>" & FORMAT( _ota25, "0.0%" ) & "</div><div style='color:" & "#FF8F82" & ";font-size:15px;line-height:1.25;text-align:right;flex:0 1 55%;min-width:0'>" & "▲ " & FORMAT( ( _ota25 - _ota21 ) * 100, "0.0" ) & " pp vs 2021 · 18% fee" & "</div></div></div>"
+			        & "</div></div>"
+		displayFolder: UX
+		lineageTag: 65107472-b82b-447f-92ba-c4ad599f6b78
+
+	measure 'UX Evidence Bridge' =
+			VAR _refreshNps = CALCULATE( [NPS 2025], Hotels[Hotel Role] = "Oldest 10 (refresh)" )
+			VAR _occTop = CALCULATE( [Occupancy 2025], Hotels[Hotel Role] = "Full · extension proposed" )
+			RETURN
+			    "<div style='font-family:Segoe UI,Aptos,sans-serif;display:flex;align-items:center;height:100%;color:#F8F1E6;border-top:1px solid #D7AB62;padding-top:6px'>"
+			        & "<span style='color:#D7AB62;font-size:14px;letter-spacing:2px;font-weight:700;margin-right:22px;white-space:nowrap'>WHAT PAGE 2 TESTS</span>"
+			        & "<span style='font-size:17px;margin-right:26px'><b>① Win back the direct guest</b> <span style='color:#CBD4E2'>— the cost is in the channel mix.</span></span>"
+			        & "<span style='font-size:17px;margin-right:26px'><b>② Add rooms where hotels are full</b> <span style='color:#CBD4E2'>— two airport hotels at " & FORMAT( _occTop, "0%" ) & ".</span></span>"
+			        & "<span style='font-size:17px'><b>③ Fix the oldest ten</b> <span style='color:#CBD4E2'>— NPS " & FORMAT( _refreshNps, "0.0" ) & ". Each must earn 8% by 2032.</span></span>"
+			        & "</div>"
+		displayFolder: UX
+		lineageTag: 294cbac8-3f37-4b8b-bca3-6751b9bbeea3
+
+	measure 'UX Operational Impact' =
+			VAR _added = [Rooms Added]
+			VAR _cap25 = [Brand Rooms]
+			VAR _d25 = CALCULATE( [Distribution Cost % 2025], REMOVEFILTERS( Region[Region] ), REMOVEFILTERS( Hotels[Region], Hotels[Country], Hotels[City], Hotels[LocationType], Hotels[HotelID], Hotels[HotelName], Hotels[Hotel Role] ) )
+			VAR _drr = [Distribution Cost % at Run-Rate]
+			VAR _rn = CALCULATE( [Plan Room Nights Out of Service], REMOVEFILTERS( 'Date' ) )
+			VAR _dis = [Plan Disruption Cost to 2032]
+			VAR _row = ( 0 )
+			RETURN
+			    "<div style='font-family:Segoe UI,Aptos,sans-serif;color:#F8F1E6;height:100%;padding-right:14px'>"
+			        & "<div style='color:#D7AB62;font-size:14px;letter-spacing:2px;font-weight:700;margin-bottom:10px'>OPERATIONAL IMPACT BY 2032</div>"
+			        & "<table style='width:100%;border-collapse:collapse;font-size:17px'>"
+			        & "<tr style='border-bottom:1px solid #334462'><td style='padding:14px 0;color:#CBD4E2'>Room capacity</td><td style='text-align:right;font-weight:600'>" & FORMAT( _cap25, "#,0" ) & " → " & FORMAT( _cap25 + _added, "#,0" ) & "</td><td style='text-align:right;color:#4DD1BD;width:70px'>+" & FORMAT( _added, "#,0" ) & "</td></tr>"
+			        & "<tr style='border-bottom:1px solid #334462'><td style='padding:14px 0;color:#CBD4E2'>Distribution cost, % of room revenue</td><td style='text-align:right;font-weight:600'>" & FORMAT( _d25, "0.0%" ) & " → " & FORMAT( _drr, "0.0%" ) & "</td><td style='text-align:right;color:" & IF( _drr < _d25, "#4DD1BD", "#CBD4E2" ) & "'>" & IF( _drr < _d25, "▼ ", "" ) & FORMAT( ABS( _drr - _d25 ) * 100, "0.0" ) & " pp</td></tr>"
+			        & "<tr><td style='padding:14px 0;color:#CBD4E2'>Room nights lost to works</td><td style='text-align:right;font-weight:600'>" & FORMAT( _rn, "#,0" ) & "</td><td style='text-align:right;color:#F6B26B'>−" & FORMAT( _dis / 1e6, "$#,0.0" ) & "M</td></tr>"
+			        & "</table></div>"
+		displayFolder: UX
+		lineageTag: 423bd2ce-c8fe-4aeb-9315-f0431925d0de
+
+	measure 'UX Hotel Card' =
+			VAR _name = SELECTEDVALUE( Hotels[HotelName] )
+			VAR _loc = SELECTEDVALUE( Hotels[City] ) & ", " & SELECTEDVALUE( Hotels[Country] ) & " · " & SELECTEDVALUE( Hotels[LocationType] )
+			VAR _rooms = SUM( Hotels[Rooms] )
+			VAR _rev = [Revenue 2025]
+			VAR _occ = [Occupancy 2025]
+			VAR _bOcc = [Brand Occupancy 2025]
+			VAR _mg = [Operating Margin 2025]
+			VAR _bMg = [Brand Operating Margin 2025]
+			VAR _nps = [NPS 2025]
+			VAR _bNps = [Brand NPS 2025]
+			VAR _dn = [NPS Change vs 2021]
+			VAR _flag = [Hotel Risk Flag]
+			VAR _ren = SELECTEDVALUE( Hotels[LastRenovationDate] )
+			RETURN
+			    "<div style='font-family:Segoe UI,Aptos,sans-serif;color:#F8F1E6;padding:2px'>"
+			        & "<div style='font-size:16px;font-weight:600'>" & _name & "</div>"
+			        & "<div style='color:#9FB0C8;font-size:12px;margin:1px 0 6px'>" & _loc & " · " & _rooms & " rooms</div>"
+			        & "<div style='color:#D7AB62;font-size:12px;letter-spacing:1.2px;font-weight:700;margin-bottom:6px'>" & UPPER( _flag ) & "</div>"
+			        & "<table style='width:100%;font-size:13px;border-collapse:collapse'>"
+			        & "<tr style='color:#9FB0C8;font-size:11px'><td></td><td style='text-align:right'>HOTEL</td><td style='text-align:right'>BRAND</td></tr>"
+			        & "<tr><td style='color:#CBD4E2;padding:2px 0'>Revenue 2025</td><td style='text-align:right'>" & FORMAT( _rev / 1e6, "$#,0.0" ) & "M</td><td></td></tr>"
+			        & "<tr><td style='color:#CBD4E2;padding:2px 0'>Occupancy 2025</td><td style='text-align:right'>" & FORMAT( _occ, "0.0%" ) & "</td><td style='text-align:right;color:#9FB0C8'>" & FORMAT( _bOcc, "0.0%" ) & "</td></tr>"
+			        & "<tr><td style='color:#CBD4E2;padding:2px 0'>Operating margin 2025</td><td style='text-align:right'>" & FORMAT( _mg, "0.0%" ) & "</td><td style='text-align:right;color:#9FB0C8'>" & FORMAT( _bMg, "0.0%" ) & "</td></tr>"
+			        & "<tr><td style='color:#CBD4E2;padding:2px 0'>NPS 2025 (vs 2021)</td><td style='text-align:right'>" & FORMAT( _nps, "0.0" ) & " (" & FORMAT( _dn, "+0.0;-0.0" ) & ")</td><td style='text-align:right;color:#9FB0C8'>" & FORMAT( _bNps, "0.0" ) & "</td></tr>"
+			        & "<tr><td style='color:#CBD4E2;padding:2px 0'>Last renovation</td><td style='text-align:right'>" & IF( ISBLANK( _ren ), "None on record", FORMAT( _ren, "mmm yyyy" ) ) & "</td><td></td></tr>"
+			        & "</table></div>"
+		displayFolder: UX
+		lineageTag: a14787ad-3dc2-487a-8509-fcad8df139fa
+
+	measure 'UX Project Card' =
+			VAR _id = SELECTEDVALUE( InvestmentProjects[ProjectID] )
+			VAR _nm = SELECTEDVALUE( InvestmentProjects[ProjectName] )
+			VAR _cat = SELECTEDVALUE( InvestmentProjects[Category] )
+			VAR _gr = SELECTEDVALUE( InvestmentProjects[GrowthInitiative] )
+			VAR _dep = SELECTEDVALUE( InvestmentProjects[DependsOn] )
+			VAR _exc = SELECTEDVALUE( InvestmentProjects[ExclusiveWith] )
+			VAR _desc = SELECTEDVALUE( InvestmentProjects[Description] )
+			VAR _capex = [Project CAPEX]
+			VAR _ben = [Project Annual Profit Expected]
+			VAR _st = [Project Start]
+			VAR _fb = [Project First Benefit]
+			VAR _nl = [Project NPV Low]
+			VAR _ne = [Project NPV Expected]
+			VAR _nh = [Project NPV High]
+			VAR _dis = [Project Disruption Cost]
+			RETURN
+			    "<div style='font-family:Segoe UI,Aptos,sans-serif;color:#F8F1E6;padding:2px'>"
+			        & "<div style='color:#D7AB62;font-size:12px;letter-spacing:1.4px;font-weight:700'>" & _id & " · " & UPPER( _cat ) & IF( _gr = "Yes", " · GROWTH", "" ) & "</div>"
+			        & "<div style='font-size:16px;font-weight:600;margin:2px 0 3px'>" & _nm & "</div>"
+			        & "<div style='color:#CBD4E2;font-size:12.5px;margin-bottom:6px'>" & _desc & "</div>"
+			        & "<table style='width:100%;font-size:13px;border-collapse:collapse'>"
+			        & "<tr><td style='color:#CBD4E2;padding:2px 0'>CAPEX · profit/yr at full run-rate</td><td style='text-align:right'>" & FORMAT( _capex / 1e6, "$0.00" ) & "M · " & FORMAT( _ben / 1e6, "$0.00" ) & "M</td></tr>"
+			        & "<tr><td style='color:#CBD4E2;padding:2px 0'>Works → first benefit</td><td style='text-align:right'>" & FORMAT( _st, "mmm yyyy" ) & " → " & FORMAT( _fb, "mmm yyyy" ) & "</td></tr>"
+			        & "<tr><td style='color:#CBD4E2;padding:2px 0'>NPV to 2032 · Low / Exp / High</td><td style='text-align:right'>" & FORMAT( _nl / 1e6, "$0.0;-$0.0" ) & " / " & FORMAT( _ne / 1e6, "$0.0;-$0.0" ) & " / " & FORMAT( _nh / 1e6, "$0.0;-$0.0" ) & "M</td></tr>"
+			        & "<tr><td style='color:#CBD4E2;padding:2px 0'>Profit lost during works</td><td style='text-align:right'>" & IF( _dis > 0, "−" & FORMAT( _dis / 1e6, "$0.00" ) & "M", "none" ) & "</td></tr>"
+			        & "<tr><td style='color:#CBD4E2;padding:2px 0'>Depends on · excludes</td><td style='text-align:right'>" & IF( _dep = "", "—", _dep ) & " · " & IF( _exc = "", "—", _exc ) & "</td></tr>"
+			        & "</table>"
+			        & "<div style='margin-top:7px;font-size:13px;color:" & IF( [Project Is Funded] = 1, "#EFD3A0", "#FF8F82" ) & "'>" & [Project Rationale] & "</div>"
+			        & "</div>"
+		displayFolder: UX
+		lineageTag: 0ab27d2c-3f53-4ad5-8262-db2e3dcde73d
+
+	measure 'Alt Trend' = "Combo chart, 2021 to 2025: revenue grew every year to " & FORMAT( [Revenue 2025] / 1e6, "$0.0" ) & "M while operating margin peaked in 2023 and fell to " & FORMAT( [Operating Margin 2025], "0.0%" ) & " in 2025."
+		displayFolder: UX
+		lineageTag: f527b8ab-ed6f-4c84-956b-4e03f171ae74
+
+	measure 'Alt Bridge' = "Waterfall of the change in operating profit from 2023 to 2025: revenue added " & FORMAT( [Revenue Change 2023-2025] / 1e6, "$0.0" ) & "M; staff, other costs and distribution took more. Distribution channel mix alone cost " & FORMAT( [Distribution Mix Effect 2023-2025] / 1e6, "$0.0" ) & "M; profit fell " & FORMAT( -[Profit Change 2023-2025] / 1e6, "$0.0" ) & "M."
+		displayFolder: UX
+		lineageTag: 57e05fcc-f619-40d8-a46d-cc232956a617
+
+	measure 'Alt Channel' = "100% stacked columns of room nights by booking channel, 2021 to 2025. Online travel agencies grew from " & FORMAT( [OTA Share 2021], "0%" ) & " to " & FORMAT( [OTA Share 2025], "0%" ) & " of room nights."
+		displayFolder: UX
+		lineageTag: 907a5dbe-8d0b-442b-b640-5c18904198f8
+
+	measure 'Alt Scatter' = "Scatter of each hotel, 2025 occupancy versus Net Promoter Score. The ten oldest hotels (coral) mostly have negative NPS; the two airport hotels proposed for extension (teal) run above 90% occupancy; the third extension hotel (amber) runs at 61%."
+		displayFolder: UX
+		lineageTag: 63d4eedd-754d-47b6-a82f-fb7ec7fc819d
+
+	measure 'Alt Timeline' = "Monthly timeline of the funded projects in the " & [Selected Portfolio] & " plan: works months in amber, benefit ramp-up in teal, through December 2032."
+		displayFolder: UX
+		lineageTag: 233f09b5-e103-40a7-a704-d0024c98a6c4
+
+	measure 'Alt Profit Path' = "Line chart of operating profit: actual 2021 to 2025, then baseline held at the 2025 level and the selected plan to 2032, reaching " & FORMAT( [Profit With Plan 2032] / 1e6, "$0.0" ) & "M in 2032."
+		displayFolder: UX
+		lineageTag: 6f519d3c-f46d-46d7-87c6-df30c9e6612b
+
+	measure 'Alt Project Table' = "Table of the ten Goodnight Inn proposals sorted by NPV to 2032 in the " & [Selected Scenario] & " case, with decision, growth flag, CAPEX, NPV, a diverging NPV bar, profit per year at full run-rate and a verdict."
+		displayFolder: UX
+		lineageTag: 39c719d9-abdd-41ba-8ffc-93d74a7befd7
+
+	measure 'Alt Options' = "Bar chart of NPV at 2026 to 2032 for five plans in the selected and Low scenarios. Recommended: " & FORMAT( CALCULATE( [Plan NPV 2026], 'Portfolio Option'[Portfolio] = "Recommended" ) / 1e6, "$0.0" ) & "M in the " & [Selected Scenario] & " case."
+		displayFolder: UX
+		lineageTag: f0b202a6-327d-43f8-ac9c-6d1f0470b204
+
+	measure 'Title Profit Path' = "With the plan, operating profit reaches " & FORMAT( [Profit With Plan 2032] / 1e6, "$0.0" ) & "M by 2032 (" & [Selected Scenario] & " case, 2025 USD)"
+		displayFolder: UX
+		lineageTag: e91afc4b-ca2a-496d-8b77-3ad96c343f6f
+
+	measure 'Title Timeline' = "When cash goes out and benefits arrive · " & [Selected Portfolio]
+		displayFolder: UX
+		lineageTag: 8de3127c-422b-4899-b46b-ab4b481a2c48
+
+	/// Decision yield: Expected-case annual profit at full run-rate / CAPEX. Scenario-independent so the funding rule does not change with the scenario viewed.
+	measure 'Project Yield Expected' = DIVIDE( [Project Annual Profit Expected], [Project CAPEX] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Investment
+		lineageTag: 050585fa-2f4d-471a-9a0e-70eb06d3d2a5
+
+	measure 'Timeline Profit' =
+			VAR _sc = [Selected Scenario]
+			RETURN CALCULATE( SUM( 'Project Timeline'[ProfitImpactUSD] ), 'Project Timeline'[Scenario] = _sc )
+		formatString: \$#,0
+		displayFolder: Investment
+		lineageTag: 90c36247-9e71-4588-b8bc-6832dbeb4dac
+
+	measure 'Timeline Capex' =
+			VAR _sc = [Selected Scenario]
+			RETURN CALCULATE( SUM( 'Project Timeline'[CapexUSD] ), 'Project Timeline'[Scenario] = _sc )
+		formatString: \$#,0
+		displayFolder: Investment
+		lineageTag: 44097c75-32e8-4972-9b5f-75aca8e0cbc1
+
+	measure 'Timeline Phase Order' =
+			VAR _sc = [Selected Scenario]
+			RETURN CALCULATE( MAX( 'Project Timeline'[PhaseOrder] ), 'Project Timeline'[Scenario] = _sc )
+		formatString: 0
+		displayFolder: Investment
+		lineageTag: ac7db51d-56e1-4378-b20c-408c6bbcf74f
+
+	measure 'CF Hurdle Color' = IF( HASONEVALUE( InvestmentProjects[ProjectID] ), IF( [Project Clears Hurdle] = 1, "#4DD1BD", "#FF8F82" ) )
+		displayFolder: UX
+		lineageTag: ad414878-7f01-4713-b9ba-02b0fa299281
+
+	measure 'CF Decision Color' = IF( HASONEVALUE( InvestmentProjects[ProjectID] ), IF( [Project Is Funded] = 1, "#EFD3A0", "#9FB0C8" ) )
+		displayFolder: UX
+		lineageTag: ea40d840-77f1-41f3-a840-8f0dcc78e71a
+
+	measure 'CF Low Case Color' = IF( HASONEVALUE( InvestmentProjects[ProjectID] ), IF( [Project Annual Profit Low] > 0, "#F8F1E6", "#FF8F82" ) )
+		displayFolder: UX
+		lineageTag: 41dd9b68-c48b-4670-98f1-192f683e0f4a
+
+	/// Bullet micro-chart: Expected-case yield bar (0-50% scale) with a white tick at the 8% discount-rate hurdle. Teal = clears hurdle, coral = fails.
+	measure 'SVG Yield Bullet' =
+			VAR _y = [Project Yield Expected]
+			VAR _h = [Discount Rate]
+			VAR _max = 0.5
+			VAR _w = 110
+			VAR _bw = ROUND( MAX( 2, MIN( _y, _max ) / _max * _w ), 0 )
+			VAR _hx = ROUND( _h / _max * _w, 0 )
+			VAR _c = IF( [Project Clears Hurdle] = 1, "#4DD1BD", "#FF8F82" )
+			RETURN
+			    IF(
+			        HASONEVALUE( InvestmentProjects[ProjectID] ),
+			        "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='20' viewBox='0 0 150 20'>"
+			            & "<rect x='0' y='6' width='" & _w & "' height='8' fill='#182A4A'/>"
+			            & "<rect x='0' y='6' width='" & _bw & "' height='8' fill='" & _c & "'/>"
+			            & "<line x1='" & _hx & "' x2='" & _hx & "' y1='1' y2='19' stroke='#F8F1E6' stroke-width='2'/>"
+			            & "<text x='" & ( _w + 4 ) & "' y='14' font-family='Segoe UI' font-size='11' fill='#F8F1E6'>" & FORMAT( _y, "0%" ) & "</text></svg>"
+			    )
+		displayFolder: UX
+		lineageTag: d4a5bd4a-2be3-4961-9a8f-ceb51611fa21
+		dataCategory: ImageUrl
+
+	/// Table display measure in USD millions (numeric, sortable).
+	measure 'Project CAPEX $M' = DIVIDE( [Project CAPEX], 1000000 )
+		formatString: \$#,0.00;-\$#,0.00;\$0.00
+		displayFolder: Investment
+		lineageTag: 1cbfe997-dd35-4232-9243-d753903a96ce
+
+	/// Table display measure in USD millions (numeric, sortable).
+	measure 'Project Profit $M' = DIVIDE( [Project Annual Profit Impact], 1000000 )
+		formatString: \$#,0.00;-\$#,0.00;\$0.00
+		displayFolder: Investment
+		lineageTag: 058f9400-e947-4bd7-9a38-62092822072c
+
+	/// Table display measure in USD millions (numeric, sortable).
+	measure 'Project Low $M' = DIVIDE( [Project Annual Profit Low], 1000000 )
+		formatString: \$#,0.00;-\$#,0.00;\$0.00
+		displayFolder: Investment
+		lineageTag: 9a1545c5-2c9d-437f-844e-d1be618761ad
+
+	/// Mathematical decomposition: extra distribution cost explained by room-revenue growth alone at the 2023 channel mix and rates.
+	measure 'Distribution Volume Effect 2023-2025' =
+			VAR _rr23 = CALCULATE( [Channel Room Revenue], REMOVEFILTERS( 'Date' ), REMOVEFILTERS( BookingChannels[Channel], BookingChannels[Channel Short] ), 'Date'[Year] = 2023 )
+			VAR _rr25 = CALCULATE( [Channel Room Revenue], REMOVEFILTERS( 'Date' ), REMOVEFILTERS( BookingChannels[Channel], BookingChannels[Channel Short] ), 'Date'[Year] = 2025 )
+			VAR _d23 = CALCULATE( [Distribution Cost %], REMOVEFILTERS( 'Date' ), REMOVEFILTERS( BookingChannels[Channel], BookingChannels[Channel Short] ), 'Date'[Year] = 2023 )
+			RETURN ( _rr25 - _rr23 ) * _d23
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Operating
+		lineageTag: ad9cfbe4-9318-4eab-b7c2-d81180af862d
+
+	/// Mathematical decomposition: extra cost from changes in each channel's commission rate (2025 volumes). Zero in the dataset: rates are constant in every channel.
+	measure 'Commission Rate Effect 2023-2025' =
+			SUMX(
+			    CALCULATETABLE( VALUES( BookingChannels[Channel] ), REMOVEFILTERS( BookingChannels[Channel], BookingChannels[Channel Short] ) ),
+			    VAR _rr25c = CALCULATE( [Channel Room Revenue], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025 )
+			    VAR _r25 = CALCULATE( [Commission Rate], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025 )
+			    VAR _r23 = CALCULATE( [Commission Rate], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2023 )
+			    RETURN _rr25c * ( _r25 - _r23 )
+			)
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Operating
+		lineageTag: 12dfaca3-f787-41e5-81bf-a351aa124249
+
+	/// Mathematical decomposition: extra cost from the shift of room revenue towards higher-commission channels (residual after volume and rate effects).
+	measure 'Distribution Mix Effect 2023-2025' =
+			VAR _dTot = CALCULATE( [Distribution Cost], REMOVEFILTERS( 'Date' ), REMOVEFILTERS( BookingChannels[Channel], BookingChannels[Channel Short] ), 'Date'[Year] = 2025 ) - CALCULATE( [Distribution Cost], REMOVEFILTERS( 'Date' ), REMOVEFILTERS( BookingChannels[Channel], BookingChannels[Channel Short] ), 'Date'[Year] = 2023 )
+			RETURN _dTot - [Distribution Volume Effect 2023-2025] - [Commission Rate Effect 2023-2025]
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Operating
+		lineageTag: e11de285-e671-41b9-8809-7625b83dcb1b
+
+	/// Standalone NPV at 2026 of the project to 2032 (selected scenario, 8%, no terminal value).
+	measure 'Project NPV' =
+			VAR _sc = [Selected Scenario]
+			RETURN CALCULATE( SUM( 'Project Value'[NPV2026] ), 'Project Value'[Scenario] = _sc, TREATAS( VALUES( InvestmentProjects[ProjectID] ), 'Project Value'[ProjectID] ) )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 59a70e68-d7cb-46d6-bcc1-159262c49bb5
+
+	measure 'Project NPV $M' = DIVIDE( [Project NPV], 1000000 )
+		formatString: \$#,0.00;-\$#,0.00;\$0.00
+		displayFolder: Investment
+		lineageTag: e7fba6b0-8420-4d87-ae75-8fb6bf3b411c
+
+	measure 'Project NPV Low' = CALCULATE( SUM( 'Project Value'[NPV2026] ), 'Project Value'[Scenario] = "Low", TREATAS( VALUES( InvestmentProjects[ProjectID] ), 'Project Value'[ProjectID] ) )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 9b6a98d2-3e04-4df8-9b49-ba2bc1fa4208
+
+	measure 'Project NPV Expected' = CALCULATE( SUM( 'Project Value'[NPV2026] ), 'Project Value'[Scenario] = "Expected", TREATAS( VALUES( InvestmentProjects[ProjectID] ), 'Project Value'[ProjectID] ) )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: d6ee7dd0-09d4-42a4-bd78-71ce1823280e
+
+	measure 'Project NPV High' = CALCULATE( SUM( 'Project Value'[NPV2026] ), 'Project Value'[Scenario] = "High", TREATAS( VALUES( InvestmentProjects[ProjectID] ), 'Project Value'[ProjectID] ) )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 735247c0-ab3a-4ab2-991b-0deabdeb4f06
+
+	/// Plain-language verdict per project based on its standalone NPV to 2032 in the selected scenario.
+	measure 'Project Assessment' =
+			VAR _npv = [Project NPV]
+			VAR _brand = SELECTEDVALUE( InvestmentProjects[Brand] )
+			VAR _least =
+			    MAXX(
+			        FILTER(
+			            ADDCOLUMNS( CALCULATETABLE( VALUES( InvestmentProjects[ProjectID] ), REMOVEFILTERS( InvestmentProjects ), InvestmentProjects[Brand] = _brand ), "N", VAR _p = InvestmentProjects[ProjectID] RETURN CALCULATE( [Project NPV], REMOVEFILTERS( InvestmentProjects ), InvestmentProjects[ProjectID] = _p ) ),
+			            [N] <= 0
+			        ),
+			        [N]
+			    )
+			RETURN
+			    IF(
+			        HASONEVALUE( InvestmentProjects[ProjectID] ),
+			        SWITCH(
+			            TRUE(),
+			            _npv > 0, "✓ Creates value by 2032",
+			            [Project Is Funded] = 1 && _npv = _least, "◐ Fills 3-project rule",
+			            [Project Is Funded] = 1, "✕ Funded · loses value",
+			            "✕ Loses value by 2032"
+			        )
+			    )
+		displayFolder: Investment
+		lineageTag: d89aaef2-67fc-48f0-8eb4-28911c8e36c3
+
+	measure 'Plan PV Benefits' =
+			VAR _r = [Discount Rate]
+			RETURN SUMX( GENERATESERIES( 2027, 2032, 1 ), VAR _y = [Value] RETURN CALCULATE( [Plan Profit Uplift], REMOVEFILTERS( 'Date' ), 'Date'[Year] = _y ) / ( 1 + _r ) ^ ( _y - 2026 ) )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: befc4d58-244d-4f60-acae-2b5059937a35
+
+	measure 'Plan PV Costs' =
+			VAR _r = [Discount Rate]
+			RETURN SUMX( GENERATESERIES( 2027, 2032, 1 ), VAR _y = [Value] RETURN CALCULATE( [Plan CAPEX Spend] + [Plan Disruption Cost], REMOVEFILTERS( 'Date' ), 'Date'[Year] = _y ) / ( 1 + _r ) ^ ( _y - 2026 ) )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: d94b2c16-ce24-44a9-b01d-6d041ac9969c
+
+	/// Share of the selected scenario's dataset impact the plan needs to reach NPV = 0 by 2032 (PV of CAPEX + works losses / PV of benefits).
+	measure 'Plan Breakeven Impact %' = DIVIDE( [Plan PV Costs], [Plan PV Benefits] )
+		formatString: 0%
+		displayFolder: Investment
+		lineageTag: 02b3778b-3f5c-4b47-aeea-eaed1ed8e74a
+
+	measure 'Plan NPV 2026 Low' = CALCULATE( [Plan NPV 2026], Scenario[Scenario] = "Low" )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 545424f8-a960-4fc7-9efd-6bc8507eff3c
+
+	measure 'Plan NPV 2026 Expected' = CALCULATE( [Plan NPV 2026], Scenario[Scenario] = "Expected" )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 6638d832-beb8-4201-a99f-ecb2be31f7d2
+
+	measure 'Plan NPV 2026 High' = CALCULATE( [Plan NPV 2026], Scenario[Scenario] = "High" )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: cbfeb083-66d6-4ca3-a17e-6bba9f9b8875
+
+	measure 'Universe Combinations' = COUNTROWS( ALL( 'Portfolio Universe' ) )
+		formatString: #,0
+		displayFolder: Investment
+		lineageTag: a5c442fc-ec08-404f-a34b-ad2be286d518
+
+	measure 'Universe Valid' = CALCULATE( COUNTROWS( 'Portfolio Universe' ), REMOVEFILTERS( 'Portfolio Universe' ), 'Portfolio Universe'[IsValid] = 1 )
+		formatString: #,0
+		displayFolder: Investment
+		lineageTag: bac9c5d8-548d-4e12-a932-990f8cbe8af3
+
+	measure 'Universe Value Creating Expected' = CALCULATE( COUNTROWS( 'Portfolio Universe' ), REMOVEFILTERS( 'Portfolio Universe' ), 'Portfolio Universe'[IsValid] = 1, 'Portfolio Universe'[NPVExpected] > 0 ) + 0
+		formatString: #,0
+		displayFolder: Investment
+		lineageTag: 56048790-6cec-4d41-8e34-cf37e9debede
+
+	measure 'Universe Value Creating Low' = CALCULATE( COUNTROWS( 'Portfolio Universe' ), REMOVEFILTERS( 'Portfolio Universe' ), 'Portfolio Universe'[IsValid] = 1, 'Portfolio Universe'[NPVLow] > 0 ) + 0
+		formatString: #,0
+		displayFolder: Investment
+		lineageTag: 6053227d-8f74-4c46-a817-c70284603001
+
+	/// Portfolio NPV in the selected scenario (row context of the Portfolio Universe).
+	measure 'Universe NPV' =
+			VAR _sc = [Selected Scenario]
+			RETURN SWITCH( _sc, "Low", SUM( 'Portfolio Universe'[NPVLow] ), "High", SUM( 'Portfolio Universe'[NPVHigh] ), SUM( 'Portfolio Universe'[NPVExpected] ) )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 6bd5cba2-ad7c-48d9-9756-6c493507c20e
+
+	measure 'Universe Is Selected' = IF( SELECTEDVALUE( 'Portfolio Universe'[Option] ) = [Selected Portfolio], 1, 0 )
+		formatString: 0
+		displayFolder: Investment
+		lineageTag: 8bdbe6bb-5ecb-47d8-932a-8afe21be2c8e
+
+	/// Rank of the selected portfolio by NPV among all rule-compliant portfolios (selected scenario).
+	measure 'Selected Portfolio Rank' =
+			VAR _key = LOOKUPVALUE( 'Portfolio Option'[ProjectsKey], 'Portfolio Option'[Portfolio], [Selected Portfolio] )
+			VAR _sc = [Selected Scenario]
+			VAR _V = FILTER( ALL( 'Portfolio Universe' ), 'Portfolio Universe'[IsValid] = 1 )
+			VAR _T = ADDCOLUMNS( _V, "N", SWITCH( _sc, "Low", 'Portfolio Universe'[NPVLow], "High", 'Portfolio Universe'[NPVHigh], 'Portfolio Universe'[NPVExpected] ) )
+			VAR _mine = MAXX( FILTER( _T, 'Portfolio Universe'[Projects] = _key ), [N] )
+			RETURN COUNTROWS( FILTER( _T, [N] > _mine ) ) + 1
+		formatString: 0
+		displayFolder: Investment
+		lineageTag: 0b0c2beb-1e18-4a2d-a8ea-f801edd96eba
+
+	measure 'Plan Funded Names' =
+			VAR _opt = [Selected Portfolio]
+			VAR _ids = SELECTCOLUMNS( FILTER( ALL( 'Portfolio Map' ), 'Portfolio Map'[Portfolio] = _opt ), "ProjectID", 'Portfolio Map'[ProjectID] )
+			RETURN CONCATENATEX( CALCULATETABLE( InvestmentProjects, REMOVEFILTERS( InvestmentProjects ), TREATAS( _ids, InvestmentProjects[ProjectID] ) ), LOWER( LEFT( InvestmentProjects[Short Name], 1 ) ) & MID( InvestmentProjects[Short Name], 2, 200 ), ", ", InvestmentProjects[CapexUSD], DESC )
+		displayFolder: UX
+		lineageTag: bff4ad36-d530-428e-8f8a-a5ee95591284
+
+	/// Marker size driver for the hotel scatter: hotels with an investment proposal are drawn larger.
+	measure 'Hotel Emphasis' = IF( HASONEVALUE( Hotels[HotelID] ), IF( SELECTEDVALUE( Hotels[Hotel Role] ) = "Other hotels", 1, 4 ) )
+		formatString: 0
+		displayFolder: UX
+		lineageTag: 3f2fcb72-3018-4055-88c3-b698fa6b0037
+
+	measure 'Alt Decision Map' = "Scatter of all " & FORMAT( [Universe Valid], "#,0" ) & " rule-compliant portfolios by CAPEX and NPV to 2032. NPV falls as CAPEX rises; the Recommended plan is the cheapest compliant plan and has the highest NPV. Named plans show Low to High ranges. The bar chart next to it gives the same comparison for the five named plans."
+		displayFolder: UX
+		lineageTag: 1b7ebad7-751c-4684-99a7-687503a4ad62
+
+	measure 'CF NPV Color' = IF( HASONEVALUE( InvestmentProjects[ProjectID] ), IF( [Project NPV] > 0, "#4DD1BD", "#FF8F82" ) )
+		displayFolder: UX
+		lineageTag: b0f720d7-4a57-4da5-a407-1e8bc119bca7
+
+	measure 'CF Assessment Color' = IF( HASONEVALUE( InvestmentProjects[ProjectID] ), IF( [Project NPV] > 0, "#4DD1BD", IF( [Project Is Funded] = 1, "#F6B26B", "#FF8F82" ) ) )
+		displayFolder: UX
+		lineageTag: 4b06756b-5380-4121-9994-0a9abcf8acdc
+
+	/// Diverging micro-bar of the project NPV to 2032 (scale +/- $30M, white tick = zero). Teal creates value, coral destroys it.
+	measure 'SVG NPV Bar' =
+			VAR _v = [Project NPV]
+			VAR _scale = 30000000
+			VAR _half = 70
+			VAR _w = ROUND( MIN( ABS( _v ) / _scale, 1 ) * _half, 0 )
+			VAR _x = IF( _v >= 0, 75, 75 - _w )
+			VAR _c = IF( _v >= 0, "#4DD1BD", "#FF8F82" )
+			RETURN
+			    IF(
+			        HASONEVALUE( InvestmentProjects[ProjectID] ),
+			        "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='20' viewBox='0 0 150 20'>"
+			            & "<rect x='5' y='9' width='140' height='2' fill='#22314F'/>"
+			            & "<rect x='" & _x & "' y='4' width='" & MAX( _w, 2 ) & "' height='12' fill='" & _c & "'/>"
+			            & "<line x1='75' x2='75' y1='0' y2='20' stroke='#F8F1E6' stroke-width='1.5'/></svg>"
+			    )
+		displayFolder: UX
+		lineageTag: 21ca2d27-6bf4-47c1-8be8-d21acd1d7ef9
+		dataCategory: ImageUrl
+
+	/// Table display measure in USD millions (numeric, sortable).
+	measure 'Plan NPV $M' = DIVIDE( [Plan NPV 2026], 1000000 )
+		formatString: \$#,0.00;-\$#,0.00;\$0.00
+		displayFolder: Investment
+		lineageTag: 6af4dfe5-f610-449e-94a6-d2e9667a4506
+
+	measure 'Revenue 2025 (Hotel)' = [Revenue 2025]
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Operating
+		lineageTag: 06d76dd5-804e-4b65-80c3-a6cc1e9e0aed
+
+	measure 'NPS Change vs 2021' = [NPS 2025] - [NPS 2021]
+		formatString: +0.0;-0.0;0.0
+		displayFolder: Guest
+		lineageTag: 00bd37e2-2935-4661-80b9-46b3627aeefd
+
+	measure 'Brand Operating Margin 2025' = CALCULATE( [Operating Margin 2025], REMOVEFILTERS( Region[Region] ), REMOVEFILTERS( Hotels[Region], Hotels[Country], Hotels[City], Hotels[LocationType], Hotels[HotelID], Hotels[HotelName], Hotels[Hotel Role], Hotels[Hotel Short] ) )
+		formatString: 0.0%
+		displayFolder: Operating
+		lineageTag: aaca445f-ec5c-450d-9712-8e0eefe14095
+
+	measure 'Brand NPS 2025' = CALCULATE( [NPS 2025], REMOVEFILTERS( Region[Region] ), REMOVEFILTERS( Hotels[Region], Hotels[Country], Hotels[City], Hotels[LocationType], Hotels[HotelID], Hotels[HotelName], Hotels[Hotel Role], Hotels[Hotel Short] ) )
+		formatString: 0.0
+		displayFolder: Guest
+		lineageTag: 80bf7865-c468-429d-a9a2-2ff6cdfde716
+
+	measure 'Brand Occupancy 2025' = CALCULATE( [Occupancy 2025], REMOVEFILTERS( Region[Region] ), REMOVEFILTERS( Hotels[Region], Hotels[Country], Hotels[City], Hotels[LocationType], Hotels[HotelID], Hotels[HotelName], Hotels[Hotel Role], Hotels[Hotel Short] ) )
+		formatString: 0.0%
+		displayFolder: Operating
+		lineageTag: 808695db-5e38-40d0-bcad-fcdc31a1deaa
+
+	measure 'Hotels Negative NPS' = COUNTROWS( FILTER( VALUES( Hotels[HotelID] ), [NPS 2025] < 0 ) ) + 0
+		formatString: 0
+		displayFolder: Guest
+		lineageTag: 14dcb7fb-d223-4c92-bfb8-5cf3941456c2
+
+	measure 'Hotels Above 90% Occupancy' = COUNTROWS( FILTER( VALUES( Hotels[HotelID] ), [Occupancy 2025] >= 0.9 ) ) + 0
+		formatString: 0
+		displayFolder: Operating
+		lineageTag: 0b715977-d6cd-4f36-8cd6-12fd667eee14
+
+	measure 'Hotel Risk Flag' =
+			IF( HASONEVALUE( Hotels[HotelID] ),
+			    VAR _n = [NPS 2025] VAR _o = [Occupancy 2025] VAR _d = [NPS Change vs 2021]
+			    RETURN SWITCH( TRUE(), _n < 0 && _d < -3, "● Guests turning away", _n < 0, "● Negative NPS", _o >= 0.9, "◆ Capacity-constrained", _d < -5, "▲ Fast NPS decline", "—" ) )
+		displayFolder: Guest
+		lineageTag: c2f35c8c-8dbc-43ee-b4eb-7798359b93e6
+
+	measure 'CF Risk Color' = IF( HASONEVALUE( Hotels[HotelID] ), SWITCH( TRUE(), [NPS 2025] < 0, "#FF8F82", [Occupancy 2025] >= 0.9, "#4DD1BD", [NPS Change vs 2021] < -5, "#F6B26B", "#9FB0C8" ) )
+		displayFolder: UX
+		lineageTag: bb2f9a43-aa5c-4b4c-896e-14df2792500d
+
+	measure 'Title Waterfall' = VAR _d = [Profit Change 2023-2025] RETURN IF( _d < 0, "Where the " & FORMAT( -_d / 1e6, "$#,0.0" ) & "M of lost profit went", "Operating profit change by driver: +" & FORMAT( _d / 1e6, "$#,0.0" ) & "M" ) & " · 2023→2025"
+		displayFolder: UX
+		lineageTag: d36ec2b7-a6d7-41bf-ab26-9b05bb7884a7
+
+	measure 'Title Channel' = "Online travel agencies now sell " & FORMAT( [OTA Share 2025], "0%" ) & " of room nights (" & FORMAT( [OTA Share 2021], "0%" ) & " in 2021)"
+		displayFolder: UX
+		lineageTag: ef027404-abed-4c1d-b237-7cc4faf5f1cf
+
+	measure 'Title Scatter' = VAR _f = [Hotels Above 90% Occupancy] VAR _n = [Hotels Negative NPS] RETURN _f & IF( _f = 1, " hotel runs", " hotels run" ) & " above 90% occupancy; " & _n & IF( _n = 1, " has", " have" ) & " negative NPS"
+		displayFolder: UX
+		lineageTag: b15fde17-c6d0-4d4c-8a1d-ab69cb1884fc
+
+	measure 'Title Region' = "Margin by region, 2023 vs 2025"
+		displayFolder: UX
+		lineageTag: fc4a729f-2c83-43d4-a119-90d51d9fba4a
+
+	measure 'UX Overview Conclusion' =
+			VAR _nps = [NPS 2025]
+			RETURN
+			    "<div style='font-family:Segoe UI,Aptos,sans-serif;display:flex;align-items:center;height:100%;color:#F8F1E6;border-top:1px solid #D7AB62;padding-top:6px;font-size:18px'>"
+			        & "<span style='color:#D7AB62;font-size:13px;letter-spacing:2px;font-weight:700;margin-right:20px'>SO WHAT</span>"
+			        & "Demand is not the problem — the cost of selling a room is. Page 2 tests which investments win the direct guest back."
+			        & "</div>"
+		displayFolder: UX
+		lineageTag: 10e1e6d0-9a41-4e56-9fb4-8e3d7b693617
+
+	measure 'Staff Cost per Occupied Room 2023' = CALCULATE( [Staff Cost per Occupied Room], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2023 )
+		formatString: \$#,0.00
+		displayFolder: Operating
+		lineageTag: 13a6a66a-9317-4ecd-aeb2-2c9c2454a9ed
+
+	measure 'Staff Cost per Occupied Room 2025' = CALCULATE( [Staff Cost per Occupied Room], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: \$#,0.00
+		displayFolder: Operating
+		lineageTag: 81fc02be-e4ea-4c29-8a9f-fb0b6378d4d8
+
+	measure 'Revenue per Occupied Room 2023' = CALCULATE( [Revenue per Occupied Room], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2023 )
+		formatString: \$#,0.00
+		displayFolder: Operating
+		lineageTag: 646a3565-ce63-4399-9a04-f92f0461adef
+
+	measure 'Revenue per Occupied Room 2025' = CALCULATE( [Revenue per Occupied Room], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: \$#,0.00
+		displayFolder: Operating
+		lineageTag: bec58dea-a133-4989-bd18-48fa4a399b6e
+
+	measure 'UX Why Profit' =
+			VAR _vol = [Distribution Volume Effect 2023-2025]
+			VAR _mix = [Distribution Mix Effect 2023-2025]
+			VAR _rate = [Commission Rate Effect 2023-2025]
+			VAR _dP = [Profit Change 2023-2025]
+			VAR _s23 = [Staff Cost per Occupied Room 2023]
+			VAR _s25 = [Staff Cost per Occupied Room 2025]
+			VAR _r23 = [Revenue per Occupied Room 2023]
+			VAR _r25 = [Revenue per Occupied Room 2025]
+			RETURN
+			    "<div style='font-family:Segoe UI,Aptos,sans-serif;color:#F8F1E6;font-size:20px'>"
+			        & "<div style='color:#D7AB62;font-size:16px;letter-spacing:2px;font-weight:700;margin-bottom:8px'>WHAT THE DATA SHOWS — AND WHAT IT DOES NOT</div>"
+			        & "<table style='width:100%;border-collapse:collapse'>"
+			        & "<tr style='border-bottom:1px solid #22314F'><td style='padding:14px 0;color:#CBD4E2'>Distribution: channel mix</td><td style='text-align:right;font-weight:600;color:#FF8F82'>" & FORMAT( _mix / 1e6, "$#,0.0;-$#,0.0" ) & "M" & "</td><td style='padding-left:14px;color:#9FB0C8;font-size:16px'>Observed: share moved to higher-fee OTAs</td></tr>"
+			        & "<tr style='border-bottom:1px solid #22314F'><td style='padding:14px 0;color:#CBD4E2'>Distribution: volume</td><td style='text-align:right;font-weight:600;color:#F8F1E6'>" & FORMAT( _vol / 1e6, "$#,0.0;-$#,0.0" ) & "M" & "</td><td style='padding-left:14px;color:#9FB0C8;font-size:16px'>Arithmetic: more room revenue at the 2023 rate</td></tr>"
+			        & "<tr style='border-bottom:1px solid #22314F'><td style='padding:14px 0;color:#CBD4E2'>Distribution: commission rates</td><td style='text-align:right;font-weight:600;color:#F8F1E6'>" & FORMAT( _rate / 1e6, "$#,0.0;-$#,0.0" ) & "M" & "</td><td style='padding-left:14px;color:#9FB0C8;font-size:16px'>Observed: rates identical every year, every channel</td></tr>"
+			        & "<tr style='border-bottom:1px solid #22314F'><td style='padding:14px 0;color:#CBD4E2'>Staff cost per occupied room</td><td style='text-align:right;font-weight:600;color:#F6B26B'>" & FORMAT( _s23, "$#,0.00" ) & " → " & FORMAT( _s25, "$#,0.00" ) & "</td><td style='padding-left:14px;color:#9FB0C8;font-size:16px'>Grew faster than revenue per room</td></tr>"
+			        & "<tr style='border-bottom:1px solid #22314F'><td style='padding:14px 0;color:#CBD4E2'>Revenue per occupied room</td><td style='text-align:right;font-weight:600;color:#F8F1E6'>" & FORMAT( _r23, "$#,0.00" ) & " → " & FORMAT( _r25, "$#,0.00" ) & "</td><td style='padding-left:14px;color:#9FB0C8;font-size:16px'>Price/mix gains did not cover costs</td></tr>"
+			        & "</table>"
+			        & "<div style='color:#9FB0C8;font-size:16px;margin-top:10px;line-height:1.45'>Decomposition is exact (volume + mix + rate = total change in distribution cost). <b style='color:#CBD4E2'>Not in the data:</b> why guests moved to OTAs — we report the shift, not its cause.</div>"
+			        & "</div>"
+		displayFolder: UX
+		lineageTag: eea37925-50fa-4874-9d97-9c994f8b4033
+
+	measure 'UX Hotel Opportunities' =
+			VAR _full = CALCULATE( [Occupancy 2025], Hotels[Hotel Role] = "Full · extension proposed" )
+			VAR _nf = CALCULATE( [Occupancy 2025], Hotels[Hotel Role] = "Not full · extension proposed" )
+			VAR _old = CALCULATE( [NPS 2025], Hotels[Hotel Role] = "Oldest 10 (refresh)" )
+			VAR _rest = CALCULATE( [NPS 2025], Hotels[Hotel Role] = "Other hotels" )
+			RETURN
+			    "<div style='font-family:Segoe UI,Aptos,sans-serif;color:#F8F1E6;font-size:18px;line-height:1.5'>"
+			        & "<div style='color:#D7AB62;font-size:15px;letter-spacing:2px;font-weight:700;margin-bottom:6px'>WHERE THE PROPOSALS POINT · BRAND-WIDE</div>"
+			        & "<div><span style='color:#4DD1BD'>◆ Capacity:</span> Toronto Pearson and London Gatwick run at " & FORMAT( _full, "0%" ) & " — real demand for the extensions. Kingston runs at " & FORMAT( _nf, "0%" ) & ".</div>"
+			        & "<div style='margin-top:6px'><span style='color:#FF8F82'>● Condition:</span> the ten oldest hotels average NPS " & FORMAT( _old, "0.0" ) & " vs " & FORMAT( _rest, "0.0" ) & " elsewhere.</div>"
+			        & "<div style='margin-top:6px;color:#9FB0C8'>Both needs are real; page 2 shows neither earns the 8% cost of capital by 2032.</div>"
+			        & "</div>"
+		displayFolder: UX
+		lineageTag: 637bdccc-9005-4114-97a6-631f18cf59c5
+
+	measure 'Project Rationale' =
+			VAR _nl = [Project NPV Low] VAR _ne = [Project NPV Expected] VAR _f = [Project Is Funded]
+			RETURN IF( HASONEVALUE( InvestmentProjects[ProjectID] ),
+			    SWITCH( TRUE(),
+			        _f = 1 && _ne > 0, "Selected: creates value by 2032 at 8% in the Expected case" & IF( _nl < 0, "; loses value in the Low case.", " and in the Low case." ),
+			        _f = 1, "Selected as the lowest-cost way to meet the three-initiative rule; small value loss accepted.",
+			        _ne > 0, "Not selected in this plan although it creates value.",
+			        "Rejected: its benefits arrive too late or too small to repay CAPEX at 8% by 2032" & IF( [Project Disruption Cost] > 0, ", and rooms out of service during works cost profit.", "." ) ) )
+		displayFolder: Investment
+		lineageTag: 0e24fa61-6719-4d4b-87a6-d1c834e0b6f9
+
+	measure 'Project Annual Benefit $M' = DIVIDE( [Project Annual Profit Expected], 1000000 )
+		formatString: \$#,0.00
+		displayFolder: Investment
+		lineageTag: 1c497692-d0a4-43d2-95a7-d3ef2ee38ff0
+
+	/// Rank of the project by standalone NPV to 2032 among the brand's ten proposals (selected scenario).
+	measure 'Project NPV Rank' =
+			IF( HASONEVALUE( InvestmentProjects[ProjectID] ),
+			    VAR _b = SELECTEDVALUE( InvestmentProjects[Brand] ) VAR _me = [Project NPV]
+			    VAR _T = ADDCOLUMNS( CALCULATETABLE( VALUES( InvestmentProjects[ProjectID] ), REMOVEFILTERS( InvestmentProjects ), InvestmentProjects[Brand] = _b ), "N", VAR _p = InvestmentProjects[ProjectID] RETURN CALCULATE( [Project NPV], REMOVEFILTERS( InvestmentProjects ), InvestmentProjects[ProjectID] = _p ) )
+			    RETURN COUNTROWS( FILTER( _T, [N] > _me ) ) + 1 )
+		formatString: 0
+		displayFolder: Investment
+		lineageTag: def83d17-51b2-44b2-b4ec-93e502fe62c8
+
+	/// Project NPV in the Low case, $M.
+	measure 'Project NPV Low $M' = DIVIDE( [Project NPV Low], 1000000 )
+		formatString: \$#,0.00;-\$#,0.00;\$0.00
+		displayFolder: Investment
+		lineageTag: 11ad8884-fff2-473a-abb9-7f2ac4e82f78
+
+	/// Page 2 decision hero: recommendation, capital, expected value and downside. Always shows Expected and Low, whatever scenario is selected in the explorer.
+	measure 'UX Hero Decision' =
+			VAR _pf = [Selected Portfolio]
+			VAR _capex = CALCULATE( [Portfolio CAPEX], REMOVEFILTERS( InvestmentProjects ) )
+			VAR _bud = [Brand Budget]
+			VAR _rem = _bud - _capex
+			VAR _npvE = [Plan NPV 2026 Expected]
+			VAR _npvL = [Plan NPV 2026 Low]
+			VAR _npvH = [Plan NPV 2026 High]
+			VAR _be = CALCULATE( [Plan Breakeven Impact %], Scenario[Scenario] = "Expected" )
+			VAR _cashL = CALCULATE( [Plan Net Cash to 2032], Scenario[Scenario] = "Low" )
+			VAR _pb = CALCULATE( [Plan Payback Year], Scenario[Scenario] = "Expected" )
+			VAR _rankE = CALCULATE( [Selected Portfolio Rank], Scenario[Scenario] = "Expected" )
+			VAR _valid = [Universe Valid]
+			VAR _head = IF( _pf = "Recommended" && _rankE = 1, "Invest " & FORMAT( _capex / 1e6, "$#,0.0;-$#,0.0" ) & "M" & ". Keep " & FORMAT( _rem / 1e6, "$#,0.0;-$#,0.0" ) & "M in reserve.", _pf & ": " & FORMAT( _capex / 1e6, "$#,0.0;-$#,0.0" ) & "M" & ", NPV " & IF( _npvE >= 0, "+", "−" ) & FORMAT( ABS( _npvE ) / 1e6, "$#,0.0" ) & "M" & " — rank " & _rankE & " of " & FORMAT( _valid, "#,0" ) & "." )
+			VAR _dek = IF( _pf = "Recommended", "Win back the direct guest: direct booking app, revenue management and self check-in. Best of " & FORMAT( _valid, "#,0" ) & " rule-compliant plans in every scenario.", SELECTEDVALUE( 'Portfolio Option'[Thesis], "" ) )
+			RETURN
+			    "<div style='font-family:Segoe UI,Aptos,sans-serif;color:#F8F1E6;padding:4px 8px 0 4px'>"
+			        & "<div style='color:#D7AB62;font-size:14px;letter-spacing:2.4px;font-weight:700'>02 · THE DECISION · " & UPPER( _pf ) & " PORTFOLIO · NPV AT 8% TO 2032 · 2025 USD</div>"
+			        & "<div style='font-family:Segoe UI Semibold,Segoe UI,sans-serif;font-size:40px;line-height:1.08;margin:8px 0 6px 0;letter-spacing:-0.6px'>" & _head & "</div>"
+			        & "<div style='color:#CBD4E2;font-size:19px;line-height:1.35;margin-bottom:12px'>" & _dek & "</div>"
+			        & "<div style='display:flex'>"
+			        & "<div style='flex:1;min-width:0;padding:13px 18px 11px 20px;background:#102747;border-left:4px solid #D7AB62;border-radius:8px;margin-right:18px'><div style='color:#9FB0C8;font-size:13px;letter-spacing:1.6px;font-weight:600;text-transform:uppercase'>Capital invested</div><div style='display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:4px'><div style='color:#F8F1E6;font-size:36px;font-weight:600;line-height:1.1;margin-top:0;white-space:nowrap;font-family:Segoe UI Semibold,Segoe UI,sans-serif'>" & FORMAT( _capex / 1e6, "$#,0.0;-$#,0.0" ) & "M" & "</div><div style='color:" & "#CBD4E2" & ";font-size:15px;line-height:1.25;text-align:right;flex:0 1 55%;min-width:0'>" & "of " & FORMAT( _bud / 1e6, "$#,0.0;-$#,0.0" ) & "M" & " · " & FORMAT( _rem / 1e6, "$#,0.0;-$#,0.0" ) & "M" & " held in reserve" & "</div></div></div>"
+			        & "<div style='flex:1;min-width:0;padding:13px 18px 11px 20px;background:#102747;border-left:4px solid #D7AB62;border-radius:8px;margin-right:18px'><div style='color:#9FB0C8;font-size:13px;letter-spacing:1.6px;font-weight:600;text-transform:uppercase'>Value created · Expected</div><div style='display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:4px'><div style='color:#F8F1E6;font-size:36px;font-weight:600;line-height:1.1;margin-top:0;white-space:nowrap;font-family:Segoe UI Semibold,Segoe UI,sans-serif'>" & IF( _npvE >= 0, "+", "−" ) & FORMAT( ABS( _npvE ) / 1e6, "$#,0.0" ) & "M" & "</div><div style='color:" & IF( _npvE > 0, "#4DD1BD", "#FF8F82" ) & ";font-size:15px;line-height:1.25;text-align:right;flex:0 1 55%;min-width:0'>" & "NPV · break-even at " & FORMAT( _be, "0%" ) & " of expected impact · payback " & _pb & "</div></div></div>"
+			        & "<div style='flex:1;min-width:0;padding:13px 18px 11px 20px;background:#102747;border-left:4px solid #D7AB62;border-radius:8px;margin-right:18px'><div style='color:#9FB0C8;font-size:13px;letter-spacing:1.6px;font-weight:600;text-transform:uppercase'>Risk · Low case</div><div style='display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:4px'><div style='color:#F8F1E6;font-size:36px;font-weight:600;line-height:1.1;margin-top:0;white-space:nowrap;font-family:Segoe UI Semibold,Segoe UI,sans-serif'>" & IF( _npvL >= 0, "+", "−" ) & FORMAT( ABS( _npvL ) / 1e6, "$#,0.0" ) & "M" & "</div><div style='color:" & "#F6B26B" & ";font-size:15px;line-height:1.25;text-align:right;flex:0 1 55%;min-width:0'>" & "NPV · net cash " & IF( _cashL >= 0, "+", "−" ) & FORMAT( ABS( _cashL ) / 1e6, "$#,0.0" ) & "M" & " by 2032 · High " & IF( _npvH >= 0, "+", "−" ) & FORMAT( ABS( _npvH ) / 1e6, "$#,0.0" ) & "M" & "</div></div></div>"
+			        & "</div></div>"
+		displayFolder: UX
+		lineageTag: 5b2bb136-6c6d-406d-aef8-96f294ce6ada
+
+	measure 'UX Decision Statement' =
+			VAR _pf = [Selected Portfolio]
+			VAR _capex = CALCULATE( [Portfolio CAPEX], REMOVEFILTERS( InvestmentProjects ) )
+			VAR _rem = [Budget Remaining]
+			RETURN
+			    "<div style='font-family:Segoe UI,Aptos,sans-serif;display:flex;align-items:center;height:100%;color:#F8F1E6;border-top:1px solid #D7AB62;padding-top:6px;font-size:18px'>"
+			        & "<span style='color:#D7AB62;font-size:13px;letter-spacing:2px;font-weight:700;margin-right:20px;white-space:nowrap'>BOARD DECISION</span>"
+			        & IF( _pf = "Recommended", "Approve " & FORMAT( _capex / 1e6, "$#,0.0" ) & "M from January 2027; hold " & FORMAT( _rem / 1e6, "$#,0.0" ) & "M. Re-test extensions and the room refresh with 2027 results.",
+			            "<span style='color:#F6B26B'>Alternative under review — reset to return to the recommendation.</span>" )
+			        & "</div>"
+		displayFolder: UX
+		lineageTag: 94742ec6-7a61-4b46-b86b-064b537b417b
+
+	measure 'UX Scenario Card' =
+			VAR _pf = [Selected Portfolio]
+			VAR _l = [Plan NPV 2026 Low] VAR _e = [Plan NPV 2026 Expected] VAR _h = [Plan NPV 2026 High]
+			VAR _cl = CALCULATE( [Plan Net Cash to 2032], Scenario[Scenario] = "Low" )
+			VAR _ce = CALCULATE( [Plan Net Cash to 2032], Scenario[Scenario] = "Expected" )
+			VAR _ch = CALCULATE( [Plan Net Cash to 2032], Scenario[Scenario] = "High" )
+			VAR _rl = CALCULATE( [Plan Run-Rate Uplift 2032], Scenario[Scenario] = "Low" )
+			VAR _re = CALCULATE( [Plan Run-Rate Uplift 2032], Scenario[Scenario] = "Expected" )
+			VAR _rh = CALCULATE( [Plan Run-Rate Uplift 2032], Scenario[Scenario] = "High" )
+			VAR _be = CALCULATE( [Plan Breakeven Impact %], Scenario[Scenario] = "Expected" )
+			VAR _posL = [Universe Value Creating Low]
+			VAR _cell = ( 0 )
+			RETURN
+			    "<div style='font-family:Segoe UI,Aptos,sans-serif;color:#F8F1E6;font-size:19px'>"
+			        & "<div style='color:#D7AB62;font-size:13px;letter-spacing:2px;font-weight:700;margin-bottom:10px'>" & UPPER( _pf ) & " · SENSITIVITY TO THE DATASET SCENARIOS</div>"
+			        & "<table style='width:100%;border-collapse:collapse;font-size:19px'>"
+			        & "<tr style='color:#9FB0C8;font-size:14px'><td></td><td style='text-align:right'>LOW</td><td style='text-align:right'>EXPECTED</td><td style='text-align:right'>HIGH</td></tr>"
+			        & "<tr style='border-bottom:1px solid #22314F'><td style='padding:16px 0;color:#CBD4E2'>NPV to 2032</td><td style='text-align:right;color:#FF8F82'>" & IF( _l >= 0, "+", "−" ) & FORMAT( ABS( _l ) / 1e6, "$#,0.0" ) & "M" & "</td><td style='text-align:right'>" & IF( _e >= 0, "+", "−" ) & FORMAT( ABS( _e ) / 1e6, "$#,0.0" ) & "M" & "</td><td style='text-align:right;color:#4DD1BD'>" & IF( _h >= 0, "+", "−" ) & FORMAT( ABS( _h ) / 1e6, "$#,0.0" ) & "M" & "</td></tr>"
+			        & "<tr style='border-bottom:1px solid #22314F'><td style='padding:16px 0;color:#CBD4E2'>Net cash 2027–32</td><td style='text-align:right'>" & IF( _cl >= 0, "+", "−" ) & FORMAT( ABS( _cl ) / 1e6, "$#,0.0" ) & "M" & "</td><td style='text-align:right'>" & IF( _ce >= 0, "+", "−" ) & FORMAT( ABS( _ce ) / 1e6, "$#,0.0" ) & "M" & "</td><td style='text-align:right'>" & IF( _ch >= 0, "+", "−" ) & FORMAT( ABS( _ch ) / 1e6, "$#,0.0" ) & "M" & "</td></tr>"
+			        & "<tr><td style='padding:16px 0;color:#CBD4E2'>Profit added / yr, 2032</td><td style='text-align:right'>" & IF( _rl >= 0, "+", "−" ) & FORMAT( ABS( _rl ) / 1e6, "$#,0.0" ) & "M" & "</td><td style='text-align:right'>" & IF( _re >= 0, "+", "−" ) & FORMAT( ABS( _re ) / 1e6, "$#,0.0" ) & "M" & "</td><td style='text-align:right'>" & IF( _rh >= 0, "+", "−" ) & FORMAT( ABS( _rh ) / 1e6, "$#,0.0" ) & "M" & "</td></tr>"
+			        & "</table>"
+			        & "<div style='margin-top:14px;line-height:1.5;color:#CBD4E2'>Staying inside the budget does not make a plan safe: <b style='color:#F6B26B'>" & _posL & " of " & FORMAT( [Universe Valid], "#,0" ) & "</b> compliant plans create value in the Low case. This one breaks even at <b>" & FORMAT( _be, "0%" ) & "</b> of the expected impact.</div>"
+			        & "</div>"
+		displayFolder: UX
+		lineageTag: 82e0a3e8-0fbe-4a14-961a-4d3582f22cbc
+
+	/// Annual discount factor at the FinanceParameters rate, base 2026. Blank on totals.
+	measure 'Plan Discount Factor' = IF( HASONEVALUE( 'Date'[Year] ), VAR _y = VALUES( 'Date'[Year] ) RETURN IF( _y >= 2027 && _y <= 2032, 1 / ( 1 + [Discount Rate] ) ^ ( _y - 2026 ) ) )
+		formatString: 0.000
+		displayFolder: Investment
+		lineageTag: 0600bdd4-0c58-4de3-af0f-4e8ffbc923ea
+
+	/// Present value of net cash; the 2027–2032 total equals Plan NPV 2026.
+	measure 'Plan PV Net Cash' = SUMX( VALUES( 'Date'[Year] ), VAR _y = 'Date'[Year] RETURN IF( _y >= 2027 && _y <= 2032, CALCULATE( [Plan Net Cash Flow] ) / ( 1 + [Discount Rate] ) ^ ( _y - 2026 ) ) )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 1985d3c5-b251-4406-a2ee-c9315e868464
+
+	measure 'Plan Cumulative Net Cash Low' = CALCULATE( [Plan Cumulative Net Cash], Scenario[Scenario] = "Low" )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 8106c0b9-8e7c-4ecb-91fb-4d99687fc99e
+
+	measure 'Plan Cumulative Net Cash Expected' = CALCULATE( [Plan Cumulative Net Cash], Scenario[Scenario] = "Expected" )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: 8338a1bf-0291-46f8-8b86-5fbe31cede33
+
+	measure 'Plan Cumulative Net Cash High' = CALCULATE( [Plan Cumulative Net Cash], Scenario[Scenario] = "High" )
+		formatString: \$#,0;-\$#,0;\$0
+		displayFolder: Investment
+		lineageTag: fc22cfcf-8d55-4703-b818-cd97de3d4f33
+
+	measure 'UX NPV Method' =
+			VAR _sc = [Selected Scenario]
+			RETURN
+			VAR _r = [Discount Rate]
+			VAR _pvB = [Plan PV Benefits]
+			VAR _pvC = [Plan PV Costs]
+			VAR _npv = [Plan NPV 2026]
+			RETURN
+			    "<div style='font-family:Segoe UI,Aptos,sans-serif;color:#F8F1E6;font-size:17px;line-height:1.5'>"
+			        & "<div style='color:#D7AB62;font-size:13px;letter-spacing:2px;font-weight:700;margin-bottom:8px'>METHOD · " & UPPER( [Selected Portfolio] ) & " · " & UPPER( [Selected Scenario] ) & " CASE</div>"
+			        & "<div><b>NPV</b> = Σ net cash of each year 2027–2032 ÷ (1 + " & FORMAT( _r, "0%" ) & ")^(year − 2026). Rate and base year come from FinanceParameters. No value is counted after 2032.</div>"
+			        & "<div style='margin-top:6px'><b>Net cash</b> = profit uplift − profit lost during works − CAPEX. CAPEX is spread evenly over each project's works; benefits start the month after completion at 50%, then 85%, then 100%.</div>"
+			        & "<div style='margin-top:6px'><b>Profit uplift</b> = the dataset's AnnualOperatingProfitImpactUSD, already net of running and distribution costs (verified), in 2025 USD.</div>"
+			        & "<div style='margin-top:6px'><b>Operating profit</b> = revenue − operating expenses − distribution cost. <b>Payback</b> = first year cumulative net cash ≥ 0.</div>"
+			        & "<div style='margin-top:12px;padding-top:8px;border-top:1px solid #334462'>PV of benefits <b>" & FORMAT( _pvB / 1e6, "$#,0.0;-$#,0.0" ) & "M" & "</b> − PV of CAPEX and works losses <b>" & FORMAT( _pvC / 1e6, "$#,0.0;-$#,0.0" ) & "M" & "</b> = NPV <b style='color:" & IF( _npv >= 0, "#4DD1BD", "#FF8F82" ) & "'>" & IF( _npv >= 0, "+", "−" ) & FORMAT( ABS( _npv ) / 1e6, "$#,0.0" ) & "M" & "</b></div>"
+			        & "</div>"
+		displayFolder: UX
+		lineageTag: 62bf9c97-d1cd-4d3b-a1ec-051fe99c7aad
+
+	measure 'UX Low Scenario' =
+			VAR _l = [Plan NPV 2026 Low]
+			VAR _e = [Plan NPV 2026 Expected]
+			VAR _cl = CALCULATE( [Plan Net Cash to 2032], Scenario[Scenario] = "Low" )
+			VAR _bl = CALCULATE( [Plan Breakeven Impact %], Scenario[Scenario] = "Low" )
+			VAR _rl = CALCULATE( [Plan Run-Rate Uplift 2032], Scenario[Scenario] = "Low" )
+			VAR _re = CALCULATE( [Plan Run-Rate Uplift 2032], Scenario[Scenario] = "Expected" )
+			VAR _T = ADDCOLUMNS( FILTER( ALL( InvestmentProjects[ProjectID], InvestmentProjects[Short Name] ), [Project Is Funded] = 1 ), "@e", [Project NPV Expected], "@l", [Project NPV Low] )
+			VAR _top = TOPN( 1, _T, [@e] - [@l], DESC )
+			VAR _sw = IF( COUNTROWS( _T ) > 0, "The largest swing is " & MAXX( _top, InvestmentProjects[ProjectID] & " " & InvestmentProjects[Short Name] ) & ": NPV " & IF( MAXX( _top, [@e] ) >= 0, "+", "−" ) & FORMAT( ABS( MAXX( _top, [@e] ) ) / 1e6, "$#,0.0" ) & "M" & " expected vs " & IF( MAXX( _top, [@l] ) >= 0, "+", "−" ) & FORMAT( ABS( MAXX( _top, [@l] ) ) / 1e6, "$#,0.0" ) & "M" & " in the Low case.", "" )
+			RETURN
+			    "<div style='font-family:Segoe UI,Aptos,sans-serif;color:#F8F1E6;font-size:18px;line-height:1.5'>"
+			        & "<div style='color:#D7AB62;font-size:13px;letter-spacing:2px;font-weight:700;margin-bottom:8px'>IF THE LOW CASE HAPPENS · " & UPPER( [Selected Portfolio] ) & "</div>"
+			        & "<div style='font-size:34px;font-family:Segoe UI Semibold,Segoe UI,sans-serif;color:#FF8F82;margin-bottom:6px'>NPV " & IF( _l >= 0, "+", "−" ) & FORMAT( ABS( _l ) / 1e6, "$#,0.0" ) & "M" & "</div>"
+			        & "<div>Profit added falls from " & FORMAT( _re / 1e6, "$#,0.0;-$#,0.0" ) & "M" & " to " & FORMAT( _rl / 1e6, "$#,0.0;-$#,0.0" ) & "M" & " a year; capital is " & IF( _cl < 0, "<b>not recovered</b> by 2032 (net cash " & IF( _cl >= 0, "+", "−" ) & FORMAT( ABS( _cl ) / 1e6, "$#,0.0" ) & "M" & ").", "recovered by 2032." ) & "</div>"
+			        & "<div style='margin-top:8px'>To break even in the Low case the plan would need " & FORMAT( _bl, "0%" ) & " of the Low impact. " & _sw & "</div>"
+			        & "<div style='margin-top:8px;color:#9FB0C8'>Mitigation inside the data: the plan commits only " & FORMAT( CALCULATE( [Portfolio CAPEX], REMOVEFILTERS( InvestmentProjects ) ) / 1e6, "$0.0" ) & "M" & IF( [Selected Portfolio] = "Recommended", "; every other named plan loses more in the Low case (see Scenario explorer).", "." ) & "</div>"
+			        & "</div>"
+		displayFolder: UX
+		lineageTag: a746280c-92ff-42cd-bc5b-026cd8616713
+
+	measure 'Alt Flows Table' = "Table of yearly cash flows 2027 to 2032 for the selected plan and scenario: CAPEX, profit uplift, works losses, net cash, discount factor and present value."
+		displayFolder: UX
+		lineageTag: 566b7659-5624-4744-b6e4-cb81058994ef
+
+	measure 'Alt Low Cash' = "Line chart of cumulative net cash 2027 to 2032 in Low, Expected and High cases for the selected plan."
+		displayFolder: UX
+		lineageTag: 65fb1f38-5d9a-4941-8cec-0b49cfa14277
+
+	measure 'Alt Hotel Table' = "Table of hotels sorted by 2025 NPS, with region, occupancy, NPS change since 2021, operating margin and a risk flag."
+		displayFolder: UX
+		lineageTag: 6859a051-a1ce-4f21-bfc1-11e6c9d275ce
+
+	measure 'Alt Region' = "Bar chart of operating margin by region, 2023 versus 2025."
+		displayFolder: UX
+		lineageTag: ed372709-ae45-4392-b096-2e4ebcff7037
+
+	measure 'Alt Recommended Table' = "Table of the projects in the selected portfolio with CAPEX and NPV to 2032 in the Expected and Low cases."
+		displayFolder: UX
+		lineageTag: 75f1dbf1-09a5-4223-b711-c35c8c006751
+
+	measure 'UX Hotel Heading' =
+			VAR _n = [Hotels Negative NPS] VAR _f = [Hotels Above 90% Occupancy] VAR _h = [Hotels in View]
+			RETURN "<div style='font-family:Segoe UI,Aptos,sans-serif;color:#F8F1E6'><div style='color:#D7AB62;font-size:13px;letter-spacing:2px;font-weight:700'>HOTEL EXPLORER · 2025 ACTUALS · " & _h & " HOTELS IN VIEW</div>"
+			    & "<div style='font-family:Segoe UI Semibold,Segoe UI,sans-serif;font-size:34px;margin-top:6px'>" & _n & IF( _n = 1, " hotel is", " hotels are" ) & " losing guests' loyalty; " & _f & IF( _f = 1, " is", " are" ) & " already above 90% full.</div></div>"
+		displayFolder: UX
+		lineageTag: 40460705-1371-41d2-96bb-edd68386de91
+
+	measure 'UX Tooltip Bridge' =
+			VAR _step = SELECTEDVALUE( 'Profit Bridge Step'[Step], "Total change" )
+			VAR _value = [Profit Bridge Value]
+			VAR _total = [Profit Change 2023-2025]
+			VAR _detail = SWITCH( _step, "Room revenue", "Room sales lifted profit before cost changes.", "F&B + other revenue", "Food, beverage and other sales added to profit.", "Staff cost", "Higher staffing cost absorbed revenue growth.", "Other operating costs", "Other running costs reduced the gain.", "Distribution: volume", "More room revenue raised distribution spend at the earlier cost rate.", "Distribution: channel mix", "The shift between booking channels raised distribution spend beyond volume alone.", "The combined drivers reconcile to the operating profit change." )
+			RETURN "<div style='font-family:Segoe UI;color:#F8F1E6;padding:10px'><div style='color:#D7AB62;font-size:11px;letter-spacing:2px'>PROFIT BRIDGE · 2023—2025</div><div style='font-size:20px;font-weight:700;margin:8px 0'>" & _step & "</div><div style='font-size:30px;color:" & IF( _value < 0, "#FF8F82", "#4DD1BD" ) & "'>" & FORMAT( _value / 1e6, "+$0.00;-$0.00;$0.00" ) & "M</div><div style='font-size:13px;margin-top:9px'>" & _detail & "</div><div style='color:#9FB0C8;font-size:12px;margin-top:10px'>Total profit change: " & FORMAT( _total / 1e6, "+$0.00;-$0.00;$0.00" ) & "M · source: 2023/2025 actuals</div></div>"
+		displayFolder: UX
+		lineageTag: 3d3e4c2e-bb00-42fb-b5bd-853eae1db101
+
+	measure 'UX Tooltip Channel' =
+			VAR _channel = SELECTEDVALUE( BookingChannels[Channel Short], "All channels" )
+			VAR _year = SELECTEDVALUE( 'Date'[Year] )
+			VAR _share = [Channel Share]
+			VAR _prior = CALCULATE( [Channel Share], REMOVEFILTERS( 'Date' ), 'Date'[Year] = 2021 )
+			VAR _cost = [Distribution Cost]
+			VAR _rate = [Distribution Cost %]
+			RETURN IF( ISBLANK( _year ), "<div style='font-family:Segoe UI;color:#F8F1E6;padding:14px'><div style='color:#D7AB62;font-size:12px;letter-spacing:2px'>CONTEXTUAL ANALYSIS</div><div style='font-size:18px;margin-top:12px'>Hover a year in the chart to see its drivers.</div></div>", "<div style='font-family:Segoe UI;color:#F8F1E6;padding:10px'><div style='color:#D7AB62;font-size:11px;letter-spacing:2px'>CHANNEL ECONOMICS · " & _year & "</div><div style='font-size:20px;font-weight:700;margin:8px 0'>" & _channel & "</div><div style='font-size:30px;color:#4DD1BD'>" & FORMAT( _share, "0.0%" ) & " <span style='font-size:13px;color:#9FB0C8'>of room nights</span></div><div style='font-size:13px;margin-top:9px'>" & FORMAT( (_share - _prior) * 100, "+0.0;-0.0;0.0" ) & " percentage points vs 2021 · " & FORMAT( [Channel Room Nights], "#,0" ) & " room nights</div><div style='font-size:13px;margin-top:6px'>Distribution cost " & FORMAT( _cost / 1e6, "$0.00" ) & "M · " & FORMAT( _rate, "0.0%" ) & " of channel room revenue</div><div style='color:#9FB0C8;font-size:12px;margin-top:10px'>Share uses room nights; cost rate uses room revenue.</div></div>"
+			    )
+		displayFolder: UX
+		lineageTag: 5ea9a0dd-6440-47b9-a96f-f5a31d1b71a1
+
+	measure 'UX Tooltip Actual Trend' =
+			VAR _year = SELECTEDVALUE( 'Date'[Year] )
+			VAR _margin = [Operating Margin]
+			VAR _prev = CALCULATE( [Operating Margin], REMOVEFILTERS( 'Date' ), 'Date'[Year] = _year - 1 )
+			RETURN IF( ISBLANK( _year ), "<div style='font-family:Segoe UI;color:#F8F1E6;padding:14px'><div style='color:#D7AB62;font-size:12px;letter-spacing:2px'>CONTEXTUAL ANALYSIS</div><div style='font-size:18px;margin-top:12px'>Hover a year in the chart to see its drivers.</div></div>", "<div style='font-family:Segoe UI;color:#F8F1E6;padding:10px'><div style='color:#D7AB62;font-size:11px;letter-spacing:2px'>OPERATING PULSE · " & _year & "</div><div style='font-size:30px;font-weight:700;margin:9px 0'>" & FORMAT( _margin, "0.0%" ) & " <span style='font-size:13px;color:#9FB0C8'>margin</span></div><div style='font-size:13px'>Revenue " & FORMAT( [Revenue] / 1e6, "$0.0" ) & "M · profit " & FORMAT( [Operating Profit] / 1e6, "$0.0" ) & "M</div><div style='font-size:13px;margin-top:8px'>" & IF( ISBLANK( _prev ), "First year in the series", FORMAT( (_margin - _prev) * 100, "+0.0;-0.0;0.0" ) & " percentage points vs prior year" ) & "</div><div style='color:#9FB0C8;font-size:12px;margin-top:10px'>Profit = revenue − operating expenses − distribution cost.</div></div>"
+			    )
+		displayFolder: UX
+		lineageTag: 217019c0-511a-43fc-9f20-e6672e87c3a9
+
+	measure 'UX Tooltip Region' =
+			VAR _region = SELECTEDVALUE( Hotels[Region], "Selected region" )
+			VAR _m23 = [Operating Margin 2023]
+			VAR _m25 = [Operating Margin 2025]
+			RETURN "<div style='font-family:Segoe UI;color:#F8F1E6;padding:10px'><div style='color:#D7AB62;font-size:11px;letter-spacing:2px'>REGIONAL MARGIN · 2023—2025</div><div style='font-size:20px;font-weight:700;margin:8px 0'>" & _region & "</div><div style='font-size:30px;color:" & IF( _m25 < _m23, "#FF8F82", "#4DD1BD" ) & "'>" & FORMAT( (_m25 - _m23) * 100, "+0.0;-0.0;0.0" ) & " pp</div><div style='font-size:13px;margin-top:9px'>2023 margin " & FORMAT( _m23, "0.0%" ) & " → 2025 margin " & FORMAT( _m25, "0.0%" ) & "</div><div style='color:#9FB0C8;font-size:12px;margin-top:10px'>Revenue weighted operating margin for hotels in this region.</div></div>"
+		displayFolder: UX
+		lineageTag: 44723db2-2406-494b-a82c-c32d2db1fd65
+
+	measure 'UX Tooltip Profit Path' =
+			VAR _year = SELECTEDVALUE( 'Date'[Year] )
+			VAR _actual = [Profit Actual]
+			VAR _plan = [Profit With Plan]
+			VAR _base = [Profit Baseline]
+			RETURN IF( ISBLANK( _year ), "<div style='font-family:Segoe UI;color:#F8F1E6;padding:14px'><div style='color:#D7AB62;font-size:12px;letter-spacing:2px'>CONTEXTUAL ANALYSIS</div><div style='font-size:18px;margin-top:12px'>Hover a year in the chart to see its drivers.</div></div>", "<div style='font-family:Segoe UI;color:#F8F1E6;padding:10px'><div style='color:#D7AB62;font-size:11px;letter-spacing:2px'>PROFIT PATH · " & _year & " · " & UPPER( [Selected Scenario] ) & "</div><div style='font-size:30px;font-weight:700;margin:9px 0'>" & FORMAT( IF( _year <= 2025, _actual, _plan ) / 1e6, "$0.00" ) & "M</div><div style='font-size:13px'>" & IF( _year <= 2025, "Observed operating profit", "Projected operating profit with " & [Selected Portfolio] ) & "</div><div style='font-size:13px;margin-top:8px'>" & IF( _year <= 2025, "Margin " & FORMAT( [Operating Margin], "0.0%" ), "2025 baseline " & FORMAT( _base / 1e6, "$0.00" ) & "M · plan uplift " & FORMAT( (_plan - _base) / 1e6, "+$0.00;-$0.00;$0.00" ) & "M" ) & "</div><div style='color:#9FB0C8;font-size:12px;margin-top:10px'>Projection in constant 2025 USD; scenario and portfolio follow the page selection.</div></div>"
+			    )
+		displayFolder: UX
+		lineageTag: e2fb8226-c115-4322-a9f9-4f92802db812
+
+	measure 'UX Tooltip Cash Flow' =
+			VAR _year = SELECTEDVALUE( 'Date'[Year] )
+			VAR _net = [Plan Net Cash Flow]
+			VAR _cum = [Plan Cumulative Net Cash]
+			RETURN IF( ISBLANK( _year ), "<div style='font-family:Segoe UI;color:#F8F1E6;padding:14px'><div style='color:#D7AB62;font-size:12px;letter-spacing:2px'>CONTEXTUAL ANALYSIS</div><div style='font-size:18px;margin-top:12px'>Hover a year in the chart to see its drivers.</div></div>", "<div style='font-family:Segoe UI;color:#F8F1E6;padding:10px'><div style='color:#D7AB62;font-size:11px;letter-spacing:2px'>CASH FLOW · " & _year & " · " & UPPER( [Selected Scenario] ) & "</div><div style='font-size:30px;font-weight:700;margin:9px 0;color:" & IF( _net < 0, "#FF8F82", "#4DD1BD" ) & "'>" & FORMAT( _net / 1e6, "+$0.00;-$0.00;$0.00" ) & "M</div><div style='font-size:13px'>Profit added " & FORMAT( [Plan Profit Uplift] / 1e6, "$0.00" ) & "M − works loss " & FORMAT( [Plan Disruption Cost] / 1e6, "$0.00" ) & "M − CAPEX " & FORMAT( [Plan CAPEX Spend] / 1e6, "$0.00" ) & "M</div><div style='font-size:13px;margin-top:8px'>Cumulative net cash through " & _year & ": " & FORMAT( _cum / 1e6, "+$0.00;-$0.00;$0.00" ) & "M</div><div style='font-size:12px;margin-top:6px'>Cumulative range: Low " & FORMAT( [Plan Cumulative Net Cash Low] / 1e6, "+$0.00;-$0.00;$0.00" ) & "M · Expected " & FORMAT( [Plan Cumulative Net Cash Expected] / 1e6, "+$0.00;-$0.00;$0.00" ) & "M · High " & FORMAT( [Plan Cumulative Net Cash High] / 1e6, "+$0.00;-$0.00;$0.00" ) & "M</div><div style='color:#9FB0C8;font-size:12px;margin-top:10px'>Undiscounted cash. NPV applies the " & FORMAT( [Discount Rate], "0%" ) & " discount rate.</div></div>"
+			    )
+		displayFolder: UX
+		lineageTag: 991515a1-2aaa-4c86-bbf8-b9da465a5ab0
+
+	measure 'UX Tooltip Portfolio' =
+			VAR _plan = [Selected Portfolio]
+			VAR _low = [Plan NPV 2026 Low]
+			VAR _exp = [Plan NPV 2026 Expected]
+			VAR _high = [Plan NPV 2026 High]
+			RETURN "<div style='font-family:Segoe UI;color:#F8F1E6;padding:10px'><div style='color:#D7AB62;font-size:11px;letter-spacing:2px'>PORTFOLIO STRESS TEST</div><div style='font-size:20px;font-weight:700;margin:8px 0'>" & _plan & "</div><div style='font-size:30px;color:" & IF( _exp < 0, "#FF8F82", "#4DD1BD" ) & "'>" & FORMAT( _exp / 1e6, "+$0.00;-$0.00;$0.00" ) & "M <span style='font-size:13px;color:#9FB0C8'>Expected NPV</span></div><div style='font-size:13px;margin-top:9px'>Low " & FORMAT( _low / 1e6, "+$0.00;-$0.00;$0.00" ) & "M · High " & FORMAT( _high / 1e6, "+$0.00;-$0.00;$0.00" ) & "M</div><div style='font-size:13px;margin-top:6px'>CAPEX committed " & FORMAT( [Portfolio CAPEX] / 1e6, "$0.00" ) & "M · Low-to-High spread " & FORMAT( (_high - _low) / 1e6, "$0.00" ) & "M</div><div style='color:#9FB0C8;font-size:12px;margin-top:10px'>NPV is discounted to 2026; the spread shows scenario sensitivity.</div></div>"
+		displayFolder: UX
+		lineageTag: b5e254c0-ff18-43bd-ac80-9f47b55d55c6
+
+	column Ref
+		isHidden
+		formatString: 0
+		lineageTag: f8e6c46b-870e-4506-98b4-725d29c78350
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Ref]
+
+	partition 'Board Metrics' = calculated
+		mode: import
+		source = ROW( "Ref", 0 )
+
+	annotation PBI_Id = 34fade74dbca4c7cb8baa0cc066ce5fc
+

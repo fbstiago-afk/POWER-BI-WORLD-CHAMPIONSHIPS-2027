@@ -1,0 +1,30 @@
+/// Low, expected and high impact scenarios. Not related to other tables: use it to select a scenario.
+table Scenario
+	lineageTag: 6db08896-29ef-4e06-a956-5b84346690c3
+
+	/// Low, Expected or High.
+	column Scenario
+		dataType: string
+		lineageTag: 3d489180-7c9a-4ba8-9f57-e872f95acbb7
+		summarizeBy: none
+		sourceColumn: Scenario
+		sortByColumn: ScenarioOrder
+
+	/// Sort order of the scenarios.
+	column ScenarioOrder
+		dataType: int64
+		lineageTag: 658fa26b-866b-4e84-8227-53d95b819de6
+		summarizeBy: none
+		sourceColumn: ScenarioOrder
+
+	partition Scenario = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="Scenario",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"Scenario", type text}, {"ScenarioOrder", Int64.Type}})
+				in
+				    Typed
+

@@ -1,0 +1,612 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "c923a8f817bd9685487d",
+  "position": {
+    "x": 0,
+    "y": 255.18639554587267,
+    "z": 1003,
+    "height": 532.63737593802955,
+    "width": 712.04710144927526
+  },
+  "visual": {
+    "visualType": "deneb7E15AEF80B9E4D4F8E12924291ECE89A",
+    "query": {
+      "queryState": {
+        "dataset": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Portfolio Universe"
+                    }
+                  },
+                  "Property": "Projects"
+                }
+              },
+              "queryRef": "Portfolio Universe.Projects",
+              "nativeQueryRef": "Projects"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Portfolio Universe"
+                    }
+                  },
+                  "Property": "Option"
+                }
+              },
+              "queryRef": "Portfolio Universe.Option",
+              "nativeQueryRef": "Option"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Portfolio Universe"
+                    }
+                  },
+                  "Property": "CapexUSD"
+                }
+              },
+              "queryRef": "Portfolio Universe.CapexUSD",
+              "nativeQueryRef": "CapexUSD"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Portfolio Universe"
+                    }
+                  },
+                  "Property": "NPVLow"
+                }
+              },
+              "queryRef": "Portfolio Universe.NPVLow",
+              "nativeQueryRef": "NPVLow"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Portfolio Universe"
+                    }
+                  },
+                  "Property": "NPVHigh"
+                }
+              },
+              "queryRef": "Portfolio Universe.NPVHigh",
+              "nativeQueryRef": "NPVHigh"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Portfolio Universe"
+                    }
+                  },
+                  "Property": "RunRate2032Expected"
+                }
+              },
+              "queryRef": "Portfolio Universe.RunRate2032Expected",
+              "nativeQueryRef": "RunRate2032Expected"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Portfolio Universe"
+                    }
+                  },
+                  "Property": "IsValid"
+                }
+              },
+              "queryRef": "Portfolio Universe.IsValid",
+              "nativeQueryRef": "IsValid"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Board Metrics"
+                    }
+                  },
+                  "Property": "Universe NPV"
+                }
+              },
+              "queryRef": "Board Metrics.Universe NPV",
+              "nativeQueryRef": "Universe NPV"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Board Metrics"
+                    }
+                  },
+                  "Property": "Universe Is Selected"
+                }
+              },
+              "queryRef": "Board Metrics.Universe Is Selected",
+              "nativeQueryRef": "Universe Is Selected"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "vega": [
+        {
+          "properties": {
+            "jsonSpec": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"$schema\": \"https://vega.github.io/schema/vega-lite/v6.json\", \"data\": {\"name\": \"dataset\"}, \"width\": \"container\", \"height\": \"container\", \"transform\": [{\"filter\": \"datum[''IsValid''] == 1\"}, {\"calculate\": \"datum[''CapexUSD'']/1e6\", \"as\": \"Capex\"}, {\"calculate\": \"datum[''Universe NPV'']/1e6\", \"as\": \"NPV\"}, {\"calculate\": \"datum[''NPVLow'']/1e6\", \"as\": \"Low\"}, {\"calculate\": \"datum[''NPVHigh'']/1e6\", \"as\": \"High\"}, {\"calculate\": \"datum[''RunRate2032Expected'']/1e6\", \"as\": \"Run\"}, {\"calculate\": \"datum[''Option''] ? datum[''Option''] : ''''\", \"as\": \"Named\"}], \"encoding\": {\"x\": {\"field\": \"Capex\", \"type\": \"quantitative\", \"title\": \"CAPEX committed ($M)\", \"scale\": {\"domain\": [0, 62], \"nice\": false}, \"axis\": {\"labelColor\": \"#CBD4E2\", \"titleColor\": \"#CBD4E2\", \"labelFontSize\": 13, \"titleFontSize\": 13, \"gridColor\": \"#22314F\", \"domain\": false, \"tickCount\": 7}}, \"y\": {\"field\": \"NPV\", \"type\": \"quantitative\", \"title\": \"NPV to 2032 ($M)\", \"axis\": {\"labelColor\": \"#CBD4E2\", \"titleColor\": \"#CBD4E2\", \"labelFontSize\": 13, \"titleFontSize\": 13, \"gridColor\": \"#22314F\", \"domain\": false}}}, \"layer\": [{\"mark\": {\"type\": \"rule\", \"color\": \"#F8F1E6\", \"strokeDash\": [4, 3], \"opacity\": 0.7}, \"encoding\": {\"y\": {\"datum\": 0}, \"x\": null}}, {\"mark\": {\"type\": \"rule\", \"color\": \"#D7AB62\", \"strokeDash\": [2, 3], \"opacity\": 0.8}, \"encoding\": {\"x\": {\"datum\": 60}, \"y\": null}}, {\"mark\": {\"type\": \"circle\", \"size\": 34, \"opacity\": 0.5, \"color\": \"#7D8BA3\"}, \"encoding\": {\"tooltip\": [{\"field\": \"Projects\", \"title\": \"Projects\"}, {\"field\": \"Capex\", \"title\": \"CAPEX $M\", \"format\": \".2f\"}, {\"field\": \"NPV\", \"title\": \"NPV $M (selected case)\", \"format\": \".2f\"}, {\"field\": \"Low\", \"title\": \"NPV Low $M\", \"format\": \".2f\"}, {\"field\": \"High\", \"title\": \"NPV High $M\", \"format\": \".2f\"}, {\"field\": \"Run\", \"title\": \"Profit/yr 2032 $M\", \"format\": \".2f\"}]}}, {\"transform\": [{\"filter\": \"datum.Named != ''''\"}], \"mark\": {\"type\": \"rule\", \"strokeWidth\": 2.5}, \"encoding\": {\"y\": {\"field\": \"Low\", \"type\": \"quantitative\"}, \"y2\": {\"field\": \"High\"}, \"color\": {\"condition\": {\"test\": \"datum[''Universe Is Selected''] == 1\", \"value\": \"#D7AB62\"}, \"value\": \"#CBD4E2\"}}}, {\"transform\": [{\"filter\": \"datum.Named != ''''\"}], \"mark\": {\"type\": \"circle\", \"size\": 170, \"opacity\": 1, \"stroke\": \"#040F2B\", \"strokeWidth\": 1.5}, \"encoding\": {\"color\": {\"condition\": {\"test\": \"datum[''Universe Is Selected''] == 1\", \"value\": \"#D7AB62\"}, \"value\": \"#F8F1E6\"}, \"tooltip\": [{\"field\": \"Named\", \"title\": \"Plan\"}, {\"field\": \"Projects\", \"title\": \"Projects\"}, {\"field\": \"Capex\", \"title\": \"CAPEX $M\", \"format\": \".2f\"}, {\"field\": \"NPV\", \"title\": \"NPV $M (selected case)\", \"format\": \".2f\"}, {\"field\": \"Low\", \"title\": \"NPV Low $M\", \"format\": \".2f\"}, {\"field\": \"High\", \"title\": \"NPV High $M\", \"format\": \".2f\"}, {\"field\": \"Run\", \"title\": \"Profit/yr 2032 $M\", \"format\": \".2f\"}]}}, {\"transform\": [{\"filter\": \"datum.Named != ''''\"}, {\"calculate\": \"datum.Named == ''Recommended'' ? datum.NPV + 7 : datum.Named == ''Digital + F&B'' ? datum.NPV - 9 : datum.NPV + 5\", \"as\": \"LabelY\"}], \"mark\": {\"type\": \"text\", \"align\": \"left\", \"dx\": 8, \"fontSize\": 14, \"fontWeight\": 600}, \"encoding\": {\"text\": {\"field\": \"Named\"}, \"y\": {\"field\": \"LabelY\", \"type\": \"quantitative\"}, \"color\": {\"condition\": {\"test\": \"datum[''Universe Is Selected''] == 1\", \"value\": \"#EFD3A0\"}, \"value\": \"#F8F1E6\"}}}, {\"data\": {\"values\": [{\"x\": 61.5, \"y\": 1.5, \"t\": \"value created\"}, {\"x\": 61.5, \"y\": -3.5, \"t\": \"value destroyed\"}]}, \"mark\": {\"type\": \"text\", \"align\": \"right\", \"fontSize\": 12, \"color\": \"#9FB0C8\", \"fontStyle\": \"italic\"}, \"encoding\": {\"x\": {\"field\": \"x\", \"type\": \"quantitative\"}, \"y\": {\"field\": \"y\", \"type\": \"quantitative\"}, \"text\": {\"field\": \"t\"}}}]}'"
+                }
+              }
+            },
+            "jsonConfig": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"autosize\": {\"type\": \"fit\", \"contains\": \"padding\"}, \"background\": null, \"view\": {\"stroke\": \"transparent\"}, \"font\": \"Segoe UI\", \"padding\": {\"left\": 4, \"right\": 10, \"top\": 6, \"bottom\": 4}}'"
+                }
+              }
+            },
+            "provider": {
+              "expr": {
+                "Literal": {
+                  "Value": "'vegaLite'"
+                }
+              }
+            },
+            "renderMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'svg'"
+                }
+              }
+            },
+            "enableTooltips": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "enableSelection": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "enableContextMenu": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "version": {
+              "expr": {
+                "Literal": {
+                  "Value": "'6.4.3'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stateManagement": [
+        {
+          "properties": {
+            "viewportHeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "459D"
+                }
+              }
+            },
+            "viewportWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "682D"
+                }
+              }
+            },
+            "supportFieldConfiguration": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"Projects\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"Option\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"CapexUSD\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"NPVLow\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"NPVHigh\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"RunRate2032Expected\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"IsValid\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"Universe NPV\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":true,\"formatted\":true,\"names\":false},\"Universe Is Selected\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":true,\"formatted\":true,\"names\":false}}'"
+                }
+              }
+            },
+            "denebMetaVersion": {
+              "expr": {
+                "Literal": {
+                  "Value": "'2'"
+                }
+              }
+            },
+            "consolidateFieldParameters": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "developer": [
+        {
+          "properties": {
+            "version": {
+              "expr": {
+                "Literal": {
+                  "Value": "'2.0.1.0'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F8F1E6'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "16D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI Semibold'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'456 compliant plans: more capital, less value by 2032'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#102747'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "33D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#263E5B'"
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Board Metrics"
+                    }
+                  },
+                  "Property": "Alt Decision Map"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "parentGroupName": "3ef70213bde9749851a1",
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "9534179f0e3e64066d0b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Portfolio Universe"
+              }
+            },
+            "Property": "Projects"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "58f7436988c973358aa1",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Portfolio Universe"
+              }
+            },
+            "Property": "Option"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "0d2bddc6848633de095e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Portfolio Universe"
+              }
+            },
+            "Property": "CapexUSD"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "9c4f64d4a08ede1064d2",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Portfolio Universe"
+              }
+            },
+            "Property": "NPVLow"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "a4c1ba09bb10616c0ea7",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Portfolio Universe"
+              }
+            },
+            "Property": "NPVHigh"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "d90f40999495dc886bc4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Portfolio Universe"
+              }
+            },
+            "Property": "RunRate2032Expected"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "506e2c2eba0ea470d5c0",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Portfolio Universe"
+              }
+            },
+            "Property": "IsValid"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "08510351468e1d0b621e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Board Metrics"
+              }
+            },
+            "Property": "Universe NPV"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "bdeb5ae631359b4be3bb",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Board Metrics"
+              }
+            },
+            "Property": "Universe Is Selected"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

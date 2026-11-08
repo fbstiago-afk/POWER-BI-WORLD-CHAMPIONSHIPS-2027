@@ -1,0 +1,52 @@
+/// Bridge: which projects each candidate portfolio funds.
+table 'Portfolio Map'
+	isHidden
+	lineageTag: c9bfd93b-f72a-4061-b55e-c31fb523fba7
+
+	column Portfolio
+		lineageTag: e0f899e2-0b94-4d05-9316-bc86fc44bd1d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Portfolio]
+
+	column ProjectID
+		lineageTag: 7d0940d6-25d0-4a4e-8f5f-320a4b93bd8c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ProjectID]
+
+	partition 'Portfolio Map' = calculated
+		mode: import
+		source =
+				DATATABLE(
+					"Portfolio", STRING,
+					"ProjectID", STRING,
+					{
+					{"Recommended", "GI-01"},
+					{"Recommended", "GI-10"},
+					{"Recommended", "GI-02"},
+					{"Digital + F&B", "GI-01"},
+					{"Digital + F&B", "GI-10"},
+					{"Digital + F&B", "GI-02"},
+					{"Digital + F&B", "GI-09"},
+					{"Growth mix", "GI-01"},
+					{"Growth mix", "GI-10"},
+					{"Growth mix", "GI-02"},
+					{"Growth mix", "GI-09"},
+					{"Growth mix", "GI-05"},
+					{"Growth mix", "GI-04"},
+					{"Yield list", "GI-01"},
+					{"Yield list", "GI-10"},
+					{"Yield list", "GI-02"},
+					{"Yield list", "GI-09"},
+					{"Yield list", "GI-05"},
+					{"Yield list", "GI-04"},
+					{"Yield list", "GI-03"},
+					{"Big bets", "GI-01"},
+					{"Big bets", "GI-07"},
+					{"Big bets", "GI-08"}
+					}
+				)
+
+	annotation PBI_Id = 23c5c699108a4169bb2b1afec16cbb1c
+

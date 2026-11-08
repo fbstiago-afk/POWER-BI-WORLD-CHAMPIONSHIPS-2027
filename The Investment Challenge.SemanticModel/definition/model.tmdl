@@ -1,0 +1,42 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_ProTooling = ["TMDLView_Desktop","DevMode","MCP-PBIModeling","DaxQueryView_Desktop"]
+
+annotation PBI_QueryOrder = ["Date","Region","Scenario","Brands","Hotels","Renovations","MonthlyPerformance","GuestSegments","BookingChannels","GuestExperience","GuestComplaints","InvestmentProjects","InvestmentProjectProperties","InvestmentScenarios","FinanceAssumptions","FinanceParameters","DataFile"]
+
+ref table Date
+ref table Region
+ref table Scenario
+ref table Brands
+ref table Hotels
+ref table Renovations
+ref table MonthlyPerformance
+ref table GuestSegments
+ref table BookingChannels
+ref table GuestExperience
+ref table GuestComplaints
+ref table InvestmentProjects
+ref table InvestmentProjectProperties
+ref table InvestmentScenarios
+ref table FinanceAssumptions
+ref table FinanceParameters
+ref table 'Board Metrics'
+ref table 'Portfolio Option'
+ref table 'Portfolio Map'
+ref table 'Profit Bridge Step'
+ref table 'Project Disruption Base'
+ref table 'Project Timeline'
+ref table 'Portfolio Universe'
+ref table 'Project Value'
+
+ref cultureInfo en-US
+

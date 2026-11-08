@@ -1,0 +1,70 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Panel · Why profit fell",
+  "name": "f074debd6ed524f2c15f",
+  "options": {
+    "targetVisualNames": [
+      "6783c6ceff3ca108bd3a",
+      "6d6dfe91223c9bc90261",
+      "feff58a1e0b4c27bfa56",
+      "3ac26743b94101d399ff",
+      "e068addbf1a9457840c6",
+      "c72696ccfd54814aa431",
+      "c69c522d7937f66ff7be"
+    ],
+    "applyOnlyToTargetVisuals": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "047e036301c06b91de48",
+    "sections": {
+      "047e036301c06b91de48": {
+        "visualContainers": {
+          "6d6dfe91223c9bc90261": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "feff58a1e0b4c27bfa56": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "3ac26743b94101d399ff": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "e068addbf1a9457840c6": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "c72696ccfd54814aa431": {
+            "singleVisual": {
+              "visualType": "htmlContent443BE3AD55E043BF878BED274D3A6865",
+              "objects": {}
+            }
+          },
+          "c69c522d7937f66ff7be": {
+            "singleVisual": {
+              "visualType": "lineClusteredColumnComboChart",
+              "objects": {}
+            }
+          }
+        },
+        "visualContainerGroups": {
+          "6783c6ceff3ca108bd3a": {
+            "isHidden": false
+          }
+        }
+      }
+    },
+    "objects": {}
+  }
+}

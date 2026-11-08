@@ -1,0 +1,17 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "e3a5609d2c8faf755a3a",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 20100,
+    "height": 1080,
+    "width": 1920,
+    "tabOrder": 0
+  },
+  "visualGroup": {
+    "displayName": "Panel · Low scenario",
+    "groupMode": "ScaleMode"
+  },
+  "isHidden": true
+}

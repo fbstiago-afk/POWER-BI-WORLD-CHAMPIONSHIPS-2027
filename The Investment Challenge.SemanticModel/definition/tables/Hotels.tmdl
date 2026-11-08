@@ -1,0 +1,135 @@
+/// One row per hotel: location, capacity, opening date and last renovation.
+table Hotels
+	lineageTag: 43965b2f-8e60-4e41-b7f4-795d0f047cb8
+
+	/// Unique hotel identifier (key).
+	column HotelID
+		dataType: string
+		lineageTag: 6fc6878d-3180-4599-861a-0de564169fe7
+		summarizeBy: none
+		sourceColumn: HotelID
+
+	/// Hotel name.
+	column HotelName
+		dataType: string
+		lineageTag: 8a2911f0-bf53-4301-81e9-fbbd96b68cef
+		summarizeBy: none
+		sourceColumn: HotelName
+
+	/// Brand of the hotel.
+	column Brand
+		dataType: string
+		lineageTag: 40bdf14d-e4a4-436d-9562-1a527bcc6ecf
+		summarizeBy: none
+		sourceColumn: Brand
+
+	/// City.
+	column City
+		dataType: string
+		lineageTag: 7e42d28a-8db8-49fe-ab78-090ff6f3fb16
+		dataCategory: City
+		summarizeBy: none
+		sourceColumn: City
+
+	/// Country.
+	column Country
+		dataType: string
+		lineageTag: 42087fa4-9476-40ca-bd58-28293a11c884
+		dataCategory: Country
+		summarizeBy: none
+		sourceColumn: Country
+
+	/// Region.
+	column Region
+		dataType: string
+		lineageTag: deb56bed-3563-415b-a8eb-dd4d2aea7166
+		summarizeBy: none
+		sourceColumn: Region
+
+	/// Approximate latitude.
+	column Latitude
+		dataType: double
+		lineageTag: fdbc88c7-78ae-4915-9ce1-05e288c81613
+		dataCategory: Latitude
+		summarizeBy: none
+		sourceColumn: Latitude
+
+	/// Approximate longitude.
+	column Longitude
+		dataType: double
+		lineageTag: 06422639-eebd-4e7d-be62-5d8557581056
+		dataCategory: Longitude
+		summarizeBy: none
+		sourceColumn: Longitude
+
+	/// City center, City, Airport, Highway or Resort type.
+	column LocationType
+		dataType: string
+		lineageTag: 8f4e261e-ac8d-4d3d-9d31-609ef2e69a01
+		summarizeBy: none
+		sourceColumn: LocationType
+
+	/// Number of rooms.
+	column Rooms
+		dataType: int64
+		formatString: #,0
+		lineageTag: bb91e149-5ab7-4b06-8421-44dd2339a771
+		summarizeBy: none
+		sourceColumn: Rooms
+
+	/// Opening date.
+	column OpeningDate
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: db727723-819c-4d6d-96eb-10cb77ff4aae
+		summarizeBy: none
+		sourceColumn: OpeningDate
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Completion date of the most recent renovation. Empty if never renovated.
+	column LastRenovationDate
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: cac11733-6d27-4e32-9cf8-0b20ec58f29f
+		summarizeBy: none
+		sourceColumn: LastRenovationDate
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Analytical role of the hotel in the Goodnight Inn investment story, derived from InvestmentProjectProperties.
+	column 'Hotel Role' =
+			VAR _h = Hotels[HotelID]
+			VAR _p = SELECTCOLUMNS( FILTER( ALL( InvestmentProjectProperties ), InvestmentProjectProperties[HotelID] = _h ), "P", InvestmentProjectProperties[ProjectID] )
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        "GI-04" IN _p || "GI-05" IN _p, "Full · extension proposed",
+			        "GI-06" IN _p, "Not full · extension proposed",
+			        "GI-07" IN _p, "Oldest 10 (refresh)",
+			        "Other hotels"
+			    )
+		dataType: string
+		lineageTag: bb0626c3-a86d-4a91-a4c5-808b6b4cdc6b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hotel Short' = SUBSTITUTE( Hotels[HotelName], "Goodnight Inn ", "" )
+		dataType: string
+		lineageTag: 6f1c2a9e-3b7d-4e55-9a10-2c8d4f7b1e01
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Hotels = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="Hotels",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"HotelName", type text}, {"Brand", type text}, {"City", type text}, {"Country", type text}, {"Region", type text}, {"Latitude", type number}, {"Longitude", type number}, {"LocationType", type text}, {"Rooms", Int64.Type}, {"OpeningDate", type date}, {"LastRenovationDate", type date}})
+				in
+				    Typed
+

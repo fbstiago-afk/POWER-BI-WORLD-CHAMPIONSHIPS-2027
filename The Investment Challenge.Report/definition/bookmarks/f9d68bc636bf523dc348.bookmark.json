@@ -1,0 +1,88 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Panel closed · Low",
+  "name": "f9d68bc636bf523dc348",
+  "options": {
+    "targetVisualNames": [
+      "e3a5609d2c8faf755a3a",
+      "77a0b9c54ec11c466d1c",
+      "f9c6fa1aecf7f2997da2",
+      "be89db08b8e7ccf6c403",
+      "863dd8134b2796845f18",
+      "ec7d56a64ffe357cc2a5",
+      "1e964672fad05eca21e2"
+    ],
+    "applyOnlyToTargetVisuals": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "464636e547cc235e4709",
+    "sections": {
+      "464636e547cc235e4709": {
+        "visualContainers": {
+          "77a0b9c54ec11c466d1c": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "f9c6fa1aecf7f2997da2": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "be89db08b8e7ccf6c403": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "863dd8134b2796845f18": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ec7d56a64ffe357cc2a5": {
+            "singleVisual": {
+              "visualType": "htmlContent443BE3AD55E043BF878BED274D3A6865",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "1e964672fad05eca21e2": {
+            "singleVisual": {
+              "visualType": "lineChart",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        },
+        "visualContainerGroups": {
+          "e3a5609d2c8faf755a3a": {
+            "isHidden": true
+          }
+        }
+      }
+    },
+    "objects": {}
+  }
+}

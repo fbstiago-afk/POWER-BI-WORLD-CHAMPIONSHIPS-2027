@@ -1,0 +1,36 @@
+/// Helper axis for the 2023 to 2025 operating-profit bridge (waterfall). Distribution is split into volume and channel-mix effects; the commission-rate effect is zero in the dataset.
+table 'Profit Bridge Step'
+	lineageTag: bc9d2079-6f0c-4e29-89e9-d5e9b2f5c72d
+
+	column Step
+		lineageTag: 8ef49848-b853-4d62-a47a-a0f88bc3ce36
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Step]
+		sortByColumn: StepOrder
+
+	column StepOrder
+		isHidden
+		lineageTag: 718b07a4-42d5-486f-b120-4bb4b7eafd76
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [StepOrder]
+
+	partition 'Profit Bridge Step' = calculated
+		mode: import
+		source =
+				DATATABLE(
+					"Step", STRING,
+					"StepOrder", INTEGER,
+					{
+					{"Room revenue", 1},
+					{"F&B + other revenue", 2},
+					{"Staff cost", 3},
+					{"Other operating costs", 4},
+					{"Distribution: volume", 5},
+					{"Distribution: channel mix", 6}
+					}
+				)
+
+	annotation PBI_Id = 58610f368541411f8a6b57c1e46ec77e
+

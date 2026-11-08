@@ -1,0 +1,17 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "8095bf9e93a8e6188e23",
+  "position": {
+    "x": 40,
+    "y": 262,
+    "z": 1300,
+    "height": 788,
+    "width": 1840,
+    "tabOrder": 3000
+  },
+  "visualGroup": {
+    "displayName": "Explore · Project timeline",
+    "groupMode": "ScaleMode"
+  },
+  "isHidden": true
+}

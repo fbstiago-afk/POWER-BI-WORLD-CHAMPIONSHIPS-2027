@@ -1,0 +1,22 @@
+/// The three regions of the group. Filters Hotels and FinanceAssumptions.
+table Region
+	lineageTag: 14487a8d-c45c-4193-a935-dca2532129a5
+
+	/// North America, Europe or Asia-Pacific.
+	column Region
+		dataType: string
+		lineageTag: 6d9acd5f-b119-4abe-a1d4-c0a141dfc54b
+		summarizeBy: none
+		sourceColumn: Region
+
+	partition Region = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="Region",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"Region", type text}})
+				in
+				    Typed
+

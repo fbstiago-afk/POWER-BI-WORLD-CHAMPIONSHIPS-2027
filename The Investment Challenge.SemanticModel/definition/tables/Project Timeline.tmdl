@@ -1,0 +1,180 @@
+/// Monthly cash-flow engine, Jan 2027 to Dec 2032, for every project and scenario. CAPEX spread evenly over the works; benefits start the month after completion and follow the official ramp-up (FinanceParameters); rooms out of service generate no revenue during works. A dependent project starts after its prerequisite completes.
+table 'Project Timeline'
+	lineageTag: c96692bd-70ca-4e6b-945c-48c6bc900ed5
+
+	column ProjectID
+		lineageTag: fbd7a264-2d20-46f3-91ab-6afc8f82bfef
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ProjectID]
+
+	column Scenario
+		lineageTag: 87c60c37-3bac-4827-9ebf-4f0efd9c929c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Scenario]
+
+	column Month
+		formatString: mmm yyyy
+		lineageTag: df0d93c4-2adc-4167-8f36-c321131112a9
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+
+	column Year
+		lineageTag: 29ded897-be89-46b1-87aa-925d071f7f04
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year]
+
+	column Phase
+		lineageTag: fb162129-eab1-46ba-86fd-91b93c35e956
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Phase]
+		sortByColumn: PhaseOrder
+
+	column PhaseOrder
+		isHidden
+		lineageTag: addede8e-4cf1-467d-8e30-3e6830b16014
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [PhaseOrder]
+
+	column StartMonth
+		formatString: mmm yyyy
+		lineageTag: a376b90a-e96c-48a9-ba5c-ae6c87ae70a3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [StartMonth]
+
+	column FirstBenefitMonth
+		formatString: mmm yyyy
+		lineageTag: ca7351e0-967a-46d5-8b21-ae1591328f3f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [FirstBenefitMonth]
+
+	column CapexUSD
+		formatString: \$#,0
+		lineageTag: 84d16623-cb3d-4e75-9199-c65828cede0f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [CapexUSD]
+
+	column ProfitImpactUSD
+		formatString: \$#,0
+		lineageTag: 45786673-0bcb-4887-a61c-df2e5f768047
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ProfitImpactUSD]
+
+	column RevenueImpactUSD
+		formatString: \$#,0
+		lineageTag: d1193508-6092-40f7-8f25-e7cb09443518
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [RevenueImpactUSD]
+
+	column DisruptionProfitUSD
+		formatString: \$#,0
+		lineageTag: c426a1a8-56c4-408b-a2d1-aeaf78b4fb72
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DisruptionProfitUSD]
+
+	column DisruptionRevenueUSD
+		formatString: \$#,0
+		lineageTag: 9493b530-9532-40df-bd12-1549c145489e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DisruptionRevenueUSD]
+
+	column DisruptionRoomNights
+		formatString: #,0
+		lineageTag: d88aa307-f0d1-4ea2-a33a-7062ef17f68a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DisruptionRoomNights]
+
+	partition 'Project Timeline' = calculated
+		mode: import
+		source =
+				VAR _R1 = LOOKUPVALUE( FinanceParameters[Value], FinanceParameters[Parameter], "Ramp-up - first year after completion" )
+				VAR _R2 = LOOKUPVALUE( FinanceParameters[Value], FinanceParameters[Parameter], "Ramp-up - second year after completion" )
+				VAR _R3 = LOOKUPVALUE( FinanceParameters[Value], FinanceParameters[Parameter], "Ramp-up - third year onwards" )
+				VAR _FirstYear = INT( LOOKUPVALUE( FinanceParameters[Value], FinanceParameters[Parameter], "Earliest investment date" ) )
+				VAR _LastYear = INT( LOOKUPVALUE( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) )
+				VAR _Months =
+				    SELECTCOLUMNS(
+				        FILTER( CALENDAR( DATE( _FirstYear, 1, 1 ), DATE( _LastYear, 12, 31 ) ), DAY( [Date] ) = 1 ),
+				        "Month", [Date]
+				    )
+				VAR _Proj =
+				    SELECTCOLUMNS(
+				        InvestmentProjects,
+				        "ProjectID", InvestmentProjects[ProjectID],
+				        "CapexTotal", InvestmentProjects[CapexUSD],
+				        "Duration", InvestmentProjects[DurationMonths],
+				        "OOS", InvestmentProjects[RoomsOutOfServicePct],
+				        "StartMonth",
+				            VAR _dep = InvestmentProjects[DependsOn]
+				            VAR _depEnd =
+				                IF(
+				                    _dep <> "",
+				                    EDATE(
+				                        LOOKUPVALUE( InvestmentProjects[EarliestStart], InvestmentProjects[ProjectID], _dep ),
+				                        LOOKUPVALUE( InvestmentProjects[DurationMonths], InvestmentProjects[ProjectID], _dep )
+				                    )
+				                )
+				            RETURN
+				                IF( _depEnd > InvestmentProjects[EarliestStart], _depEnd, InvestmentProjects[EarliestStart] )
+				    )
+				VAR _Proj2 = ADDCOLUMNS( _Proj, "FirstBenefitMonth", EDATE( [StartMonth], [Duration] ) )
+				VAR _Grid =
+				    CROSSJOIN( _Proj2, _Months, SELECTCOLUMNS( Scenario, "Scenario", Scenario[Scenario] ) )
+				VAR _Calc =
+				    ADDCOLUMNS(
+				        _Grid,
+				        "InWorks", [Month] >= [StartMonth] && [Month] < [FirstBenefitMonth],
+				        "K", IF( [Month] >= [FirstBenefitMonth], DATEDIFF( [FirstBenefitMonth], [Month], MONTH ), -1 ),
+				        "AnnualProfit", LOOKUPVALUE( InvestmentScenarios[AnnualOperatingProfitImpactUSD], InvestmentScenarios[ProjectID], [ProjectID], InvestmentScenarios[Scenario], [Scenario] ),
+				        "AnnualRevenue", LOOKUPVALUE( InvestmentScenarios[AnnualRevenueImpactUSD], InvestmentScenarios[ProjectID], [ProjectID], InvestmentScenarios[Scenario], [Scenario] )
+				    )
+				VAR _Calc2 =
+				    ADDCOLUMNS(
+				        _Calc,
+				        "Ramp", IF( [K] < 0, 0, IF( [K] < 12, _R1, IF( [K] < 24, _R2, _R3 ) ) ),
+				        "DisP", IF( [InWorks] && [OOS] > 0, LOOKUPVALUE( 'Project Disruption Base'[LostProfitUSD], 'Project Disruption Base'[ProjectID], [ProjectID], 'Project Disruption Base'[MonthNo], MONTH( [Month] ) ) ),
+				        "DisR", IF( [InWorks] && [OOS] > 0, LOOKUPVALUE( 'Project Disruption Base'[LostRoomRevenueUSD], 'Project Disruption Base'[ProjectID], [ProjectID], 'Project Disruption Base'[MonthNo], MONTH( [Month] ) ) ),
+				        "DisN", IF( [InWorks] && [OOS] > 0, LOOKUPVALUE( 'Project Disruption Base'[LostRoomNights], 'Project Disruption Base'[ProjectID], [ProjectID], 'Project Disruption Base'[MonthNo], MONTH( [Month] ) ) )
+				    )
+				RETURN
+				    SELECTCOLUMNS(
+				        _Calc2,
+				        "ProjectID", [ProjectID],
+				        "Scenario", [Scenario],
+				        "Month", [Month],
+				        "Year", YEAR( [Month] ),
+				        "Phase",
+				            SWITCH(
+				                TRUE(),
+				                [InWorks], "Works",
+				                [K] < 0, "Not started",
+				                [K] < 12, "Ramp-up " & FORMAT( _R1, "0%" ),
+				                [K] < 24, "Ramp-up " & FORMAT( _R2, "0%" ),
+				                "Full run-rate"
+				            ),
+				        "PhaseOrder", SWITCH( TRUE(), [InWorks], 1, [K] < 0, 0, [K] < 12, 2, [K] < 24, 3, 4 ),
+				        "StartMonth", [StartMonth],
+				        "FirstBenefitMonth", [FirstBenefitMonth],
+				        "CapexUSD", IF( [InWorks], DIVIDE( [CapexTotal], [Duration] ), 0 ),
+				        "ProfitImpactUSD", [AnnualProfit] / 12 * [Ramp],
+				        "RevenueImpactUSD", [AnnualRevenue] / 12 * [Ramp],
+				        "DisruptionProfitUSD", COALESCE( [DisP], 0 ),
+				        "DisruptionRevenueUSD", COALESCE( [DisR], 0 ),
+				        "DisruptionRoomNights", COALESCE( [DisN], 0 )
+				    )
+
+	annotation PBI_Id = 186e194253974ec9af5f07fbad7dbdc2
+

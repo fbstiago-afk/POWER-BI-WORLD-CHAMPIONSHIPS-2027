@@ -1,0 +1,17 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "134a93a2acb28a747072",
+  "position": {
+    "x": 40,
+    "y": 262,
+    "z": 1400,
+    "height": 788,
+    "width": 1840,
+    "tabOrder": 2000
+  },
+  "visualGroup": {
+    "displayName": "Explore · Scenario explorer",
+    "groupMode": "ScaleMode"
+  },
+  "isHidden": true
+}

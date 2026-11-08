@@ -1,0 +1,46 @@
+/// One row per hotel, month and complaint category.
+table GuestComplaints
+	lineageTag: 03618df3-72fd-447c-a71a-5253a1fa3942
+
+	/// Hotel.
+	column HotelID
+		dataType: string
+		lineageTag: 139d4997-b566-44df-88fc-34e5dd23d701
+		summarizeBy: none
+		sourceColumn: HotelID
+
+	/// First day of the month.
+	column Month
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 3d510fe5-5739-41eb-b354-5a3fe69d77cc
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Complaint category.
+	column Category
+		dataType: string
+		lineageTag: e6c2a39b-78e4-4039-b045-161c4cb46b94
+		summarizeBy: none
+		sourceColumn: Category
+
+	/// Number of complaints received.
+	column Complaints
+		dataType: int64
+		lineageTag: f2b2ce9a-1081-4d82-aa5c-68473dc180c2
+		summarizeBy: sum
+		sourceColumn: Complaints
+
+	partition GuestComplaints = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="GuestComplaints",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"Category", type text}, {"Complaints", Int64.Type}})
+				in
+				    Typed
+

@@ -1,0 +1,53 @@
+/// One row per brand, with its positioning and its investment budget for 2027-2031.
+table Brands
+	lineageTag: d86e4067-7be4-4366-a360-2be92c8ed697
+
+	/// Brand name (key).
+	column Brand
+		dataType: string
+		lineageTag: 0af76801-66b4-4864-ab4e-d6436b9c2134
+		summarizeBy: none
+		sourceColumn: Brand
+
+	/// Market segment of the brand.
+	column Segment
+		dataType: string
+		lineageTag: 782ab22b-17a1-4fe5-a6b2-4000cc9f1196
+		summarizeBy: none
+		sourceColumn: Segment
+
+	/// Number of hotels in the brand.
+	column Properties
+		dataType: int64
+		lineageTag: 254cdda0-1259-42b4-8d7b-1f44187ff726
+		summarizeBy: none
+		sourceColumn: Properties
+
+	/// Brand positioning statement.
+	column Positioning
+		dataType: string
+		lineageTag: d665c176-8933-42be-94f1-504df6561fac
+		summarizeBy: none
+		sourceColumn: Positioning
+
+	/// Total investment budget allocated to the brand for 2027-2031, in USD.
+	column InvestmentBudgetUSD
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: fbd87044-46f8-464b-8fe3-73311b00e1b8
+		summarizeBy: sum
+		sourceColumn: InvestmentBudgetUSD
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition Brands = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="Brands",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"Brand", type text}, {"Segment", type text}, {"Properties", Int64.Type}, {"Positioning", type text}, {"InvestmentBudgetUSD", Int64.Type}})
+				in
+				    Typed
+
