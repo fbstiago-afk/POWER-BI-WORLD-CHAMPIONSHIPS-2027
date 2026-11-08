@@ -2,7 +2,7 @@
 _Updated 2026-11-05 (photographic Home and layout QA). Status: Implemented / Tested / Blocked._
 
 ## D-01 · Brand: Goodnight Inn (unchanged)
-Revenue +$8.9M, operating profit −$2.6M (2023→25). OTA share 32% → 49% at 18% fee; rates unchanged, mix shift = $2.05M of cost. See FINANCIAL_AUDIT §5.
+Revenue +$8.9M, operating profit −$2.6M (2023→25). OTA share rose from 32% in 2021 to 49% in 2025 at an 18% fee; rates unchanged. The 2023→25 channel-mix contribution to distribution cost was $2.05M. See FINANCIAL_AUDIT §5.
 
 ## D-03 (revised) · Portfolio: GI-01 + GI-10 + GI-02, $9.4M
 Highest NPV of 456 compliant plans in every scenario. $50.6M held in reserve. Low-case NPV −$5.2M disclosed on page.

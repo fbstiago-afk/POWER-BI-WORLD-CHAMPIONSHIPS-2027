@@ -9,7 +9,7 @@ This Power BI report examines **Goodnight Inn**, the budget and economy brand of
 
 ## The decision in brief
 
-Goodnight Inn's revenue grew **$8.9M** from 2023 to 2025 while operating profit fell **$2.6M**. Online travel agencies' share of room nights rose from 32% to 49%. With unchanged commission rates, the channel mix shift added approximately **$2.05M** in distribution costs, about 80% of the profit decline. This is an accounting decomposition; the supplied data do not explain why guests changed channels.
+Goodnight Inn's revenue grew **$8.9M** from 2023 to 2025 while operating profit fell **$2.6M**. Online travel agencies' share of room nights rose from **32% in 2021 to 49% in 2025**. With unchanged commission rates, the **2023–2025** channel mix shift added approximately **$2.05M** in distribution costs, about 80% of the profit decline. This is an accounting decomposition; the supplied data do not explain why guests changed channels.
 
 The recommended portfolio combines **GI-01 (direct booking app), GI-10 (revenue management) and GI-02 (self check-in kiosks)**. It commits **$9.4M** of the $60M budget and holds **$50.6M** in reserve. Among **456 rule-compliant portfolios** from 1,024 combinations, it ranks first in the Low, Expected and High scenarios. At the dataset's 8% discount rate through 2032, its **Expected NPV is +$3.25M**. The **Low-case NPV is −$5.15M**; this downside is shown in the report.
 
